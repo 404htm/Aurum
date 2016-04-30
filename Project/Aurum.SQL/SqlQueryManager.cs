@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Aurum.SQL
 {
-    public class Class1
+    class SqlQueryManager
     {
     }
 }
