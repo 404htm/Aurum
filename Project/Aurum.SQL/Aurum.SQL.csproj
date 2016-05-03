@@ -32,6 +32,7 @@
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -45,6 +46,7 @@
     <Compile Include="SqlParameterInfo.cs" />
     <Compile Include="SqlQueryDefinition.cs" />
     <Compile Include="SqlQueryManager.cs" />
+    <Compile Include="SqlQueryTemplate.cs" />
     <Compile Include="SqlSchemaReader.cs" />
     <Compile Include="SqlTableInfo.cs" />
     <Compile Include="SqlTemplateBuilder.cs" />
