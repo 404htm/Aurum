@@ -12,7 +12,7 @@ using System.Xml.Linq;
 namespace Aurum.Core
 {
 	[DataContract(Namespace = "", IsReference = false)]
-	public abstract class StoreableBase<T> where T : StoreableBase<T>
+	public abstract class Storeable<T> where T : Storeable<T>
 	{
 		public void Save(string filename)
 		{
@@ -22,6 +22,7 @@ namespace Aurum.Core
 				ser.WriteObject(stream, this);
 			}
 		}
+
 		public static T Load(string filename)
 		{
 			var ser = new DataContractJsonSerializer(typeof(T));

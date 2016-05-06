@@ -50,7 +50,8 @@
     <Compile Include="QueryTemplate.cs" />
     <Compile Include="SourceType.cs" />
     <Compile Include="SQLDataConnection.cs" />
-    <Compile Include="StoreableBase.cs" />
+    <Compile Include="Storeable.cs" />
+    <Compile Include="StoreableSet.cs" />
     <Compile Include="TypeDefinition.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

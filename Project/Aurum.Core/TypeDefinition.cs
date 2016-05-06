@@ -6,7 +6,7 @@ using System.Runtime.Serialization;
 namespace Aurum.Core
 {
 	[DataContract]
-	public class TypeDefinition : StoreableBase<TypeDefinition>
+	public class TypeDefinition : Storeable<TypeDefinition>
 	{
 		[DataMember]
 		public string Name { get; set; }

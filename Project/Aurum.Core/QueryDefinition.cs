@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 namespace Aurum.Core
 {
 	[DataContract]
-	public class QueryDefinition : StoreableBase<QueryDefinition>
+	public class QueryDefinition : Storeable<QueryDefinition>
 	{
 		[DataMember]
 		public Guid Id { get; set; }

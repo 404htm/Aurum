@@ -9,7 +9,7 @@ namespace Aurum.Core
 {
 	[DataContract]
 	[KnownType(typeof(SQLDataConnection))]
-	public class Context:StoreableBase<Context>
+	public class Context:Storeable<Context>
 	{
 		[DataMember]
 		public string Name { get; set; }
