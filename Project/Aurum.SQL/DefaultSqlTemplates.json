@@ -1,0 +1,20 @@
+{
+	"Items": [
+		{
+			"AllowRecursion": true,
+			"Description": null,
+			"IsDestructive": false,
+			"Name": "SelectById",
+			"QueryText": "Select {columns} from [{schema}].[{table}] where {identity}",
+			"RequiredColumns": null
+		},
+		{
+			"AllowRecursion": true,
+			"Description": null,
+			"IsDestructive": false,
+			"Name": "SelectByName",
+			"QueryText": "Select {columns} from [{schema}].[{table}] where {[Name] = @name}",
+			"RequiredColumns": null
+		}
+	]
+}

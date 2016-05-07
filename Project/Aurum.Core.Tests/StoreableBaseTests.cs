@@ -11,26 +11,33 @@ namespace Aurum.Core.Tests
 	public class StoreableBaseTests
 	{
 		[DataContract(IsReference = false)]
-		private class TestObjA : Storeable<TestObjA>
+		private class TestObj : Storeable<TestObj>
 		{
-			[DataMember] public string Name { get; set; }
-			[DataMember] public int Test { get; set; }
-			[DataMember] public DateTime date { get; set; }
+			[DataMember]
+			public string Name { get; set; }
+			[DataMember]
+			public int Test { get; set; }
+			[DataMember]
+			public DateTime date { get; set; }
+		}
+
+		private void AssertCompare(TestObj original, TestObj copy)
+		{
+			Assert.IsNotNull(copy);
+			Assert.AreEqual(original.Name, copy.Name);
+			Assert.AreEqual(original.Test, copy.Test);
+			Assert.AreEqual(0, original.date.Subtract(copy.date).Milliseconds, "Serialized and deserialized dates do not match");
 		}
 
 		[TestMethod]
 		public void SaveAndReload()
 		{
-			var obj = new TestObjA { Name = "TEST", Test = 5, date = DateTime.Now };
 			var tmp = Path.GetTempFileName();
+			var obj = new TestObj { Name = "TEST", Test = 5, date = DateTime.Now };
 
 			obj.Save(tmp);
-			var copy = TestObjA.Load(tmp);
-
-			Assert.IsNotNull(copy);
-			Assert.AreEqual(obj.Name, copy.Name);
-			Assert.AreEqual(obj.Test, copy.Test);
-			Assert.AreEqual(0, obj.date.Subtract(copy.date).Milliseconds,  "Serialized and deserialized dates do not match");
+			var copy = TestObj.Load(tmp);
+			AssertCompare(obj, copy);
 
 			File.Delete(tmp);
 		}
@@ -39,24 +46,35 @@ namespace Aurum.Core.Tests
 		public void SaveAndReloadSet()
 		{
 			var count = 5;
-			var list = new List<TestObjA>();
+			var list = new List<TestObj>();
 			var tmp = Path.GetTempFileName();
+			for (int i = 0; i < count; i++) list.Add(new TestObj { Name = $"TEST{i}", Test = i, date = DateTime.Now });
 
-			for (int i = 0; i < count; i++) list.Add(new TestObjA { Name = $"TEST{i}", Test = i, date = DateTime.Now });
-
-			new StoreableSet<TestObjA>(list).Save(tmp);
-			var copy = StoreableSet<TestObjA>.Load(tmp);
+			new StoreableSet<TestObj>(list).Save(tmp);
+			var copy = StoreableSet<TestObj>.Load(tmp);
 
 			Assert.IsNotNull(copy);
 			Assert.AreEqual(copy.Count, list.Count);
+			for (int i = 0; i < count; i++) AssertCompare(list[i], copy[i]);
 
-			for (int i = 0; i < count; i++)
-			{
-				Assert.AreEqual(list[i].Name, copy[i].Name);
-				Assert.AreEqual(list[i].Test, copy[i].Test);
-				Assert.AreEqual(0, list[i].date.Subtract(copy[i].date).Milliseconds, "Serialized and deserialized dates do not match");
-			}
+			File.Delete(tmp);
+		}
 
+		[TestMethod]
+		public void ResaveSet()
+		{
+			var count = 5;
+			var list = new List<TestObj>();
+			var tmp = Path.GetTempFileName();
+			for (int i = 0; i < count; i++) list.Add(new TestObj { Name = $"TEST{i}", Test = i, date = DateTime.Now });
+
+			//Ensure that the file isn't appending
+			new StoreableSet<TestObj>(list).Save(tmp);
+			var copy = StoreableSet<TestObj>.Load(tmp);
+			new StoreableSet<TestObj>(list).Save(tmp);
+			copy = StoreableSet<TestObj>.Load(tmp);
+
+			Assert.AreEqual(list.Count, copy.Count);
 			File.Delete(tmp);
 		}
 	}
