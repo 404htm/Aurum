@@ -10,22 +10,19 @@ namespace Aurum.Core
 	[DataContract]
 	public class QueryDefinition : Storeable<QueryDefinition>
 	{
-		[DataMember]
-		public Guid Id { get; set; }
-		[DataMember]
-		public Guid DataSourceID { get; set; }
-		[DataMember]
-		public string Name { get; set; }
-		[DataMember]
-		public bool IsModified { get; set; }
-		[DataMember]
-		public SourceType SourceType { get; set; }
-		[DataMember]
-		public string SourceName { get; set; }
-		[DataMember]
-		public TypeDefinition InputType { get; private set; }
-		[DataMember]
-		public TypeDefinition OutputType { get; private set; }
+		public QueryDefinition()
+		{
+			Id = Guid.NewGuid();
+		}
+
+		[DataMember] public Guid Id { get; set; }
+		[DataMember] public string Name { get; set; }
+		[DataMember] public string GroupName { get; set; }
+		[DataMember] public bool IsModified { get; set; }
+		[DataMember] public SourceType SourceType { get; set; }
+		[DataMember] public string SourceName { get; set; }
+		[DataMember] public TypeDefinition InputType { get; private set; }
+		[DataMember] public TypeDefinition OutputType { get; private set; }
 
 	}
 }

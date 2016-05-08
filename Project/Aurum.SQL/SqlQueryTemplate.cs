@@ -15,6 +15,12 @@ namespace Aurum.SQL
 		[DataMember] public string Description { get; set; }
 		[DataMember] public List<string> RequiredColumns { get; set; }
 		[DataMember] public bool IsDestructive { get; set; }
+
+		internal bool AppliesTo(SqlTableInfo table)
+		{
+			throw new NotImplementedException();
+		}
+
 		[DataMember] public bool AllowRecursion { get; set; }
 		[DataMember] public string QueryText { get; set; }
 

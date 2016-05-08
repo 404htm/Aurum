@@ -49,7 +49,7 @@
     <Compile Include="QuerySet.cs" />
     <Compile Include="QueryTemplate.cs" />
     <Compile Include="SourceType.cs" />
-    <Compile Include="SQLDataConnection.cs" />
+    <Compile Include="SqlDataConnection.cs" />
     <Compile Include="Storeable.cs" />
     <Compile Include="StoreableSet.cs" />
     <Compile Include="TypeDefinition.cs" />

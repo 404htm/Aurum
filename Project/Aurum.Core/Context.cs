@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 namespace Aurum.Core
 {
 	[DataContract]
-	[KnownType(typeof(SQLDataConnection))]
+	[KnownType(typeof(SqlDataConnection))]
 	public class Context:Storeable<Context>
 	{
 		[DataMember]

@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 namespace Aurum.Core
 {
 	[DataContract]
-	public class SQLDataConnection : IDataConnection
+	public class SqlDataConnection : IDataConnection
 	{
 		[DataMember]
 		public Guid Id { get; set; }

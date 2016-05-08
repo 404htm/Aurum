@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Aurum.SQL
 {
-	public class SqlTemplateBuilder
+	public class TemplateBuilder
 	{
 		SqlTableInfo _tableInfo;
 		string _columns;
@@ -14,7 +14,7 @@ namespace Aurum.SQL
 		//string _skip;
 		//string _take;
 
-		public SqlTemplateBuilder(SqlTableInfo tableInfo)
+		public TemplateBuilder(SqlTableInfo tableInfo)
 		{
 			_columns = tableInfo.ColumnInfo.Select(c => $"[{c.Name}]").Aggregate((a, b) => $"{a}, {b}");
 			_tableInfo = tableInfo;
