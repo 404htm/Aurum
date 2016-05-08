@@ -36,7 +36,7 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
-    <OutputPath>bin\Debug\</OutputPath>
+    <OutputPath>bin\Output\</OutputPath>
     <BuildScriptName>$(MSBuildProjectName).sql</BuildScriptName>
     <TreatWarningsAsErrors>false</TreatWarningsAsErrors>
     <DebugSymbols>true</DebugSymbols>
@@ -70,5 +70,9 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="localdb12.publish.xml" />
+    <None Include="Aurum.TestDB.publish.xml" />
   </ItemGroup>
+  <PropertyGroup>
+    <PostBuildEvent>MSBuild /t:Publish /p:SqlPublishProfilePath="localdb12.publish.xml" $(ProjectDir)$(ProjectName).sqlproj</PostBuildEvent>
+  </PropertyGroup>
 </Project>
