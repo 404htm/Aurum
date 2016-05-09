@@ -70,9 +70,10 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="localdb12.publish.xml" />
-    <None Include="Aurum.TestDB.publish.xml" />
+    <None Include="AppVeyor.publish.xml" />
   </ItemGroup>
   <PropertyGroup>
-    <PostBuildEvent>MSBuild /t:Publish /p:SqlPublishProfilePath="localdb12.publish.xml" $(ProjectDir)$(ProjectName).sqlproj</PostBuildEvent>
+    <PostBuildEvent>
+    </PostBuildEvent>
   </PropertyGroup>
 </Project>
