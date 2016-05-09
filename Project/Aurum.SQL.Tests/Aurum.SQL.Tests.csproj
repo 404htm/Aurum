@@ -61,6 +61,7 @@
     <Compile Include="SqlSchemaReaderTests.cs" />
     <Compile Include="SqlTemplatingTests.cs" />
     <Compile Include="SqlValidatorTests.cs" />
+    <Compile Include="TestHelpers.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />

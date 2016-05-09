@@ -11,7 +11,7 @@ namespace Aurum.SQL.Tests
 		[TestInitialize]
 		public void Init()
 		{
-			_cstr_db = Properties.Settings.Default.cnn_db;
+			_cstr_db = TestHelpers.GetTestConnection();
 		}
 
 		//[TestMethod]
