@@ -22,19 +22,19 @@ namespace Aurum.SQL
 
 			return _templates
 				.Where(t => t.AppliesTo(table))
-				.Select(t => Apply(t, lookup))
+				.Select(t => Apply(t, table, lookup))
 				.ToList();
 		} 
 
-		SqlQueryDefinition Apply(SqlQueryTemplate template, Lookup lookup)
+		SqlQueryDefinition Apply(SqlQueryTemplate template, SqlTableInfo table, Lookup lookup)
 		{
 			var def = new SqlQueryDefinition();
-			
+			def.GroupName = table.Name;
+			def.SourceName = table.Name;
+			def.IsModified = false;
 
-			def.Name = template.Name;
+			def.Name = Replace(template.QueryName??template.Name, lookup);
 			def.Query = Replace(template.QueryText, lookup);
-
-
 			return def;
 		}
 

@@ -13,12 +13,9 @@ namespace Aurum.Core.Tests
 		[DataContract(IsReference = false)]
 		private class TestObj : Storeable<TestObj>
 		{
-			[DataMember]
-			public string Name { get; set; }
-			[DataMember]
-			public int Test { get; set; }
-			[DataMember]
-			public DateTime date { get; set; }
+			[DataMember] public string Name { get; set; }
+			[DataMember] public int Test { get; set; }
+			[DataMember] public DateTime date { get; set; }
 		}
 
 		private void AssertCompare(TestObj original, TestObj copy)

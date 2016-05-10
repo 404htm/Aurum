@@ -12,19 +12,18 @@ namespace Aurum.SQL
 	public class SqlQueryTemplate
 	{
 		[DataMember] public string Name { get; set; }
+		[DataMember] public string QueryName { get; set; }
 		[DataMember] public string Description { get; set; }
 		[DataMember] public List<string> RequiredColumns { get; set; }
 		[DataMember] public bool IsDestructive { get; set; }
+		[DataMember] public bool AllowAutoSubquery { get; set; }
+		[DataMember] public string QueryText { get; set; }
 
 		internal bool AppliesTo(SqlTableInfo table)
 		{
-			throw new NotImplementedException();
+			return true;
+			//TODO: Make this actually work
 		}
-
-		[DataMember] public bool AllowRecursion { get; set; }
-		[DataMember] public string QueryText { get; set; }
-
-		//TODO: SubQuery Settings
 		//TODO: Output Types
 
 	}
