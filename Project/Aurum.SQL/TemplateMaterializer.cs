@@ -86,7 +86,7 @@ namespace Aurum.SQL
 
 		string buildExpression(IEnumerable<SqlColumnInfo> columns, string set, string expression, string delimiter)
 		{
-			var split = expression.Split(new string[] { "=>" }, StringSplitOptions.None);
+			var split = expression.Split(new string[]{"=>"}, StringSplitOptions.None);
 
 			if (split.Count() != 2) throw new InvalidOperationException("Invalid expression syntax");
 			if (!_filters.ContainsKey(set)) throw new InvalidOperationException($@"""{set}"" is not a valid set name");
@@ -103,7 +103,6 @@ namespace Aurum.SQL
 
 			return result;
 		}
-
 
 		Lookup buildLookup(SqlTableInfo table)
 		{
