@@ -3,6 +3,7 @@ using System.Text;
 using System.Collections.Generic;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Linq;
+using Aurum.Core;
 
 namespace Aurum.SQL.Tests.IntegrationTests
 {
@@ -60,11 +61,12 @@ namespace Aurum.SQL.Tests.IntegrationTests
 		#endregion
 
 		[TestMethod]
-		public void BuildFromTables()
+		public void _INTEGRATION_BuildTemplatesFromTablesAndValidate()
 		{
 			var timer_str = "Timer";
 			var cnn = TestHelpers.GetTestConnection();
 
+			IList<SqlTableDetail> details;
 			using (var reader = new SqlSchemaReader(cnn))
 			{
 				var tables = reader.GetTables();
@@ -72,16 +74,40 @@ namespace Aurum.SQL.Tests.IntegrationTests
 				this.TestContext.WriteLine($"Integration Results: {tables.Count()} tables found.");
 				Assert.IsTrue(tables.Count > 0, "Tables not retrieved from connection");
 
-				var details = tables.Select(t => reader.GetTableDetail(t));
+				details = tables.Select(t => reader.GetTableDetail(t)).ToList();
 				Assert.IsTrue(details.Count() > 0, "Details not retrieved from connection");
-
-				//tables.Select(λ => λ.);
-
 			}
 
+			IList<SqlQueryTemplate> templates;
+			using (var str = Resources.GetDefaultTemplates())
+			{
+				templates = StoreableSet<SqlQueryTemplate>.Load(str);
+			}
+			Assert.IsTrue(templates.Any(), "Templates could not be loaded from assembly resources");
 
+			var builder = new TemplateMaterializer(templates);
+			var query_sets = details.Select(λ => new { Table = λ.Name, Queries = builder.Build(λ) }).ToList();
 
+			int query_count = query_sets.SelectMany(q => q.Queries).Count();
+			int failed_count = 0;
 
+			using (var validator = new SqlValidator(cnn))
+			{
+				foreach (var table in query_sets) foreach (var query in table.Queries)
+				{
+					this.TestContext.WriteLine($"Validating {table.Table} - {query.Name}: {query.Query}".Replace("{","{{").Replace("}","}}"));
+					
+					IList<System.Data.SqlClient.SqlError> errors;
+					validator.GetParametersAndValidate(query.Query, out errors);
+					if (errors != null)
+					{
+						foreach (var e in errors) TestContext.WriteLine($"\tError: {e.Message}");
+						failed_count++;
+					}
+				}
+				Assert.IsTrue(failed_count == 0, $"{failed_count}/{query_count} Queries Failed Validation - See output for details.");
+
+			}
 
 		}
 	}

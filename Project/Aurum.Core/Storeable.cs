@@ -25,13 +25,16 @@ namespace Aurum.Core
 
 		public static T Load(string filename)
 		{
-			var ser = new DataContractJsonSerializer(typeof(T));
-			T result;
 			using (FileStream stream = File.OpenRead(filename))
 			{
-				result = (T)ser.ReadObject(stream);
+				return Load(stream);
 			}
+		}
 
+		public static T Load(Stream stream)
+		{
+			var ser = new DataContractJsonSerializer(typeof(T));
+			T result = (T)ser.ReadObject(stream);
 			result.OnDeserialization();
 			return result;
 		}

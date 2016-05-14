@@ -11,6 +11,7 @@ namespace Aurum.SQL
 	public class SqlValidator : IDisposable
 	{
 		SqlConnection _cnn;
+		const int COMPILER_ERROR_CODE = 11501;
 
 		public SqlValidator(string connectionString)
 		{
@@ -54,7 +55,7 @@ namespace Aurum.SQL
 			catch (SqlException ex)
 			{
 				//Eliminate an extraneous compilier error for clarity
-				errors = ex.Errors.Cast<SqlError>().Where(e => e.Number == 11501).ToList();
+				errors = ex.Errors.Cast<SqlError>().Where(e => e.Number != COMPILER_ERROR_CODE).ToList();
 				return null;
 			}
 		}
