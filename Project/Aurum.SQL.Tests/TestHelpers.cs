@@ -15,5 +15,10 @@ namespace Aurum.SQL.Tests
 
 			return env_cnn ?? app_cnn;
 		}
+
+		public static string Escape(this string str)
+		{
+			return str.Replace("{", "{{").Replace("}", "}}");
+		}
 	}
 }

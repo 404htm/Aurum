@@ -95,7 +95,7 @@ namespace Aurum.SQL.Tests.IntegrationTests
 			{
 				foreach (var table in query_sets) foreach (var query in table.Queries)
 				{
-					this.TestContext.WriteLine($"Validating {table.Table} - {query.Name}: {query.Query}".Replace("{","{{").Replace("}","}}"));
+					this.TestContext.WriteLine($"Validating {table.Table} - {query.Name}: {query.Query}".Escape());
 					
 					IList<System.Data.SqlClient.SqlError> errors;
 					validator.GetParametersAndValidate(query.Query, out errors);
