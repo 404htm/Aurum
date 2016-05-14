@@ -14,7 +14,7 @@ namespace Aurum.SQL.Tests
 			var templates = new List<SqlQueryTemplate>();
 			templates.Add(new SqlQueryTemplate { Name = "SelectById", IsDestructive = false, AllowAutoSubquery = true, QueryText = "SELECT ${*|c=>[c]|, } FROM [{schema}].[{table}] WHERE (${identity|c=>[c] = @c| AND })" });
 
-			var table1 = new SqlTableInfo { Name = "TestTable", Schema = "dbo" };
+			var table1 = new SqlTableDetail { Name = "TestTable", Schema = "dbo" };
 			table1.ColumnInfo.Add(new SqlColumnInfo() { ColumnId = 1, Name = "Id", Identity = true });
 			table1.ColumnInfo.Add(new SqlColumnInfo() { ColumnId = 2, Name = "Name", Identity = false });
 			table1.ColumnInfo.Add(new SqlColumnInfo() { ColumnId = 3, Name = "City", Identity = false });
@@ -40,7 +40,7 @@ namespace Aurum.SQL.Tests
 			var templates = new List<SqlQueryTemplate>();
 			templates.Add(new SqlQueryTemplate { Name = "Select{table}ById", IsDestructive = false, AllowAutoSubquery = true, QueryText = "SELECT ${!identity|column=>[column]|, } FROM [{schema}].[{table}] WHERE (${identity|c=>[c] = @c| AND })" });
 
-			var table1 = new SqlTableInfo { Name = "TestTable", Schema = "dbo" };
+			var table1 = new SqlTableDetail { Name = "TestTable", Schema = "dbo" };
 			table1.ColumnInfo.Add(new SqlColumnInfo() { ColumnId = 1, Name = "Id1", Identity = true });
 			table1.ColumnInfo.Add(new SqlColumnInfo() { ColumnId = 6, Name = "Id2", Identity = true });
 			table1.ColumnInfo.Add(new SqlColumnInfo() { ColumnId = 2, Name = "Name", Identity = false });

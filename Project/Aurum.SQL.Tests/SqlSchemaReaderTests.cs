@@ -22,7 +22,7 @@ namespace Aurum.SQL.Tests
 			IList<string> tables;
 			using (var reader = new SqlSchemaReader(_cstr_db))
 			{
-				tables = reader.GetTables(null);
+				tables = reader.GetTables(null).Select(t => t.ToString()).ToList();
 			}
 
 			Assert.IsTrue(tables.Contains("[dbo].[Customer]"), "dbo.Customer not found");
@@ -36,7 +36,7 @@ namespace Aurum.SQL.Tests
 			IList<string> tables;
 			using (var reader = new SqlSchemaReader(_cstr_db))
 			{
-				tables = reader.GetTables("dbo");
+				tables = reader.GetTables("dbo").Select(t => t.ToString()).ToList();
 			}
 
 			Assert.IsTrue(tables.Contains("[dbo].[Customer]"), "dbo.Customer not found");
@@ -53,8 +53,8 @@ namespace Aurum.SQL.Tests
 
 			using (var reader = new SqlSchemaReader(_cstr_db))
 			{
-				customer_columns = reader.GetColumns("dbo.customer");
-				order_columns = reader.GetColumns("[dbo].[ORDER]");
+				customer_columns = reader.GetTableDetail(new SqlTableInfo { Schema = "dbo", Name = "customer" }).ColumnInfo;
+				order_columns = reader.GetTableDetail(new SqlTableInfo { Schema = "dbo", Name = "order" }).ColumnInfo;
 			}
 
 			Assert.IsTrue(customer_columns.Any());

@@ -49,6 +49,7 @@
     <Compile Include="SqlQueryTemplate.cs" />
     <Compile Include="SqlSchemaReader.cs" />
     <Compile Include="SqlTableInfo.cs" />
+    <Compile Include="SqlTableDetail.cs" />
     <Compile Include="TemplateBuilder.cs" />
     <Compile Include="TemplateMaterializer.cs" />
     <Compile Include="SqlValidator.cs" />

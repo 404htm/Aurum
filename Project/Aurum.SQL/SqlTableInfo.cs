@@ -8,14 +8,12 @@ namespace Aurum.SQL
 {
 	public class SqlTableInfo
 	{
-		public SqlTableInfo()
-		{
-			ColumnInfo = new List<SqlColumnInfo>();
-		}
-
 		public string Name { get; set; }
 		public string Schema { get; set; }
-		public IList<SqlColumnInfo> ColumnInfo { get; set; }
-		
+
+		public override string ToString()
+		{
+			return $"[{Schema}].[{Name}]";
+		}
 	}
 }

@@ -18,19 +18,22 @@ namespace Aurum.SQL
 			_cnn.Open();
 		}
 
-		public IList<string> GetTables(string schema = null)
+		public IList<SqlTableInfo> GetTables(string schema = null)
 		{
 			return runInfoSchemaQuery(schema, "BASE TABLE").ToList();
 		}
 
-		public IList<string> GetViews(string schema = null)
+		public IList<SqlTableInfo> GetViews(string schema = null)
 		{
 			return runInfoSchemaQuery(schema, "VIEW").ToList();
 		}
 
-		public IList<SqlColumnInfo> GetColumns(string objectname)
+		public SqlTableDetail GetTableDetail(SqlTableInfo tableInfo)
 		{
-			return runColumnQuery(objectname).ToList();
+			return new SqlTableDetail(tableInfo)
+			{
+				ColumnInfo = runColumnQuery(tableInfo.Name).ToList()
+			};
 		}
 
 		//public SqlTableInfo GetTableInfo(string objectname)
@@ -42,6 +45,24 @@ namespace Aurum.SQL
 		//    }
 		//}
 
+		private static SqlColumnInfo mapColumn(IDataReader reader)
+		{
+			return new SqlColumnInfo
+			{
+				Name = Convert.ToString(reader["name"]),
+				ColumnId = Convert.ToInt32(reader["column_id"]),
+				Nullable = Convert.ToBoolean(reader["is_nullable"]),
+				Identity = Convert.ToBoolean(reader["is_identity"])
+			};
+		}
+
+		private static T mapTable<T>(IDataReader reader, T table) where T : SqlTableInfo
+		{
+			table.Name = reader["TABLE_NAME"].ToString();
+			table.Schema = reader["TABLE_SCHEMA"].ToString();
+			return table;
+		}
+
 		private IEnumerable<SqlColumnInfo> runColumnQuery(string objectname)
 		{
 			string query = "SELECT [name], [column_id], [is_nullable], [is_identity] FROM sys.columns WHERE object_id = OBJECT_ID(@object_name)";
@@ -52,21 +73,11 @@ namespace Aurum.SQL
 
 			var reader = command.ExecuteReader();
 
-			while (reader.Read())
-			{
-				yield return new SqlColumnInfo
-				{
-					Name = Convert.ToString(reader["name"]),
-					ColumnId = Convert.ToInt32(reader["column_id"]),
-					Nullable = Convert.ToBoolean(reader["is_nullable"]),
-					Identity = Convert.ToBoolean(reader["is_identity"])
-				};
-			}
-
+			while (reader.Read()) yield return mapColumn(reader);
 			reader.Close();
 		}
 
-		private IEnumerable<string> runInfoSchemaQuery(string schema, string type)
+		private IEnumerable<SqlTableInfo> runInfoSchemaQuery(string schema, string type)
 		{
 			string query = "SELECT [TABLE_SCHEMA], [TABLE_NAME] FROM information_schema.tables WHERE TABLE_TYPE = @type";
 			if (schema != null) query += " AND TABLE_SCHEMA = @schema";
@@ -77,15 +88,9 @@ namespace Aurum.SQL
 			if (schema != null) command.Parameters.AddWithValue("@schema", schema);
 
 			var reader = command.ExecuteReader();
-
-			while (reader.Read())
-			{
-				yield return $"[{reader["TABLE_SCHEMA"]}].[{reader["TABLE_NAME"]}]";
-			}
+			while (reader.Read()) yield return mapTable(reader, new SqlTableInfo());
 			reader.Close();
 		}
-
-
 
 		#region IDisposable Support
 		private bool disposedValue = false;

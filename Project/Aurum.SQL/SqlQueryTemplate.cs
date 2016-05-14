@@ -19,7 +19,7 @@ namespace Aurum.SQL
 		[DataMember] public bool AllowAutoSubquery { get; set; }
 		[DataMember] public string QueryText { get; set; }
 
-		internal bool AppliesTo(SqlTableInfo table)
+		internal bool AppliesTo(SqlTableDetail table)
 		{
 			return true;
 			//TODO: Make this actually work

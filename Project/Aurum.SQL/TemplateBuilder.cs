@@ -8,13 +8,13 @@ namespace Aurum.SQL
 {
 	public class TemplateBuilder
 	{
-		SqlTableInfo _tableInfo;
+		SqlTableDetail _tableInfo;
 		string _columns;
 		string _identity;
 		//string _skip;
 		//string _take;
 
-		public TemplateBuilder(SqlTableInfo tableInfo)
+		public TemplateBuilder(SqlTableDetail tableInfo)
 		{
 			_columns = tableInfo.ColumnInfo.Select(c => $"[{c.Name}]").Aggregate((a, b) => $"{a}, {b}");
 			_tableInfo = tableInfo;

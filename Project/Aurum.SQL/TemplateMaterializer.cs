@@ -29,7 +29,7 @@ namespace Aurum.SQL
 			_templates = templates;
 		}
 
-		public List<SqlQueryDefinition> Build(SqlTableInfo table)
+		public List<SqlQueryDefinition> Build(SqlTableDetail table)
 		{
 			var lookup = buildLookup(table);
 
@@ -39,7 +39,7 @@ namespace Aurum.SQL
 				.ToList();
 		} 
 
-		SqlQueryDefinition Apply(SqlQueryTemplate template, SqlTableInfo table, Lookup lookup)
+		SqlQueryDefinition Apply(SqlQueryTemplate template, SqlTableDetail table, Lookup lookup)
 		{
 			var def = new SqlQueryDefinition();
 			def.GroupName = table.Name;
@@ -104,7 +104,7 @@ namespace Aurum.SQL
 			return result;
 		}
 
-		Lookup buildLookup(SqlTableInfo table)
+		Lookup buildLookup(SqlTableDetail table)
 		{
 			var lookup = new Dictionary<string, string>();
 			lookup["{schema}"] = table.Schema;

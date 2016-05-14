@@ -65,13 +65,20 @@ namespace Aurum.SQL.Tests.IntegrationTests
 			var timer_str = "Timer";
 			var cnn = TestHelpers.GetTestConnection();
 
-			var reader = new SqlSchemaReader(cnn);
-			var tables = reader.GetTables();
+			using (var reader = new SqlSchemaReader(cnn))
+			{
+				var tables = reader.GetTables();
 
-			this.TestContext.WriteLine($"Integration Results: {tables.Count()} tables found.");
-			Assert.IsTrue(tables.Count > 0, "Tables not retrieved from connection");
+				this.TestContext.WriteLine($"Integration Results: {tables.Count()} tables found.");
+				Assert.IsTrue(tables.Count > 0, "Tables not retrieved from connection");
 
-			//tables.Select(λ => λ.);
+				var details = tables.Select(t => reader.GetTableDetail(t));
+				Assert.IsTrue(details.Count() > 0, "Details not retrieved from connection");
+
+				//tables.Select(λ => λ.);
+
+			}
+
 
 
 
