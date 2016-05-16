@@ -23,7 +23,7 @@ This project is currently in development
 
 ---
 
-####What distinguishes aurum from traditional orms?
+####What distinguishes Aurum from traditional ORMs?
 With traditional ORMs you trade some performance and a lot of control for convenience. This isn't necessarily a bad thing; Developer time is valuable and repetitive mapping code is both error-prone and deeply soul-crushing. The problem is that a lot of this power provided by traditional ORMs can't even be leveraged in most structured applications. 
 
 Generally professional-grade software has a discrete data-layer. The ability to walk arbitrary object trees in such a scenario is useless. You retrieve data from a specific method for a specific purpose. Lazy loading seems useful at first but ends up burning new devs enough that it can practically be considered as an ORM rite of passage. Frameworks like EF also seem to treat attached entities as the standard case - In most real-world applications this isn't an option. Objects are passed across web-services, used for short lived requests, or used across many classes in a way that makes keeping track of a context unwieldy. Objects can be detached, and reattached but the syntax is frequently awkward and full of pitfalls. 
