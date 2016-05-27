@@ -11,6 +11,12 @@ namespace Aurum.Core.Utility
 	{
 		List<ParameterExpression> _parameters = new List<ParameterExpression>();
 		List<Expression> _variables = new List<Expression>();
+		List<Command> _commands = new List<Command>();
+
+		public ExpressionCompiler()
+		{
+			_commands.Add(new Command("+", (l, r) => Expression.Add(l, r)));
+		}
 
 		public void SetParameter<P>(string name)
 		{
@@ -29,6 +35,7 @@ namespace Aurum.Core.Utility
 		//	}
 		//	
 
+
 		public T CompileStatement(string statement)
 		{
 			var block = parse(statement);
@@ -38,8 +45,15 @@ namespace Aurum.Core.Utility
 
 		private BlockExpression parse(string statement)
 		{
-			var block = Expression.Block(Expression.Equal(Expression.Constant(5), Expression.Constant(5)));
+
+			var command = _commands.Select(c => c.Parse(statement, null)).FirstOrDefault(c => c != null);
+
+			//var rtree = (SyntaxTree)CSharpSyntaxTree.ParseText(statement);
+			//rtree.GetRoot().Dump();
+			var block = Expression.Block(Expression.Equal(Expression.Constant(5), _parameters[0]));
 			return block;
 		}
+
+
 	}
 }

@@ -53,6 +53,7 @@
     <Compile Include="Storeable.cs" />
     <Compile Include="StoreableSet.cs" />
     <Compile Include="TypeDefinition.cs" />
+    <Compile Include="Utility\Command.cs" />
     <Compile Include="Utility\ExpressionCompiler.cs" />
   </ItemGroup>
   <ItemGroup />
