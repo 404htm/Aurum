@@ -5,17 +5,17 @@ using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Aurum.Core.Utility
+namespace Aurum.Core.Parser
 {
 	public class ExpressionCompiler<T>
 	{
 		List<ParameterExpression> _parameters = new List<ParameterExpression>();
 		List<Expression> _variables = new List<Expression>();
-		List<Command> _commands = new List<Command>();
+		List<Operation> _commands = new List<Operation>();
 
 		public ExpressionCompiler()
 		{
-			_commands.Add(new Command("+", (l, r) => Expression.Add(l, r)));
+			_commands.Add(new Operation("+", (l, r) => Expression.Add(l, r)));
 		}
 
 		public void SetParameter<P>(string name)

@@ -44,6 +44,8 @@
     <Compile Include="Context.cs" />
     <Compile Include="IDataConnection.cs" />
     <Compile Include="IDataSource.cs" />
+    <Compile Include="Parser\ICommand.cs" />
+    <Compile Include="Parser\Segment.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="QueryDefinition.cs" />
     <Compile Include="QuerySet.cs" />
@@ -53,8 +55,8 @@
     <Compile Include="Storeable.cs" />
     <Compile Include="StoreableSet.cs" />
     <Compile Include="TypeDefinition.cs" />
-    <Compile Include="Utility\Command.cs" />
-    <Compile Include="Utility\ExpressionCompiler.cs" />
+    <Compile Include="Parser\Operation.cs" />
+    <Compile Include="Parser\ExpressionCompiler.cs" />
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

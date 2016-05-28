@@ -6,11 +6,11 @@ using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
-namespace Aurum.Core.Utility
+namespace Aurum.Core.Parser
 {
-	public class Command
+	public class Operation
 	{
-		public Command(string command, Func<Expression, Expression, Expression> exp)
+		public Operation(string command, Func<Expression, Expression, Expression> exp)
 		{
 			Pattern = new Regex(command);
 			Expression = exp;
