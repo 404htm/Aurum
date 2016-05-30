@@ -32,7 +32,7 @@ namespace Aurum.SQL
 		{
 			return new SqlTableDetail(tableInfo)
 			{
-				ColumnInfo = runColumnQuery(tableInfo.Name).ToList()
+				Columns = runColumnQuery(tableInfo.Name).ToList()
 			};
 		}
 

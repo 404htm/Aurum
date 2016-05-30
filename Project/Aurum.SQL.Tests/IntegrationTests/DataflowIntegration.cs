@@ -4,6 +4,8 @@ using System.Collections.Generic;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Linq;
 using Aurum.Core;
+using Aurum.SQL.Templates;
+using Aurum.Core.Parser;
 
 namespace Aurum.SQL.Tests.IntegrationTests
 {
@@ -65,6 +67,7 @@ namespace Aurum.SQL.Tests.IntegrationTests
 		{
 			var timer_str = "Timer";
 			var cnn = TestHelpers.GetTestConnection();
+			var parserFactory = new ParserFactory();
 
 			IList<SqlTableDetail> details;
 			using (var reader = new SqlSchemaReader(cnn))
@@ -78,12 +81,15 @@ namespace Aurum.SQL.Tests.IntegrationTests
 				Assert.IsTrue(details.Count() > 0, "Details not retrieved from connection");
 			}
 
-			IList<SqlQueryTemplate> templates;
+			IList<SqlQueryTemplateData> templateData;
 			using (var str = Resources.GetDefaultTemplates())
 			{
-				templates = StoreableSet<SqlQueryTemplate>.Load(str);
+				templateData = StoreableSet<SqlQueryTemplateData>.Load(str);
 			}
-			Assert.IsTrue(templates.Any(), "Templates could not be loaded from assembly resources");
+			Assert.IsTrue(templateData.Any(), "Templates could not be loaded from assembly resources");
+
+			var hydrator  = new SqlQueryTemplateHydrator(parserFactory);
+			var templates = templateData.Select(hydrator.Hydrate).ToList();
 
 			var builder = new TemplateMaterializer(templates);
 			var query_sets = details.Select(λ => new { Table = λ.Name, Queries = builder.Build(λ) }).ToList();

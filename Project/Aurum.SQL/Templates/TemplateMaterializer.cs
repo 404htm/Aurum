@@ -1,4 +1,6 @@
-﻿using System;
+﻿using Aurum.Core.Parser;
+using Aurum.SQL.Templates;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -11,7 +13,8 @@ namespace Aurum.SQL
 {
 	public class TemplateMaterializer
 	{
-		IList<SqlQueryTemplate> _templates;
+		IList<ISqlQueryTemplate> _templates;
+
 		static readonly IDictionary<string, filter> _filters = new Dictionary<string, filter>
 		{
 			{"all", λ => true },
@@ -24,22 +27,23 @@ namespace Aurum.SQL
 			
 		};
 		
-		public TemplateMaterializer(IList<SqlQueryTemplate> templates)
+		public TemplateMaterializer(IList<ISqlQueryTemplate> templates)
 		{
 			_templates = templates;
 		}
+
 
 		public List<SqlQueryDefinition> Build(SqlTableDetail table)
 		{
 			var lookup = buildLookup(table);
 
 			return _templates
-				.Where(t => t.AppliesTo(table))
+				.Where(λ => λ.AppliesTo(table))
 				.Select(t => Apply(t, table, lookup))
 				.ToList();
 		} 
 
-		SqlQueryDefinition Apply(SqlQueryTemplate template, SqlTableDetail table, Lookup lookup)
+		SqlQueryDefinition Apply(ISqlQueryTemplate template, SqlTableDetail table, Lookup lookup)
 		{
 			var def = new SqlQueryDefinition();
 			def.GroupName = table.Name;
@@ -48,7 +52,7 @@ namespace Aurum.SQL
 
 			def.Name = replace(template.QueryName??template.Name, lookup);
 			var query = replace(template.QueryText, lookup);
-			def.Query = parse(query, table.ColumnInfo);
+			def.Query = parse(query, table.Columns);
 
 			return def;
 		}

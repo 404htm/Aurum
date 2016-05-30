@@ -48,12 +48,15 @@
     <Compile Include="SqlParameterInfo.cs" />
     <Compile Include="SqlQueryDefinition.cs" />
     <Compile Include="SqlQueryManager.cs" />
-    <Compile Include="SqlQueryTemplate.cs" />
+    <Compile Include="Templates\ISqlQueryTemplate.cs" />
+    <Compile Include="Templates\SqlQueryTemplate.cs" />
+    <Compile Include="Templates\SqlQueryTemplateData.cs" />
+    <Compile Include="Templates\SqlTemplateHydrator.cs" />
     <Compile Include="SqlSchemaReader.cs" />
     <Compile Include="SqlTableInfo.cs" />
     <Compile Include="SqlTableDetail.cs" />
-    <Compile Include="TemplateBuilder.cs" />
-    <Compile Include="TemplateMaterializer.cs" />
+    <Compile Include="Templates\TemplateBuilder.cs" />
+    <Compile Include="Templates\TemplateMaterializer.cs" />
     <Compile Include="SqlValidator.cs" />
   </ItemGroup>
   <ItemGroup>

@@ -16,9 +16,9 @@ namespace Aurum.SQL
 
 		public TemplateBuilder(SqlTableDetail tableInfo)
 		{
-			_columns = tableInfo.ColumnInfo.Select(c => $"[{c.Name}]").Aggregate((a, b) => $"{a}, {b}");
+			_columns = tableInfo.Columns.Select(c => $"[{c.Name}]").Aggregate((a, b) => $"{a}, {b}");
 			_tableInfo = tableInfo;
-			_identity = tableInfo.ColumnInfo
+			_identity = tableInfo.Columns
 				.Where(c => c.Identity)
 				.Select(c => $"[{c.Name}] = @{c.Name}")
 				.Aggregate((a, b) => $"{a} AND {b}");
@@ -33,7 +33,7 @@ namespace Aurum.SQL
 
 		public string BuildGetByNameQuery()
 		{
-			if (!_tableInfo.ColumnInfo.Any(c => c.Name.ToLower() == "name")) return null;
+			if (!_tableInfo.Columns.Any(c => c.Name.ToLower() == "name")) return null;
 			var query = $"SELECT {_columns} FROM [{_tableInfo.Schema}].[{_tableInfo.Name}] WHERE (name = @name);";
 			return query;
 		}
@@ -41,7 +41,7 @@ namespace Aurum.SQL
 		public string BuildGetActiveQuery()
 		{
 			//TODO: Skip/Take
-			if (!_tableInfo.ColumnInfo.Any(c => c.Name.ToLower() == "active")) return null;
+			if (!_tableInfo.Columns.Any(c => c.Name.ToLower() == "active")) return null;
 			var query = $"SELECT {_columns} FROM [{_tableInfo.Schema}].[{_tableInfo.Name}] WHERE active;";
 			return query;
 		}

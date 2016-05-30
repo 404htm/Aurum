@@ -53,8 +53,8 @@ namespace Aurum.SQL.Tests
 
 			using (var reader = new SqlSchemaReader(_cstr_db))
 			{
-				customer_columns = reader.GetTableDetail(new SqlTableInfo { Schema = "dbo", Name = "customer" }).ColumnInfo;
-				order_columns = reader.GetTableDetail(new SqlTableInfo { Schema = "dbo", Name = "order" }).ColumnInfo;
+				customer_columns = reader.GetTableDetail(new SqlTableInfo { Schema = "dbo", Name = "customer" }).Columns;
+				order_columns = reader.GetTableDetail(new SqlTableInfo { Schema = "dbo", Name = "order" }).Columns;
 			}
 
 			Assert.IsTrue(customer_columns.Any());
