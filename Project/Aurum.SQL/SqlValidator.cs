@@ -8,7 +8,7 @@ using System.Data;
 
 namespace Aurum.SQL
 {
-	public class SqlValidator : IDisposable
+	public class SqlValidator : IDisposable, ISqlValidator
 	{
 		SqlConnection _cnn;
 		const int COMPILER_ERROR_CODE = 11501;

@@ -42,6 +42,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ISqlSchemaReader.cs" />
+    <Compile Include="ISqlValidator.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Resources.cs" />
     <Compile Include="SqlColumnInfo.cs" />
@@ -49,6 +51,7 @@
     <Compile Include="SqlQueryDefinition.cs" />
     <Compile Include="SqlQueryManager.cs" />
     <Compile Include="Templates\ISqlQueryTemplate.cs" />
+    <Compile Include="Templates\ISqlQueryTemplateHydrator.cs" />
     <Compile Include="Templates\SqlQueryTemplate.cs" />
     <Compile Include="Templates\SqlQueryTemplateData.cs" />
     <Compile Include="Templates\SqlTemplateHydrator.cs" />

@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace Aurum.SQL
 {
-	public class SqlSchemaReader : IDisposable
+	public class SqlSchemaReader : IDisposable, ISqlSchemaReader
 	{
 		SqlConnection _cnn;
 

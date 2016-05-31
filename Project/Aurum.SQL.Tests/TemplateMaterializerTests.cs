@@ -1,14 +1,12 @@
-﻿using System;
+﻿using Aurum.SQL.Templates;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Collections.Generic;
 using System.Linq;
-using Aurum.SQL.Templates;
-using Microsoft.QualityTools.Testing.Fakes;
 
 namespace Aurum.SQL.Tests
 {
 	[TestClass]
-	public class TemplateMaterialzerTests
+	public class TemplateMaterializerTests
 	{
 		[TestInitialize]
 		public void Init()
