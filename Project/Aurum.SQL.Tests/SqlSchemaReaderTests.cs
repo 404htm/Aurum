@@ -2,12 +2,14 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Linq;
 using System.Collections.Generic;
+using Ninject;
 
 namespace Aurum.SQL.Tests
 {
 	[TestClass]
 	public class SqlSchemaReaderTests
 	{
+		
 		string _cstr_db;
 
 		[TestInitialize]
