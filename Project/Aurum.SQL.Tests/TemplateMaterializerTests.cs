@@ -1,5 +1,7 @@
 ﻿using Aurum.SQL.Templates;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Moq;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -17,13 +19,12 @@ namespace Aurum.SQL.Tests
 		#region Stubs
 		private ISqlQueryTemplate StubTemplate_SelectById()
 		{
-			return new Aurum.SQL.Templates.Fakes.StubISqlQueryTemplate()
-			{
-				NameGet = () => "SelectById",
-				IsDestructiveGet = () => false,
-				QueryTextGet = () => "SELECT ${*|c=>[c]|, } FROM [{schema}].[{table}] WHERE (${identity|c=>[c] = @c| AND })",
-				AppliesToGet = () => (t) => t.Columns.Any(c => c.Identity)
-			};
+			var mock =  new Mock<ISqlQueryTemplate>();
+			mock.Setup(λ => λ.Name).Returns("SelectById");
+			mock.Setup(λ => λ.IsDestructive).Returns(false);
+			mock.Setup(λ => λ.QueryText).Returns("SELECT ${*|c=>[c]|, } FROM [{schema}].[{table}] WHERE (${identity|c=>[c] = @c| AND })");
+			mock.Setup(λ => λ.AppliesTo).Returns(() => t => t.Columns.Any(c => c.Identity));
+			return mock.Object;
 		}
 
 		private SqlTableDetail StubTable_SingleId()
