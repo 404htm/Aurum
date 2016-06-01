@@ -22,10 +22,10 @@ namespace Aurum.SQL.Tests.IntegrationTests
 			Context = testContext;
 
 			IOC = new StandardKernel();
-			IOC.Bind<ISqlSchemaReader>().ToMethod(c => new SqlSchemaReader(TestHelpers.GetTestConnection()));
-			IOC.Bind<ISqlValidator>().ToMethod(c => new SqlValidator(TestHelpers.GetTestConnection()));
 			IOC.Bind<IParserFactory>().To<ParserFactory>();
 			IOC.Bind<ISqlQueryTemplateHydrator>().To<SqlQueryTemplateHydrator>();
+			IOC.Bind<ISqlValidator>().ToMethod(c => new SqlValidator(TestHelpers.GetTestConnection()));
+			IOC.Bind<ISqlSchemaReader>().ToMethod(c => new SqlSchemaReader(TestHelpers.GetTestConnection()));
 			IOC.Bind<IList<SqlQueryTemplateData>>().ToMethod(c => StoreableSet<SqlQueryTemplateData>.Load(Resources.GetDefaultTemplates()));
 		}
 
@@ -58,6 +58,7 @@ namespace Aurum.SQL.Tests.IntegrationTests
 			int query_count = query_sets.SelectMany(q => q.Queries).Count();
 			int failed_count = 0;
 
+			//Step 4: Validate SQL
 			using (var validator = IOC.Get<ISqlValidator>())
 			{
 				foreach (var table in query_sets) foreach (var query in table.Queries)
@@ -74,7 +75,6 @@ namespace Aurum.SQL.Tests.IntegrationTests
 				}
 				Assert.IsTrue(failed_count == 0, $"{failed_count}/{query_count} Queries Failed Validation - See output for details.");
 			}
-
 		}
 	}
 }

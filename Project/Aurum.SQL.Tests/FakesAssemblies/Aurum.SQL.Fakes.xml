@@ -610,9 +610,6 @@
         <member name="M:Aurum.SQL.Fakes.StubISqlSchemaReader.#ctor">
             <summary>Initializes a new instance of type StubISqlSchemaReader</summary>
         </member>
-        <member name="M:Aurum.SQL.Fakes.StubISqlSchemaReader.Aurum#SQL#ISqlSchemaReader#Dispose">
-            <summary>Sets the stub of ISqlSchemaReader.Dispose()</summary>
-        </member>
         <member name="M:Aurum.SQL.Fakes.StubISqlSchemaReader.Aurum#SQL#ISqlSchemaReader#GetTableDetail(Aurum.SQL.SqlTableInfo)">
             <summary>Sets the stub of ISqlSchemaReader.GetTableDetail(SqlTableInfo tableInfo)</summary>
         </member>
@@ -623,9 +620,6 @@
             <summary>Sets the stub of ISqlSchemaReader.GetViews(String schema)</summary>
         </member>
         <member name="F:Aurum.SQL.Fakes.StubISqlSchemaReader.Dispose">
-            <summary>Sets the stub of ISqlSchemaReader.Dispose()</summary>
-        </member>
-        <member name="F:Aurum.SQL.Fakes.StubISqlSchemaReader.Dispose01">
             <summary>Sets the stub of IDisposable.Dispose()</summary>
         </member>
         <member name="F:Aurum.SQL.Fakes.StubISqlSchemaReader.GetTableDetailSqlTableInfo">
