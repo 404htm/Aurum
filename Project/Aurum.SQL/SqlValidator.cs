@@ -24,6 +24,7 @@ namespace Aurum.SQL
 		/// </summary>
 		/// <param name="sql"></param>
 		/// <returns></returns>
+		[System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Security", "CA2100:Review SQL queries for security vulnerabilities")]
 		public bool ParseSQLBasic(string sql)
 		{
 			var query = new StringBuilder();
@@ -38,7 +39,7 @@ namespace Aurum.SQL
 				command.ExecuteNonQuery();
 				return true;
 			}
-			catch(SqlException ex)
+			catch(SqlException)
 			{
 				return false;
 			}

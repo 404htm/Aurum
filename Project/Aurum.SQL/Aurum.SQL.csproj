@@ -47,6 +47,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Resources.cs" />
     <Compile Include="SqlColumnInfo.cs" />
+    <Compile Include="SqlLoader.cs" />
     <Compile Include="SqlParameterInfo.cs" />
     <Compile Include="SqlQueryDefinition.cs" />
     <Compile Include="SqlQueryManager.cs" />

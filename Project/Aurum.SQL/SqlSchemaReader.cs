@@ -77,6 +77,7 @@ namespace Aurum.SQL
 			reader.Close();
 		}
 
+		[System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Security", "CA2100:Review SQL queries for security vulnerabilities")]
 		private IEnumerable<SqlTableInfo> runInfoSchemaQuery(string schema, string type)
 		{
 			string query = "SELECT [TABLE_SCHEMA], [TABLE_NAME] FROM information_schema.tables WHERE TABLE_TYPE = @type";

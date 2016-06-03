@@ -8,7 +8,7 @@ namespace Aurum.Core.Parser
 {
 	public class ParserFactory : IParserFactory
 	{
-		IExpressionParser<T> IParserFactory.Create<T>()
+		public IExpressionParser<T> Create<T>()
 		{
 			var result = new ExpressionParser<T>();
 			result.Register(typeof(Queryable));

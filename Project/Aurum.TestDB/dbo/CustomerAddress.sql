@@ -5,6 +5,6 @@
     [Line1] VARCHAR(200) NULL, 
     [Line2] VARCHAR(200) NULL, 
     [City] VARCHAR(100) NULL, 
-    [State] VARCHAR(2) NULL, 
+    [State] CHAR(2) NULL, 
     [Zip] VARCHAR(5) NULL
 )
