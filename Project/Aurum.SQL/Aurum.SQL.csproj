@@ -51,6 +51,7 @@
     <Compile Include="SqlParameterInfo.cs" />
     <Compile Include="SqlQueryDefinition.cs" />
     <Compile Include="SqlQueryManager.cs" />
+    <Compile Include="SqlTypeMap.cs" />
     <Compile Include="Templates\ISqlQueryTemplate.cs" />
     <Compile Include="Templates\ISqlQueryTemplateHydrator.cs" />
     <Compile Include="Templates\SqlQueryTemplate.cs" />
