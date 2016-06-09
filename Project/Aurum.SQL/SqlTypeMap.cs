@@ -4,7 +4,7 @@ using System.Data;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-
+using System.Xml.Linq;
 using DbTypeLookup = System.Collections.Generic.Dictionary<System.Data.SqlDbType, System.Type>;
 
 namespace Aurum.SQL
@@ -38,8 +38,23 @@ namespace Aurum.SQL
 				{SqlDbType.Int,             typeof(int) },
 				{SqlDbType.Money,           typeof(decimal) },
 				{SqlDbType.NChar,           typeof(string) },
-				{SqlDbType.NText,           typeof(string)},
-				{SqlDbType.NVarChar,        typeof(string)}
+				{SqlDbType.NText,           typeof(string) },
+				{SqlDbType.NVarChar,        typeof(string) },
+				{SqlDbType.Real,            typeof(Single) },
+				{SqlDbType.SmallDateTime,   typeof(DateTime) },
+				{SqlDbType.SmallInt,        typeof(Int16) },
+				{SqlDbType.SmallMoney,      typeof(Decimal) },
+				{SqlDbType.Structured,      null },
+				{SqlDbType.Text,            typeof(string) },
+				{SqlDbType.Time,            typeof(DateTime) },
+				{SqlDbType.Timestamp,       typeof(byte[]) },
+				{SqlDbType.TinyInt,         typeof(byte) },
+				{SqlDbType.Udt,             null },
+				{SqlDbType.UniqueIdentifier,typeof(Guid) },
+				{SqlDbType.VarBinary,       typeof(byte[]) },
+				{SqlDbType.VarChar,         typeof(string) },
+				{SqlDbType.Variant,         typeof(object) },
+				{SqlDbType.Xml,             typeof(XElement) }
 			};
 		}
 
