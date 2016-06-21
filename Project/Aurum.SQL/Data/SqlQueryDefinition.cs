@@ -18,5 +18,6 @@ namespace Aurum.SQL
 
 		[DataMember] public string Query { get; set; }
 
+
 	}
 }

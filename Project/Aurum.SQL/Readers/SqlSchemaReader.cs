@@ -93,6 +93,8 @@ namespace Aurum.SQL
 			reader.Close();
 		}
 
+		
+
 		#region IDisposable Support
 		private bool disposedValue = false;
 

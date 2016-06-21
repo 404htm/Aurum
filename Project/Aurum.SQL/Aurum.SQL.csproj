@@ -42,27 +42,26 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="ISqlSchemaReader.cs" />
-    <Compile Include="ISqlValidator.cs" />
+    <Compile Include="Readers\ISqlSchemaReader.cs" />
+    <Compile Include="Readers\ISqlValidator.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Resources.cs" />
-    <Compile Include="SqlColumnInfo.cs" />
-    <Compile Include="SqlLoader.cs" />
-    <Compile Include="SqlParameterInfo.cs" />
-    <Compile Include="SqlQueryDefinition.cs" />
-    <Compile Include="SqlQueryManager.cs" />
-    <Compile Include="SqlTypeMap.cs" />
+    <Compile Include="Helpers\Resources.cs" />
+    <Compile Include="Data\SqlColumnInfo.cs" />
+    <Compile Include="Data\SqlParameterInfo.cs" />
+    <Compile Include="Data\SqlQueryDefinition.cs" />
+    <Compile Include="Data\SqlQueryDetail.cs" />
+    <Compile Include="Readers\SqlTypeMap.cs" />
     <Compile Include="Templates\ISqlQueryTemplate.cs" />
     <Compile Include="Templates\ISqlQueryTemplateHydrator.cs" />
     <Compile Include="Templates\SqlQueryTemplate.cs" />
-    <Compile Include="Templates\SqlQueryTemplateData.cs" />
+    <Compile Include="Data\SqlQueryTemplateData.cs" />
     <Compile Include="Templates\SqlTemplateHydrator.cs" />
-    <Compile Include="SqlSchemaReader.cs" />
-    <Compile Include="SqlTableInfo.cs" />
-    <Compile Include="SqlTableDetail.cs" />
+    <Compile Include="Readers\SqlSchemaReader.cs" />
+    <Compile Include="Data\SqlTableInfo.cs" />
+    <Compile Include="Data\SqlTableDetail.cs" />
     <Compile Include="Templates\TemplateBuilder.cs" />
     <Compile Include="Templates\TemplateMaterializer.cs" />
-    <Compile Include="SqlValidator.cs" />
+    <Compile Include="Readers\SqlValidator.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Aurum.Core\Aurum.Core.csproj">

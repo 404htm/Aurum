@@ -17,12 +17,12 @@ namespace Aurum.Core
 
 		[DataMember] public Guid Id { get; set; }
 		[DataMember] public string Name { get; set; }
+		[DataMember] public string Description { get; set; }
 		[DataMember] public string GroupName { get; set; }
 		[DataMember] public bool IsModified { get; set; }
 		[DataMember] public SourceType SourceType { get; set; }
 		[DataMember] public string SourceName { get; set; }
-		[DataMember] public TypeDefinition InputType { get; private set; }
-		[DataMember] public TypeDefinition OutputType { get; private set; }
+
 
 	}
 }
