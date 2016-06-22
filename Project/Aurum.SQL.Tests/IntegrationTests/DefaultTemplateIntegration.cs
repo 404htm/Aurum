@@ -7,6 +7,7 @@ using Aurum.Core;
 using Aurum.SQL.Templates;
 using Aurum.Core.Parser;
 using Ninject;
+using Aurum.SQL.Data;
 
 namespace Aurum.SQL.Tests.IntegrationTests
 {

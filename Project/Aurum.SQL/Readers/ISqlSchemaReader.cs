@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Aurum.SQL.Data;
+using System;
 using System.Collections.Generic;
 
 namespace Aurum.SQL

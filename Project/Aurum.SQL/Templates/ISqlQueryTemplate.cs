@@ -1,8 +1,8 @@
 ﻿namespace Aurum.SQL.Templates
 {
 
-	using Filter = System.Func<Aurum.SQL.SqlTableDetail, bool>;
-	using Query = System.Func<Aurum.SQL.SqlTableDetail, string>;
+	using Filter = System.Func<Aurum.SQL.Data.SqlTableDetail, bool>;
+	using Query = System.Func<Aurum.SQL.Data.SqlTableDetail, string>;
 
 	public interface ISqlQueryTemplate
 	{

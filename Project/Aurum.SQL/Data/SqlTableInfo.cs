@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Aurum.SQL
+namespace Aurum.SQL.Data
 {
 	public class SqlTableInfo
 	{

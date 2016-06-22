@@ -1,4 +1,5 @@
-﻿using Aurum.SQL.Templates;
+﻿using Aurum.SQL.Data;
+using Aurum.SQL.Templates;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
 using System;

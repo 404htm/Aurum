@@ -8,7 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 
 
-namespace Aurum.SQL.Templates
+namespace Aurum.SQL.Data
 {
 	[DataContract(Name = "SqlQueryTemplate")]
 	public class SqlQueryTemplateData

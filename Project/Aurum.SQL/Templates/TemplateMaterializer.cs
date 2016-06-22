@@ -1,4 +1,4 @@
-﻿using Aurum.Core.Parser;
+﻿using Aurum.SQL.Data;
 using Aurum.SQL.Templates;
 using System;
 using System.Collections.Generic;
@@ -6,8 +6,8 @@ using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
 
-using filter = System.Func<Aurum.SQL.SqlColumnInfo, bool>;
-using Lookup = System.Collections.Generic.Dictionary<string, string>;
+using filter = System.Func<Aurum.SQL.Data.SqlColumnInfo, bool>;
+using lookup = System.Collections.Generic.Dictionary<string, string>;
 
 namespace Aurum.SQL
 {
@@ -43,7 +43,7 @@ namespace Aurum.SQL
 				.ToList();
 		} 
 
-		SqlQueryDefinition Apply(ISqlQueryTemplate template, SqlTableDetail table, Lookup lookup)
+		SqlQueryDefinition Apply(ISqlQueryTemplate template, SqlTableDetail table, lookup lookup)
 		{
 			var def = new SqlQueryDefinition();
 			def.GroupName = table.Name;
@@ -57,7 +57,7 @@ namespace Aurum.SQL
 			return def;
 		}
 
-		string replace(string input, Lookup lookup)
+		string replace(string input, lookup lookup)
 		{
 			var sb = new StringBuilder(input);
 			foreach (var set in lookup) sb.Replace(set.Key, set.Value);
@@ -108,7 +108,7 @@ namespace Aurum.SQL
 			return result;
 		}
 
-		Lookup buildLookup(SqlTableDetail table)
+		lookup buildLookup(SqlTableDetail table)
 		{
 			var lookup = new Dictionary<string, string>();
 			lookup["{schema}"] = table.Schema;

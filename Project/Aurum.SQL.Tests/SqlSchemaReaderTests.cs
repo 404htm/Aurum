@@ -3,6 +3,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Linq;
 using System.Collections.Generic;
 using Ninject;
+using Aurum.SQL.Data;
 
 namespace Aurum.SQL.Tests
 {
