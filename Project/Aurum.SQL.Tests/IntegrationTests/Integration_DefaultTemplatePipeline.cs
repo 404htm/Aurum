@@ -8,11 +8,12 @@ using Aurum.SQL.Templates;
 using Aurum.Core.Parser;
 using Ninject;
 using Aurum.SQL.Data;
+using Aurum.SQL.Readers;
 
 namespace Aurum.SQL.Tests.IntegrationTests
 {
 	[TestClass]
-	public class DefaultTemplateIntegration
+	public class Integration_DefaultTemplatePipeline
 	{
 		static StandardKernel IOC;
 		static TestContext Context;
@@ -21,11 +22,11 @@ namespace Aurum.SQL.Tests.IntegrationTests
 		public static void SetupTests(TestContext testContext)
 		{
 			Context = testContext;
-
 			IOC = new StandardKernel();
+
 			IOC.Bind<IParserFactory>().To<ParserFactory>();
 			IOC.Bind<ISqlQueryTemplateHydrator>().To<SqlQueryTemplateHydrator>();
-			IOC.Bind<ISqlValidator>().ToMethod(c => new SqlValidator(TestHelpers.GetTestConnection()));
+			IOC.Bind<ISqlValidator>().ToMethod(c => new SqlQueryReader2012(TestHelpers.GetTestConnection()));
 			IOC.Bind<ISqlSchemaReader>().ToMethod(c => new SqlSchemaReader(TestHelpers.GetTestConnection()));
 			IOC.Bind<IList<SqlQueryTemplateData>>().ToMethod(c => StoreableSet<SqlQueryTemplateData>.Load(Resources.GetDefaultTemplates()));
 		}
@@ -66,7 +67,7 @@ namespace Aurum.SQL.Tests.IntegrationTests
 				{
 					Context.WriteLine($"Validating {table.Table} - {query.Name}: {query.Query}".Escape());
 					IList<System.Data.SqlClient.SqlError> errors;
-					validator.GetParametersAndValidate(query.Query, out errors);
+					validator.Validate(query.Query, out errors);
 
 					if (errors != null)
 					{

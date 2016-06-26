@@ -7,7 +7,6 @@ namespace Aurum.SQL
 {
 	public interface ISqlValidator : IDisposable
 	{
-		IList<SqlParameterInfo> GetParametersAndValidate(string sql, out IList<SqlError> errors);
-		bool ParseSQLBasic(string sql);
+		bool Validate(string query, out IList<SqlError> errors);
 	}
 }

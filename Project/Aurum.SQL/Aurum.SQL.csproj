@@ -42,6 +42,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Queries\SqlQueryMetadataLoader.cs" />
     <Compile Include="Readers\ISqlSchemaReader.cs" />
     <Compile Include="Readers\ISqlValidator.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -61,7 +62,7 @@
     <Compile Include="Data\SqlTableDetail.cs" />
     <Compile Include="Templates\TemplateBuilder.cs" />
     <Compile Include="Templates\TemplateMaterializer.cs" />
-    <Compile Include="Readers\SqlValidator.cs" />
+    <Compile Include="Readers\SqlQueryReader2012.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Aurum.Core\Aurum.Core.csproj">

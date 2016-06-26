@@ -7,44 +7,35 @@ using System.Data.SqlClient;
 using System.Data;
 using Aurum.SQL.Data;
 
-namespace Aurum.SQL
+namespace Aurum.SQL.Readers
 {
-	public class SqlValidator : IDisposable, ISqlValidator
+	/// <summary>Provides Query Metadata for SQL2012 and Newer</summary>
+	public class SqlQueryReader2012 : IDisposable, ISqlValidator
 	{
 		SqlConnection _cnn;
 		const int COMPILER_ERROR_CODE = 11501;
 
-		public SqlValidator(string connectionString)
+		public SqlQueryReader2012(string connectionString)
 		{
 			_cnn = new SqlConnection(connectionString);
 			_cnn.Open();
 		}
 
-		/// <summary>
-		/// Parse SQL for Errors - Does not handle parameters
-		/// </summary>
-		/// <param name="sql"></param>
-		/// <returns></returns>
-		[System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Security", "CA2100:Review SQL queries for security vulnerabilities")]
-		public bool ParseSQLBasic(string sql)
+		public bool Validate(string query, out IList<SqlError> errors)
 		{
-			var query = new StringBuilder();
-			query.AppendLine("SET NOEXEC ON;");
-			query.AppendLine(sql);
-			query.AppendLine("SET NOEXEC OFF;");
-
-			var command = new SqlCommand(query.ToString(), _cnn);
-			command.CommandType = CommandType.Text;
 			try
 			{
-				command.ExecuteNonQuery();
+				var result = runParameterQuery(query);
+				errors = null;
 				return true;
 			}
-			catch(SqlException)
+			catch (SqlException ex)
 			{
+				errors = ex.Errors.Cast<SqlError>().Where(NotCompiler).ToList();
 				return false;
 			}
 		}
+
 
 		public IList<SqlParameterInfo> GetParametersAndValidate(string sql, out IList<SqlError> errors)
 		{
@@ -56,11 +47,13 @@ namespace Aurum.SQL
 			}
 			catch (SqlException ex)
 			{
-				//Eliminate an extraneous compilier error for clarity
-				errors = ex.Errors.Cast<SqlError>().Where(e => e.Number != COMPILER_ERROR_CODE).ToList();
+				errors = ex.Errors.Cast<SqlError>().Where(NotCompiler).ToList();
 				return null;
 			}
 		}
+
+		const string sp_getParameters = "sys.sp_describe_undeclared_parameters";
+		const string sp_getResultSet = "sys.dm_exec_describe_first_result_set";
 
 		private IEnumerable<SqlParameterInfo> runParameterQuery(string sql)
 		{
@@ -83,9 +76,13 @@ namespace Aurum.SQL
 			}
 		}
 
+		private bool NotCompiler(SqlError e) => e.Number != COMPILER_ERROR_CODE;
+		
+
 		#region IDisposable Support
 		private bool disposedValue = false;
 
+		public void Dispose() => Dispose(true);
 		protected virtual void Dispose(bool disposing)
 		{
 			if (!disposedValue)
@@ -93,12 +90,6 @@ namespace Aurum.SQL
 				if (disposing) _cnn.Close();
 				disposedValue = true;
 			}
-		}
-
-
-		public void Dispose()
-		{
-			Dispose(true);
 		}
 		#endregion
 	}
