@@ -75,6 +75,7 @@
     <Compile Include="SqlSchemaReaderTests.cs" />
     <Compile Include="TemplateMaterializerTests.cs" />
     <Compile Include="SqlValidatorTests.cs" />
+    <Compile Include="SQLTestBase.cs" />
     <Compile Include="TestHelpers.cs" />
   </ItemGroup>
   <ItemGroup>

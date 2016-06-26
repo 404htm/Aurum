@@ -14,23 +14,10 @@ using System.Data.SqlClient;
 namespace Aurum.SQL.Tests.IntegrationTests
 {
 	[TestClass]
-	public class Integration_FullPipeline
+	public class Integration_FullPipeline : SQLTestBase
 	{
-		static StandardKernel IOC;
-		static TestContext Context;
-
 		[ClassInitialize]
-		public static void SetupTests(TestContext testContext)
-		{
-			Context = testContext;
-			IOC = new StandardKernel();
-
-			IOC.Bind<IParserFactory>().To<ParserFactory>();
-			IOC.Bind<ISqlQueryTemplateHydrator>().To<SqlQueryTemplateHydrator>();
-			IOC.Bind<ISqlValidator>().ToMethod(c => new SqlQueryReader2012(TestHelpers.GetTestConnection()));
-			IOC.Bind<ISqlSchemaReader>().ToMethod(c => new SqlSchemaReader(TestHelpers.GetTestConnection()));
-			IOC.Bind<IList<SqlQueryTemplateData>>().ToMethod(c => StoreableSet<SqlQueryTemplateData>.Load(Resources.GetDefaultTemplates()));
-		}
+		public static void SetupTests(TestContext testContext) => Context = testContext;
 
 		[TestMethod]
 		public void Integration_AllTables_DefaultTemplates_FullPipeline()
