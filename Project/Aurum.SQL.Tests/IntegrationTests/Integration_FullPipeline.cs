@@ -9,11 +9,12 @@ using Aurum.Core.Parser;
 using Ninject;
 using Aurum.SQL.Data;
 using Aurum.SQL.Readers;
+using System.Data.SqlClient;
 
 namespace Aurum.SQL.Tests.IntegrationTests
 {
 	[TestClass]
-	public class Integration_DefaultTemplatePipeline
+	public class Integration_FullPipeline
 	{
 		static StandardKernel IOC;
 		static TestContext Context;
@@ -32,41 +33,58 @@ namespace Aurum.SQL.Tests.IntegrationTests
 		}
 
 		[TestMethod]
-		public void Integration_DefaultTemplates()
+		public void Integration_AllTables_DefaultTemplates_FullPipeline()
 		{
-			//Step 1: Read metadata from test database
+			var tableMetadata = ReadTableMetadataFromTestDatabase();
+			var templates = ReadAndHydrateDefaultTemplates();
+			var queryDefinitions = MaterializeTemplates(templates, tableMetadata);
+			AssertGeneratedQueryValidity(queryDefinitions);
+		}
+
+		private IList<SqlTableDetail> ReadTableMetadataFromTestDatabase()
+		{
 			IList<SqlTableDetail> details;
 			using (var reader = IOC.Get<ISqlSchemaReader>())
 			{
 				var tables = reader.GetTables();
-				details = tables.Select(t => reader.GetTableDetail(t)).ToList();
+				details = tables.Select(reader.GetTableDetail).ToList();
 
 				Context.WriteLine($"Integration Results: {tables.Count()} tables found.");
 				Assert.IsTrue(tables.Any(), "Tables not retrieved from connection");
 				Assert.IsTrue(details.Any(), "Details not retrieved from connection");
 			}
+			return details;
+		}
 
-			//Step 2: Read default queries and parse
+		private List<ISqlQueryTemplate> ReadAndHydrateDefaultTemplates()
+		{
 			var rawTemplates = IOC.Get<IList<SqlQueryTemplateData>>();
 			Assert.IsTrue(rawTemplates.Any(), "Templates could not be loaded from assembly resources");
 
 			var hydrator = IOC.Get<ISqlQueryTemplateHydrator>();
 			var templates = rawTemplates.Select(hydrator.Hydrate).ToList();
+			return templates;
+		}
 
-			//Step 3: Materialize Templates
+		private List<SqlQueryDefinition> MaterializeTemplates(IList<ISqlQueryTemplate> templates, IList<SqlTableDetail> tables)
+		{
 			var builder = new TemplateMaterializer(templates);
-			var query_sets = details.Select(λ => new { Table = λ.Name, Queries = builder.Build(λ) }).ToList();
+			var query_sets = tables.SelectMany(builder.Build).ToList();
+			return query_sets;
+		}
 
-			int query_count = query_sets.SelectMany(q => q.Queries).Count();
+		private void AssertGeneratedQueryValidity(List<SqlQueryDefinition> queryDefinitions)
+		{
+			int query_count = queryDefinitions.Count();
 			int failed_count = 0;
 
-			//Step 4: Validate SQL
 			using (var validator = IOC.Get<ISqlValidator>())
 			{
-				foreach (var table in query_sets) foreach (var query in table.Queries)
+				foreach (var query in queryDefinitions)
 				{
-					Context.WriteLine($"Validating {table.Table} - {query.Name}: {query.Query}".Escape());
-					IList<System.Data.SqlClient.SqlError> errors;
+					IList<SqlError> errors;
+
+					Context.WriteLine($"Validating {query.SourceName} - {query.Name}: {query.Query}".Escape());
 					validator.Validate(query.Query, out errors);
 
 					if (errors != null)
@@ -78,5 +96,6 @@ namespace Aurum.SQL.Tests.IntegrationTests
 				Assert.IsTrue(failed_count == 0, $"{failed_count}/{query_count} Queries Failed Validation - See output for details.");
 			}
 		}
+
 	}
 }
