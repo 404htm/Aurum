@@ -1,4 +1,5 @@
-﻿using Aurum.SQL.Data;
+﻿using Aurum.Core;
+using Aurum.SQL.Data;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -19,7 +20,7 @@ namespace Aurum.SQL.Queries
 		public SqlQueryDetail LoadQueryDetails(SqlQueryDefinition queryDefinition)
 		{
 			var detail = SqlQueryDetail.MapFrom(queryDefinition);
-			
+			//detail.InputType = new TypeDefinition { Name = queryDefinition.Name, }
 			return detail;
 		}
 	}

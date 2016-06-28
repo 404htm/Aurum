@@ -16,8 +16,7 @@ namespace Aurum.SQL.Tests.IntegrationTests
 	[TestClass]
 	public class Integration_FullPipeline : SQLTestBase
 	{
-		[ClassInitialize]
-		public static void SetupTests(TestContext testContext) => Context = testContext;
+		[ClassInitialize] public static void SetupTests(TestContext testContext) => Context = testContext;
 
 		[TestMethod]
 		public void Integration_AllTables_DefaultTemplates_FullPipeline()

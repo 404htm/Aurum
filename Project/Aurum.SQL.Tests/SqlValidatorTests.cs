@@ -40,7 +40,7 @@ namespace Aurum.SQL.Tests
 			using (var validator = new SqlQueryReader2012(_cstr_db))
 			{
 				IList<SqlError> errors;
-				var Parameters = validator.GetParametersAndValidate("select * from Customer where FirstName = @name;", out errors);
+				var Parameters = validator.GetParameters("select * from Customer where FirstName = @name;", out errors);
 
 				Assert.IsNull(errors);
 				Assert.IsTrue(Parameters.Any());
@@ -54,7 +54,7 @@ namespace Aurum.SQL.Tests
 			using (var validator = new SqlQueryReader2012(_cstr_db))
 			{
 				IList<SqlError> errors;
-				var Parameters = validator.GetParametersAndValidate("select * from NotARealTable where FirstName = @name;", out errors);
+				var Parameters = validator.GetParameters("select * from NotARealTable where FirstName = @name;", out errors);
 
 				Assert.IsNotNull(errors);
 				Assert.AreEqual(errors.Count(), 1);
