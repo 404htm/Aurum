@@ -71,7 +71,7 @@
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
       <DependentUpon>Settings.settings</DependentUpon>
     </Compile>
-    <Compile Include="Readers\SqlQueryReader.cs" />
+    <Compile Include="Readers\SqlQueryReader2012Tests.cs" />
     <Compile Include="SqlSchemaReaderTests.cs" />
     <Compile Include="TemplateMaterializerTests.cs" />
     <Compile Include="SqlValidatorTests.cs" />

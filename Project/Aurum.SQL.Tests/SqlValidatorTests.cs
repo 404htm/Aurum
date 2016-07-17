@@ -34,35 +34,7 @@ namespace Aurum.SQL.Tests
 
 		//}
 
-		[TestMethod]
-		public void TestGetParametersAndValidate_GoodQuery()
-		{
-			using (var validator = new SqlQueryReader2012(_cstr_db))
-			{
-				IList<SqlError> errors;
-				var Parameters = validator.GetParameters("select * from Customer where FirstName = @name;", out errors);
 
-				Assert.IsNull(errors);
-				Assert.IsTrue(Parameters.Any());
-				Assert.IsTrue(Parameters.Any(p => p.Name == "@name"));
-			}
-		}
-
-		[TestMethod]
-		public void TestGetParametersAndValidate_BadQuery()
-		{
-			using (var validator = new SqlQueryReader2012(_cstr_db))
-			{
-				IList<SqlError> errors;
-				var Parameters = validator.GetParameters("select * from NotARealTable where FirstName = @name;", out errors);
-
-				Assert.IsNotNull(errors);
-				Assert.AreEqual(errors.Count(), 1);
-				Assert.IsNull(Parameters);
-
-				foreach (var error in errors) Debug.WriteLine(error);
-			}
-		}
 
 	}
 }

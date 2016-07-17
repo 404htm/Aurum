@@ -17,7 +17,7 @@ namespace Aurum.SQL
 
 		static SqlTypeMap()
 		{
-			_sqlDbTypeLookup = BuildDbTypeLookup();
+			_sqlDbTypeLookup = BuildDbTypeLookup(); 
 		}
 
 		static DbTypeLookup BuildDbTypeLookup()
@@ -27,6 +27,8 @@ namespace Aurum.SQL
 				{SqlDbType.BigInt,          typeof(long) },
 				{SqlDbType.Binary,          typeof(byte[]) },
 				{SqlDbType.Bit,             typeof(bool) },
+				{SqlDbType.NVarChar,        typeof(string) },
+				{SqlDbType.VarChar,         typeof(string) },
 				{SqlDbType.Char,            typeof(string) },
 				{SqlDbType.Date,            typeof(DateTime) },
 				{SqlDbType.DateTime,        typeof(DateTime) },
@@ -39,7 +41,6 @@ namespace Aurum.SQL
 				{SqlDbType.Money,           typeof(decimal) },
 				{SqlDbType.NChar,           typeof(string) },
 				{SqlDbType.NText,           typeof(string) },
-				{SqlDbType.NVarChar,        typeof(string) },
 				{SqlDbType.Real,            typeof(Single) },
 				{SqlDbType.SmallDateTime,   typeof(DateTime) },
 				{SqlDbType.SmallInt,        typeof(Int16) },
@@ -52,11 +53,11 @@ namespace Aurum.SQL
 				{SqlDbType.Udt,             null },
 				{SqlDbType.UniqueIdentifier,typeof(Guid) },
 				{SqlDbType.VarBinary,       typeof(byte[]) },
-				{SqlDbType.VarChar,         typeof(string) },
 				{SqlDbType.Variant,         typeof(object) },
 				{SqlDbType.Xml,             typeof(XElement) }
 			};
 		}
 
+		public static SqlDbType Get(Type type) => _sqlDbTypeLookup.Where(l => l.Value == type).Select(l => l.Key).FirstOrDefault();
 	}
 }

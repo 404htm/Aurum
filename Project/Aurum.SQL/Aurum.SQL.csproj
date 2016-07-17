@@ -42,6 +42,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Helpers\SqlHelpers.cs" />
     <Compile Include="Queries\SqlQueryMetadataLoader.cs" />
     <Compile Include="Readers\ISqlSchemaReader.cs" />
     <Compile Include="Readers\ISqlValidator.cs" />

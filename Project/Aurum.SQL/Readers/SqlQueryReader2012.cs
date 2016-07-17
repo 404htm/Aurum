@@ -7,17 +7,14 @@ using System.Data.SqlClient;
 using System.Data;
 using Aurum.SQL.Data;
 
+using static Aurum.SQL.Helpers.SqlHelpers;
+
 namespace Aurum.SQL.Readers
 {
 	/// <summary>Provides Query Metadata for SQL2012 and Newer</summary>
 	public class SqlQueryReader2012 : IDisposable, ISqlValidator
 	{
 		SqlConnection _cnn;
-		const int COMPILER_ERROR_CODE = 11501;
-
-		private bool NotCompiler(SqlError e) => e.Number != COMPILER_ERROR_CODE;
-		const string sp_getParameters = "sys.sp_describe_undeclared_parameters";
-		const string sp_getResultSet = "sys.dm_exec_describe_first_result_set";
 
 		public SqlQueryReader2012(string connectionString)
 		{
@@ -27,7 +24,8 @@ namespace Aurum.SQL.Readers
 
 		public bool Validate(string query, out IList<SqlError> errors)
 		{
-			return RunAndGetErrors(() => RunParameterQuery(query), out errors) != null;
+			var result = RunAndGetErrors(() => RunParameterQuery(query).ToList(), out errors);
+			return errors == null;
 		}
 
 		public IList<SqlParameterInfo> GetParameters(string query, out IList<SqlError> errors)
@@ -40,28 +38,11 @@ namespace Aurum.SQL.Readers
 			return RunAndGetErrors(() => RunResultSetQuery(query).ToList(), out errors);
 		}
 
-
-
-		private T RunAndGetErrors<T>(Func<T> operation, out IList<SqlError> errors)
+		private IEnumerable<SqlParameterInfo> RunParameterQuery(string sql)
 		{
-			try
-			{
-				var result = operation();
-				errors = null;
-				return result;
-			}
-			catch (SqlException ex)
-			{
-				errors = ex.Errors.Cast<SqlError>().Where(NotCompiler).ToList();
-				return default(T);
-			}
-		}
-
-		private IEnumerable<SqlParameterInfo> RunResultSetQuery(string sql)
-		{
-			var command = new SqlCommand(sp_getResultSet, _cnn);
-			command.CommandType = CommandType.StoredProcedure;
-			command.Parameters.AddWithValue("tsql", sql);
+			var query = "sys.sp_describe_undeclared_parameters";
+			var command = new SqlCommand(query, _cnn) { CommandType = CommandType.StoredProcedure }
+				.AddParam("tsql", sql);
 
 			using (var reader = command.ExecuteReader())
 			{
@@ -76,19 +57,21 @@ namespace Aurum.SQL.Readers
 			}
 		}
 
-		private IEnumerable<SqlParameterInfo> RunParameterQuery(string sql)
+		private IEnumerable<SqlParameterInfo> RunResultSetQuery(string sql)
 		{
-			var command = new SqlCommand(sp_getParameters, _cnn);
-			command.CommandType = CommandType.StoredProcedure;
-			command.Parameters.AddWithValue("tsql", sql);
+			var query = "sys.dm_exec_describe_first_result_set";
+			var command = new SqlCommand(query, _cnn) {CommandType = CommandType.TableDirect}
+				.AddParam("tsql", sql)
+				.AddParam("params", (string)null)
+				.AddParam("browse_information_mode", (Int16)1);
 
 			using (var reader = command.ExecuteReader())
 			{
 				while (reader.Read()) yield return new SqlParameterInfo
-					{
-						Name = Convert.ToString(reader["name"]),
-						ColumnId = Convert.ToInt32(reader["parameter_ordinal"]),
-						SQLType = Convert.ToString(reader["suggested_system_type_name"])
+				{
+					Name = Convert.ToString(reader["name"]),
+					ColumnId = Convert.ToInt32(reader["parameter_ordinal"]),
+					SQLType = Convert.ToString(reader["suggested_system_type_name"])
 					//Nullable = Convert.ToBoolean(reader["is_nullable"]),
 					//Identity = Convert.ToBoolean(reader["is_identity"])
 				};
