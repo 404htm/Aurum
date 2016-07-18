@@ -33,9 +33,9 @@ namespace Aurum.SQL.Readers
 			return RunAndGetErrors(() => RunParameterQuery(query).ToList(), out errors);
 		}
 
-		public IList<SqlParameterInfo> GetResultSet(string query, out IList<SqlError> errors)
+		public IList<SqlParameterInfo> GetResultSet(string query, out IList<SqlError> errors, params string[] parameters)
 		{
-			return RunAndGetErrors(() => RunResultSetQuery(query).ToList(), out errors);
+			return RunAndGetErrors(() => RunResultSetQuery(query, parameters).ToList(), out errors);
 		}
 
 		private IEnumerable<SqlParameterInfo> RunParameterQuery(string sql)
@@ -57,21 +57,23 @@ namespace Aurum.SQL.Readers
 			}
 		}
 
-		private IEnumerable<SqlParameterInfo> RunResultSetQuery(string sql)
+		private IEnumerable<SqlParameterInfo> RunResultSetQuery(string sql, params string[] parameters)
 		{
-			var query = "sys.dm_exec_describe_first_result_set";
-			var command = new SqlCommand(query, _cnn) {CommandType = CommandType.TableDirect}
+			var query = "select * from sys.dm_exec_describe_first_result_set(@tsql,  @params,  @include_browse_information)";
+			var paramStr = string.Join(", ", parameters);
+
+			var command = new SqlCommand(query, _cnn) {CommandType = CommandType.Text}
 				.AddParam("tsql", sql)
-				.AddParam("params", (string)null)
-				.AddParam("browse_information_mode", (Int16)1);
+				.AddParam("params", paramStr)
+				.AddParam("include_browse_information", (Int16)1);
 
 			using (var reader = command.ExecuteReader())
 			{
 				while (reader.Read()) yield return new SqlParameterInfo
 				{
 					Name = Convert.ToString(reader["name"]),
-					ColumnId = Convert.ToInt32(reader["parameter_ordinal"]),
-					SQLType = Convert.ToString(reader["suggested_system_type_name"])
+					ColumnId = Convert.ToInt32(reader["column_ordinal"]),
+					SQLType = Convert.ToString(reader["system_type_name"])
 					//Nullable = Convert.ToBoolean(reader["is_nullable"]),
 					//Identity = Convert.ToBoolean(reader["is_identity"])
 				};

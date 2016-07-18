@@ -53,6 +53,8 @@ namespace Aurum.SQL.Tests.Readers
 
 				Assert.IsNull(errors);
 				Assert.IsTrue(result);
+
+				if (errors?.Any() ?? false) foreach (var e in errors) Context.WriteLine(e.Message);
 			}
 		}
 
@@ -78,11 +80,14 @@ namespace Aurum.SQL.Tests.Readers
 			using (var validator = new SqlQueryReader2012(TestHelpers.GetTestConnection()))
 			{
 				IList<SqlError> errors;
-				var results = validator.GetResultSet("select * from Customer where FirstName = @name;", out errors);
+				var results = validator.GetResultSet("select Id, Active, FirstName from Customer where FirstName = @name;", out errors, "@name varchar");
 
+				if (errors?.Any() ?? false) foreach (var e in errors) Context.WriteLine(e.Message);
 				Assert.IsNull(errors);
-				Assert.IsTrue(results.Any());
-				Assert.IsTrue(results.Any(p => p.Name == "@name"));
+				Assert.IsTrue(results.Any(), "No Results Returned");
+				Assert.IsTrue(results.Any(p => p.Name == "FirstName"), "FirstName column not found");
+
+				
 			}
 		}
 
