@@ -51,8 +51,8 @@ namespace Aurum.SQL.Tests
 		[TestMethod]
 		public void GetColumns()
 		{
-			IList<SqlColumnInfo> customer_columns;
-			IList<SqlColumnInfo> order_columns;
+			IList<SqlColumn> customer_columns;
+			IList<SqlColumn> order_columns;
 
 			using (var reader = new SqlSchemaReader(_cstr_db))
 			{
@@ -68,14 +68,14 @@ namespace Aurum.SQL.Tests
 			Assert.IsNotNull(id_column);
 			Assert.IsTrue(id_column.Identity);
 			Assert.IsFalse(id_column.Nullable);
-			Assert.IsTrue(id_column.ColumnId == 1);
+			Assert.IsTrue(id_column.Order == 1);
 
 			var name_column = customer_columns.SingleOrDefault(c => c.Name == "FirstName");
 
 			Assert.IsNotNull(name_column);
 			Assert.IsFalse(name_column.Identity);
 			Assert.IsTrue(name_column.Nullable);
-			Assert.IsTrue(name_column.ColumnId == 3);
+			Assert.IsTrue(name_column.Order == 3);
 		}
 
 	}

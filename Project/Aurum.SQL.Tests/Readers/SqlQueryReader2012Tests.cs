@@ -86,8 +86,6 @@ namespace Aurum.SQL.Tests.Readers
 				Assert.IsNull(errors);
 				Assert.IsTrue(results.Any(), "No Results Returned");
 				Assert.IsTrue(results.Any(p => p.Name == "FirstName"), "FirstName column not found");
-
-				
 			}
 		}
 

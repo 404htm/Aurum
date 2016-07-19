@@ -16,10 +16,10 @@ namespace Aurum.SQL.Data
 
 		public SqlTableDetail()
 		{
-			Columns = new List<SqlColumnInfo>();
+			Columns = new List<SqlColumn>();
 		}
 
-		public IList<SqlColumnInfo> Columns { get; set; }
+		public IList<SqlColumn> Columns { get; set; }
 		
 	}
 }

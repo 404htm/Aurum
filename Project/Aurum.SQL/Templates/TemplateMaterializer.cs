@@ -6,7 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
 
-using filter = System.Func<Aurum.SQL.Data.SqlColumnInfo, bool>;
+using filter = System.Func<Aurum.SQL.Data.SqlColumn, bool>;
 using lookup = System.Collections.Generic.Dictionary<string, string>;
 
 namespace Aurum.SQL
@@ -64,7 +64,7 @@ namespace Aurum.SQL
 			return sb.ToString();
 		}
 
-		string parse(string query, IEnumerable<SqlColumnInfo> columns)
+		string parse(string query, IEnumerable<SqlColumn> columns)
 		{
 			var pattern = @"\$\{(?<s>[^|}]*)\|(?<e>[^|}]*)\|(?<d>[^|}]*)\}";
 			Func<Match, string, string> get = (match, key) => match.Groups[key].Value;
@@ -88,7 +88,7 @@ namespace Aurum.SQL
 			return sb.ToString();
 		}
 
-		string buildExpression(IEnumerable<SqlColumnInfo> columns, string set, string expression, string delimiter)
+		string buildExpression(IEnumerable<SqlColumn> columns, string set, string expression, string delimiter)
 		{
 			var split = expression.Split(new string[]{"=>"}, StringSplitOptions.None);
 

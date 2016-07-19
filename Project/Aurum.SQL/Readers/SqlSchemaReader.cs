@@ -46,12 +46,12 @@ namespace Aurum.SQL
 		//    }
 		//}
 
-		private static SqlColumnInfo mapColumn(IDataReader reader)
+		private static SqlColumn mapColumn(IDataReader reader)
 		{
-			return new SqlColumnInfo
+			return new SqlColumn
 			{
 				Name = Convert.ToString(reader["name"]),
-				ColumnId = Convert.ToInt32(reader["column_id"]),
+				Order = Convert.ToInt32(reader["column_id"]),
 				Nullable = Convert.ToBoolean(reader["is_nullable"]),
 				Identity = Convert.ToBoolean(reader["is_identity"])
 			};
@@ -64,7 +64,7 @@ namespace Aurum.SQL
 			return table;
 		}
 
-		private IEnumerable<SqlColumnInfo> runColumnQuery(string objectname)
+		private IEnumerable<SqlColumn> runColumnQuery(string objectname)
 		{
 			string query = "SELECT [name], [column_id], [is_nullable], [is_identity] FROM sys.columns WHERE object_id = OBJECT_ID(@object_name)";
 

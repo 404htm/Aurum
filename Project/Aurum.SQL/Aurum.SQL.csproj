@@ -42,14 +42,15 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Data\SqlElement.cs" />
     <Compile Include="Helpers\SqlHelpers.cs" />
     <Compile Include="Queries\SqlQueryMetadataLoader.cs" />
     <Compile Include="Readers\ISqlSchemaReader.cs" />
     <Compile Include="Readers\ISqlValidator.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Helpers\Resources.cs" />
-    <Compile Include="Data\SqlColumnInfo.cs" />
-    <Compile Include="Data\SqlParameterInfo.cs" />
+    <Compile Include="Data\SqlColumn.cs" />
+    <Compile Include="Data\SqlParameter.cs" />
     <Compile Include="Data\SqlQueryDefinition.cs" />
     <Compile Include="Data\SqlQueryDetail.cs" />
     <Compile Include="Readers\SqlTypeMap.cs" />

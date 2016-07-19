@@ -31,32 +31,32 @@ namespace Aurum.SQL.Tests
 		private SqlTableDetail StubTable_SingleId()
 		{
 			var table = new SqlTableDetail { Name = "TestTable", Schema = "dbo" };
-			table.Columns.Add(new SqlColumnInfo() { ColumnId = 1, Name = "Id", Identity = true });
-			table.Columns.Add(new SqlColumnInfo() { ColumnId = 2, Name = "Name", Identity = false });
-			table.Columns.Add(new SqlColumnInfo() { ColumnId = 3, Name = "City", Identity = false });
-			table.Columns.Add(new SqlColumnInfo() { ColumnId = 4, Name = "State", Identity = false });
-			table.Columns.Add(new SqlColumnInfo() { ColumnId = 5, Name = "Zip", Identity = false });
+			table.Columns.Add(new SqlColumn() { Order = 1, Name = "Id", Identity = true });
+			table.Columns.Add(new SqlColumn() { Order = 2, Name = "Name", Identity = false });
+			table.Columns.Add(new SqlColumn() { Order = 3, Name = "City", Identity = false });
+			table.Columns.Add(new SqlColumn() { Order = 4, Name = "State", Identity = false });
+			table.Columns.Add(new SqlColumn() { Order = 5, Name = "Zip", Identity = false });
 			return table;
 		}
 
 		private SqlTableDetail StubTable_CompoundId()
 		{
 			var table = new SqlTableDetail { Name = "CrossRefTable", Schema = "dbo" };
-			table.Columns.Add(new SqlColumnInfo() { ColumnId = 1, Name = "Id1", Identity = true });
-			table.Columns.Add(new SqlColumnInfo() { ColumnId = 6, Name = "Id2", Identity = true });
-			table.Columns.Add(new SqlColumnInfo() { ColumnId = 2, Name = "Name", Identity = false });
-			table.Columns.Add(new SqlColumnInfo() { ColumnId = 3, Name = "City", Identity = false });
-			table.Columns.Add(new SqlColumnInfo() { ColumnId = 4, Name = "State", Identity = false });
-			table.Columns.Add(new SqlColumnInfo() { ColumnId = 5, Name = "Zip", Identity = false });
+			table.Columns.Add(new SqlColumn() { Order = 1, Name = "Id1", Identity = true });
+			table.Columns.Add(new SqlColumn() { Order = 6, Name = "Id2", Identity = true });
+			table.Columns.Add(new SqlColumn() { Order = 2, Name = "Name", Identity = false });
+			table.Columns.Add(new SqlColumn() { Order = 3, Name = "City", Identity = false });
+			table.Columns.Add(new SqlColumn() { Order = 4, Name = "State", Identity = false });
+			table.Columns.Add(new SqlColumn() { Order = 5, Name = "Zip", Identity = false });
 			return table;
 		}
 
 		private SqlTableDetail StubTable_NoId()
 		{
 			var table = new SqlTableDetail { Name = "NoIdentTable", Schema = "dbo" };
-			table.Columns.Add(new SqlColumnInfo() { ColumnId = 1, Name = "ColumnA", Identity = false });
-			table.Columns.Add(new SqlColumnInfo() { ColumnId = 2, Name = "ColumnB", Identity = false });
-			table.Columns.Add(new SqlColumnInfo() { ColumnId = 3, Name = "ColumnC", Identity = false });
+			table.Columns.Add(new SqlColumn() { Order = 1, Name = "ColumnA", Identity = false });
+			table.Columns.Add(new SqlColumn() { Order = 2, Name = "ColumnB", Identity = false });
+			table.Columns.Add(new SqlColumn() { Order = 3, Name = "ColumnC", Identity = false });
 			return table;
 		}
 

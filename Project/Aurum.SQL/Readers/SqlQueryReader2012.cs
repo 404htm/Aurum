@@ -28,17 +28,17 @@ namespace Aurum.SQL.Readers
 			return errors == null;
 		}
 
-		public IList<SqlParameterInfo> GetParameters(string query, out IList<SqlError> errors)
+		public IList<Data.SqlParameter> GetParameters(string query, out IList<SqlError> errors)
 		{
 			return RunAndGetErrors(() => RunParameterQuery(query).ToList(), out errors);
 		}
 
-		public IList<SqlParameterInfo> GetResultSet(string query, out IList<SqlError> errors, params string[] parameters)
+		public IList<Data.SqlColumn> GetResultSet(string query, out IList<SqlError> errors, params string[] parameters)
 		{
 			return RunAndGetErrors(() => RunResultSetQuery(query, parameters).ToList(), out errors);
 		}
 
-		private IEnumerable<SqlParameterInfo> RunParameterQuery(string sql)
+		private IEnumerable<Data.SqlParameter> RunParameterQuery(string sql)
 		{
 			var query = "sys.sp_describe_undeclared_parameters";
 			var command = new SqlCommand(query, _cnn) { CommandType = CommandType.StoredProcedure }
@@ -46,18 +46,18 @@ namespace Aurum.SQL.Readers
 
 			using (var reader = command.ExecuteReader())
 			{
-				while (reader.Read()) yield return new SqlParameterInfo
+				while (reader.Read()) yield return new Data.SqlParameter
 				{
 					Name = Convert.ToString(reader["name"]),
-					ColumnId = Convert.ToInt32(reader["parameter_ordinal"]),
-					SQLType = Convert.ToString(reader["suggested_system_type_name"])
+					Order = Convert.ToInt32(reader["parameter_ordinal"]),
+					SQLType = (SqlDbType)Convert.ToInt32(reader["system_type_id"]),
 					//Nullable = Convert.ToBoolean(reader["is_nullable"]),
 					//Identity = Convert.ToBoolean(reader["is_identity"])
 				};
 			}
 		}
 
-		private IEnumerable<SqlParameterInfo> RunResultSetQuery(string sql, params string[] parameters)
+		private IEnumerable<Data.SqlColumn> RunResultSetQuery(string sql, params string[] parameters)
 		{
 			var query = "select * from sys.dm_exec_describe_first_result_set(@tsql,  @params,  @include_browse_information)";
 			var paramStr = string.Join(", ", parameters);
@@ -67,15 +67,18 @@ namespace Aurum.SQL.Readers
 				.AddParam("params", paramStr)
 				.AddParam("include_browse_information", (Int16)1);
 
+			//TODO: Actual proper null checks
 			using (var reader = command.ExecuteReader())
 			{
-				while (reader.Read()) yield return new SqlParameterInfo
+				while (reader.Read()) yield return new Data.SqlColumn
 				{
 					Name = Convert.ToString(reader["name"]),
-					ColumnId = Convert.ToInt32(reader["column_ordinal"]),
-					SQLType = Convert.ToString(reader["system_type_name"])
-					//Nullable = Convert.ToBoolean(reader["is_nullable"]),
-					//Identity = Convert.ToBoolean(reader["is_identity"])
+					Order = Convert.ToInt32(reader["column_ordinal"]),
+					SQLType = (SqlDbType)Convert.ToInt32(reader["system_type_id"]),
+					Nullable = Convert.ToBoolean(reader["is_nullable"]),
+					Length = Convert.ToInt32(reader["max_length"]),
+					Precision = Convert.ToInt32(reader["precision"]),
+					Scale = Convert.ToInt32(reader["scale"])
 				};
 			}
 		}
