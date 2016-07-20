@@ -50,7 +50,7 @@ namespace Aurum.SQL.Readers
 				{
 					Name = Convert.ToString(reader["name"]),
 					Order = Convert.ToInt32(reader["parameter_ordinal"]),
-					SQLType = (SqlDbType)Convert.ToInt32(reader["system_type_id"]),
+					SQLType = (SqlDbType)Convert.ToInt32(reader["suggested_system_type_id"]),
 					//Nullable = Convert.ToBoolean(reader["is_nullable"]),
 					//Identity = Convert.ToBoolean(reader["is_identity"])
 				};
