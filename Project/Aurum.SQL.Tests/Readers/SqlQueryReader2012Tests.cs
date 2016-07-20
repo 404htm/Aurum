@@ -85,7 +85,7 @@ namespace Aurum.SQL.Tests.Readers
 				if (errors?.Any() ?? false) foreach (var e in errors) Context.WriteLine(e.Message);
 				Assert.IsNull(errors);
 				Assert.IsTrue(results.Any(), "No Results Returned");
-				Assert.IsTrue(results.Any(p => p.Name == "FirstName"), "FirstName column not found");
+				Assert.IsTrue(results.Any(λ => λ.Name == "FirstName"), "FirstName column not found");
 			}
 		}
 

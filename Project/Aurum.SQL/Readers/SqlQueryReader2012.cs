@@ -46,13 +46,18 @@ namespace Aurum.SQL.Readers
 
 			using (var reader = command.ExecuteReader())
 			{
+				var cols = reader.GetColumnLookup();
+
 				while (reader.Read()) yield return new Data.SqlParameter
 				{
-					Name = Convert.ToString(reader["name"]),
-					Order = Convert.ToInt32(reader["parameter_ordinal"]),
-					SQLType = (SqlDbType)Convert.ToInt32(reader["suggested_system_type_id"]),
-					//Nullable = Convert.ToBoolean(reader["is_nullable"]),
-					//Identity = Convert.ToBoolean(reader["is_identity"])
+					Name = reader.GetString(cols["name"]),
+					Order = reader.GetInt32(cols["parameter_ordinal"]),
+					SQLType = reader.GetDbType(cols["suggested_system_type_id"]),
+					Length = reader.GetInt16(cols["suggested_max_length"]),
+					Precision = reader.GetByte(cols["suggested_precision"]),
+					Scale = reader.GetByte(cols["suggested_scale"]),
+					IsOutput = reader.GetBoolean(cols["suggested_is_output"]),
+					IsInput = reader.GetBoolean(cols["suggested_is_input"]),
 				};
 			}
 		}
@@ -70,15 +75,17 @@ namespace Aurum.SQL.Readers
 			//TODO: Actual proper null checks
 			using (var reader = command.ExecuteReader())
 			{
+				var cols = reader.GetColumnLookup();
+
 				while (reader.Read()) yield return new Data.SqlColumn
 				{
-					Name = Convert.ToString(reader["name"]),
-					Order = Convert.ToInt32(reader["column_ordinal"]),
-					SQLType = (SqlDbType)Convert.ToInt32(reader["system_type_id"]),
-					Nullable = Convert.ToBoolean(reader["is_nullable"]),
-					Length = Convert.ToInt32(reader["max_length"]),
-					Precision = Convert.ToInt32(reader["precision"]),
-					Scale = Convert.ToInt32(reader["scale"])
+					Name = reader.GetString(cols["name"]),
+					Order = reader.GetInt32(cols["column_ordinal"]),
+					SQLType = reader.GetDbType(cols["system_type_id"]),
+					Nullable = reader.GetBoolean(cols["is_nullable"]),
+					Length = reader.GetInt16(cols["max_length"]),
+					Precision = reader.GetByte(cols["precision"]),
+					Scale = reader.GetByte(cols["scale"])
 				};
 			}
 		}

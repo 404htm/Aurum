@@ -20,5 +20,6 @@ namespace Aurum.SQL.Tests
 		{
 			return str.Replace("{", "{{").Replace("}", "}}");
 		}
+
 	}
 }

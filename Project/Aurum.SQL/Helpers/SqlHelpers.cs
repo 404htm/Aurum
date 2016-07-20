@@ -37,5 +37,13 @@ namespace Aurum.SQL.Helpers
 			command.Parameters.Add(param);
 			return command;
 		}
+
+		public static Dictionary<string, int> GetColumnLookup(this SqlDataReader reader)
+		{
+			return Enumerable.Range(0, reader.FieldCount)
+				.ToDictionary(λ => reader.GetName(λ), λ => λ);
+		}
+
+		public static SqlDbType GetDbType(this SqlDataReader reader, int index) => (SqlDbType)reader.GetInt32(index);
 	}
 }
