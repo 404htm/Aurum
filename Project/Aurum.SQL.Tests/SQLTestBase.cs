@@ -6,6 +6,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Ninject;
 using System;
 using System.Collections.Generic;
+using System.Data.SqlClient;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -25,6 +26,11 @@ namespace Aurum.SQL.Tests
 			IOC.Bind<ISqlValidator>().ToMethod(c => new SqlQueryReader2012(TestHelpers.GetTestConnection()));
 			IOC.Bind<ISqlSchemaReader>().ToMethod(c => new SqlSchemaReader(TestHelpers.GetTestConnection()));
 			IOC.Bind<IList<SqlQueryTemplateData>>().ToMethod(c => StoreableSet<SqlQueryTemplateData>.Load(Resources.GetDefaultTemplates()));
+		}
+
+		public void WriteErrors(IEnumerable<SqlError> errors)
+		{
+			if (errors?.Any() ?? false) foreach (var e in errors) Context.WriteLine(e.Message);
 		}
 	}
 }

@@ -20,6 +20,7 @@ namespace Aurum.SQL.Tests.Readers
 			{
 				IList<SqlError> errors;
 				var Parameters = validator.GetParameters("select * from Customer where FirstName = @name;", out errors);
+				WriteErrors(errors);
 
 				Assert.IsNull(errors);
 				Assert.IsTrue(Parameters.Any());
@@ -34,12 +35,11 @@ namespace Aurum.SQL.Tests.Readers
 			{
 				IList<SqlError> errors;
 				var Parameters = reader.GetParameters("select * from NotARealTable where FirstName = @name;", out errors);
+				WriteErrors(errors);
 
 				Assert.IsNotNull(errors);
 				Assert.AreEqual(errors.Count(), 1);
 				Assert.IsNull(Parameters);
-
-				foreach (var error in errors) Context.WriteLine($"{error.Number} - {error.Message}");
 			}
 		}
 
@@ -50,11 +50,10 @@ namespace Aurum.SQL.Tests.Readers
 			{
 				IList<SqlError> errors;
 				var result = reader.Validate("select * from Customer where FirstName = @name;", out errors);
+				WriteErrors(errors);
 
 				Assert.IsNull(errors);
 				Assert.IsTrue(result);
-
-				if (errors?.Any() ?? false) foreach (var e in errors) Context.WriteLine(e.Message);
 			}
 		}
 
@@ -65,12 +64,11 @@ namespace Aurum.SQL.Tests.Readers
 			{
 				IList<SqlError> errors;
 				var result = reader.Validate("select * from NotARealTable where FirstName = @name;", out errors);
+				WriteErrors(errors);
 
 				Assert.IsNotNull(errors);
 				Assert.AreEqual(errors.Count(), 1);
 				Assert.IsFalse(result);
-
-				foreach (var error in errors) Context.WriteLine($"{error.Number} - {error.Message}");
 			}
 		}
 
@@ -81,8 +79,8 @@ namespace Aurum.SQL.Tests.Readers
 			{
 				IList<SqlError> errors;
 				var results = validator.GetResultSet("select Id, Active, FirstName from Customer where FirstName = @name;", out errors, "@name varchar");
-
-				if (errors?.Any() ?? false) foreach (var e in errors) Context.WriteLine(e.Message);
+				WriteErrors(errors);
+				
 				Assert.IsNull(errors);
 				Assert.IsTrue(results.Any(), "No Results Returned");
 				Assert.IsTrue(results.Any(λ => λ.Name == "FirstName"), "FirstName column not found");
