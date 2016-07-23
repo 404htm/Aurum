@@ -85,7 +85,10 @@ namespace Aurum.SQL.Readers
 					Nullable = reader.GetBoolean(cols["is_nullable"]),
 					Length = reader.GetInt16(cols["max_length"]),
 					Precision = reader.GetByte(cols["precision"]),
-					Scale = reader.GetByte(cols["scale"])
+					Scale = reader.GetByte(cols["scale"]),
+					SourceColumn = reader.GetString(cols["source_column"]),
+					IsUpdatable = reader.GetBoolean(cols["is_updateable"]),
+					IsComputed = reader.GetBoolean(cols["is_computed_column"])
 				};
 			}
 		}

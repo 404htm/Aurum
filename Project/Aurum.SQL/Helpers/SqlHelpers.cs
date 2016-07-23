@@ -1,6 +1,6 @@
-﻿using System;
+﻿using Aurum.SQL.Data;
+using System;
 using System.Collections.Generic;
-using System.Data;
 using System.Data.SqlClient;
 using System.Linq;
 using System.Text;
@@ -13,7 +13,7 @@ namespace Aurum.SQL.Helpers
 	internal static class SqlHelpers
 	{
 		const int COMPILER_ERROR_CODE = 11501;
-		private static bool NotAPointlessCompilerError(SqlError e) => e.Number != COMPILER_ERROR_CODE;
+		private static bool NotAPointlessCompilerError(System.Data.SqlClient.SqlError e) => e.Number != COMPILER_ERROR_CODE;
 
 		public static T RunAndGetErrors<T>(Func<T> operation, out IList<SqlError> errors)
 		{
@@ -33,7 +33,7 @@ namespace Aurum.SQL.Helpers
 		public static SqlCommand AddParam<T>(this SqlCommand command, string name, T value)
 		{
 			var type = SqlTypeMap.Get(typeof(T));
-			var param = new SqlParameter(name, type) { Value = value };
+			var param = new System.Data.SqlClient.SqlParameter(name, type) { Value = value };
 			command.Parameters.Add(param);
 			return command;
 		}
@@ -44,6 +44,6 @@ namespace Aurum.SQL.Helpers
 				.ToDictionary(λ => reader.GetName(λ), λ => λ);
 		}
 
-		public static SqlDbType GetDbType(this SqlDataReader reader, int index) => (SqlDbType)reader.GetInt32(index);
+		public static SqlType GetDbType(this SqlDataReader reader, int index) => (SqlType)reader.GetInt32(index);
 	}
 }

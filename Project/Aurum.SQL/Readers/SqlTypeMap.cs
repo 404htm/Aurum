@@ -1,63 +1,64 @@
-﻿using System;
+﻿using Aurum.SQL.Data;
+using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Xml.Linq;
-using DbTypeLookup = System.Collections.Generic.Dictionary<System.Data.SqlDbType, System.Type>;
+using DbTypeLookup = System.Collections.Generic.Dictionary<Aurum.SQL.Data.SqlType, System.Type>;
 
 namespace Aurum.SQL
 {
 	public class SqlTypeMap
 	{
-		//Reference: https://msdn.microsoft.com/en-us/library/system.data.sqldbtype(v=vs.110).aspx
+		//Reference: https://msdn.microsoft.com/en-us/library/system.data.SqlType(v=vs.110).aspx
 
-		static readonly DbTypeLookup _sqlDbTypeLookup;
+		static readonly DbTypeLookup _SqlTypeLookup;
 
 		static SqlTypeMap()
 		{
-			_sqlDbTypeLookup = BuildDbTypeLookup(); 
+			_SqlTypeLookup = BuildDbTypeLookup(); 
 		}
 
 		static DbTypeLookup BuildDbTypeLookup()
 		{
-			return new Dictionary<SqlDbType, Type>
+			return new Dictionary<SqlType, Type>
 			{
-				{SqlDbType.BigInt,          typeof(long) },
-				{SqlDbType.Binary,          typeof(byte[]) },
-				{SqlDbType.Bit,             typeof(bool) },
-				{SqlDbType.NVarChar,        typeof(string) },
-				{SqlDbType.VarChar,         typeof(string) },
-				{SqlDbType.Char,            typeof(string) },
-				{SqlDbType.Date,            typeof(DateTime) },
-				{SqlDbType.DateTime,        typeof(DateTime) },
-				{SqlDbType.DateTime2,       typeof(DateTime) },
-				{SqlDbType.DateTimeOffset,  typeof(TimeSpan) }, //TODO: Validate this decision
-				{SqlDbType.Decimal,         typeof(decimal) },
-				{SqlDbType.Float,           typeof(float) },
-				{SqlDbType.Image,           typeof(byte[]) },
-				{SqlDbType.Int,             typeof(int) },
-				{SqlDbType.Money,           typeof(decimal) },
-				{SqlDbType.NChar,           typeof(string) },
-				{SqlDbType.NText,           typeof(string) },
-				{SqlDbType.Real,            typeof(Single) },
-				{SqlDbType.SmallDateTime,   typeof(DateTime) },
-				{SqlDbType.SmallInt,        typeof(Int16) },
-				{SqlDbType.SmallMoney,      typeof(Decimal) },
-				{SqlDbType.Structured,      null },
-				{SqlDbType.Text,            typeof(string) },
-				{SqlDbType.Time,            typeof(DateTime) },
-				{SqlDbType.Timestamp,       typeof(byte[]) },
-				{SqlDbType.TinyInt,         typeof(byte) },
-				{SqlDbType.Udt,             null },
-				{SqlDbType.UniqueIdentifier,typeof(Guid) },
-				{SqlDbType.VarBinary,       typeof(byte[]) },
-				{SqlDbType.Variant,         typeof(object) },
-				{SqlDbType.Xml,             typeof(XElement) }
+				{SqlType.BigInt,          typeof(long) },
+				{SqlType.Binary,          typeof(byte[]) },
+				{SqlType.Bit,             typeof(bool) },
+				{SqlType.NVarChar,        typeof(string) },
+				{SqlType.VarChar,         typeof(string) },
+				{SqlType.Char,            typeof(string) },
+				{SqlType.Date,            typeof(DateTime) },
+				{SqlType.DateTime,        typeof(DateTime) },
+				{SqlType.DateTime2,       typeof(DateTime) },
+				{SqlType.DateTimeOffset,  typeof(TimeSpan) }, //TODO: Validate this decision
+				{SqlType.Decimal,         typeof(decimal) },
+				{SqlType.Float,           typeof(float) },
+				{SqlType.Image,           typeof(byte[]) },
+				{SqlType.Int,             typeof(int) },
+				{SqlType.Money,           typeof(decimal) },
+				{SqlType.NChar,           typeof(string) },
+				{SqlType.NText,           typeof(string) },
+				{SqlType.Real,            typeof(Single) },
+				{SqlType.SmallDateTime,   typeof(DateTime) },
+				{SqlType.SmallInt,        typeof(Int16) },
+				{SqlType.SmallMoney,      typeof(Decimal) },
+				//{SqlType.Structured,      null },
+				{SqlType.Text,            typeof(string) },
+				{SqlType.Time,            typeof(DateTime) },
+				{SqlType.Timestamp,       typeof(byte[]) },
+				{SqlType.TinyInt,         typeof(byte) },
+				{SqlType.Udt,             null },
+				{SqlType.UniqueIdentifier,typeof(Guid) },
+				{SqlType.VarBinary,       typeof(byte[]) },
+				{SqlType.Sql_Variant,         typeof(object) },
+				{SqlType.Xml,             typeof(XElement) }
 			};
 		}
 
-		public static SqlDbType Get(Type type) => _sqlDbTypeLookup.Where(l => l.Value == type).Select(l => l.Key).FirstOrDefault();
+		public static SqlType Get(Type type) => _SqlTypeLookup.Where(l => l.Value == type).Select(l => l.Key).FirstOrDefault();
 	}
 }

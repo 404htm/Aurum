@@ -12,7 +12,7 @@ namespace Aurum.SQL.Data
 	public class SqlElement
 	{
 		[DataMember] public string Name { get; set; }
-		[DataMember] public SqlDbType SQLType { get; set; }
+		[DataMember] public SqlType SQLType { get; set; }
 		[DataMember] public int Order { get; set; }
 		[DataMember] public bool Nullable { get; set; }
 

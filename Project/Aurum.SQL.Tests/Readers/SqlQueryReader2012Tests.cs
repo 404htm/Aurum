@@ -5,6 +5,8 @@ using System.Collections;
 using System.Data.SqlClient;
 using System.Collections.Generic;
 using System.Linq;
+using System.Data;
+using Aurum.SQL.Data;
 
 namespace Aurum.SQL.Tests.Readers
 {
@@ -73,7 +75,7 @@ namespace Aurum.SQL.Tests.Readers
 		}
 
 		[TestMethod]
-		public void TestGetResult_GoodQuery()
+		public void TestGetResult_BasicQuery()
 		{
 			using (var validator = new SqlQueryReader2012(TestHelpers.GetTestConnection()))
 			{
@@ -83,9 +85,21 @@ namespace Aurum.SQL.Tests.Readers
 				
 				Assert.IsNull(errors);
 				Assert.IsTrue(results.Any(), "No Results Returned");
-				Assert.IsTrue(results.Any(λ => λ.Name == "FirstName"), "FirstName column not found");
+
+				var first = results.SingleOrDefault(λ => λ.Name == "FirstName");
+				Assert.IsNotNull(first);
+				Assert.AreEqual(false, first.Identity);
+				Assert.AreEqual(100, first.Length);
+				Assert.AreEqual(true, first.Nullable);
+				Assert.AreEqual(3, first.Order);
+				Assert.AreEqual("FirstName", first.SourceColumn);
+				Assert.AreEqual(SqlType.VarChar, first.SQLType);
+				Assert.AreEqual(false, first.UniqueKey);
+				Assert.AreEqual(true, first.IsUpdatable);
+				Assert.AreEqual(false, first.IsComputed);
 			}
 		}
+
 
 	}
 }
