@@ -10,10 +10,6 @@ namespace Aurum.SQL.Data
 	{
 		public string Name { get; set; }
 		public string Schema { get; set; }
-
-		public override string ToString()
-		{
-			return $"[{Schema}].[{Name}]";
-		}
+		public override string ToString() => $"[{Schema}].[{Name}]";
 	}
 }

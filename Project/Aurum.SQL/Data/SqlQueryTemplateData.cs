@@ -7,7 +7,7 @@ using System.Runtime.Serialization;
 using System.Text;
 using System.Threading.Tasks;
 
-
+/// <summary>Backing data for SqlTemplates - Describes a compilable query and filter that can be used to generate SQL queries against multiple tables</summary>
 namespace Aurum.SQL.Data
 {
 	[DataContract(Name = "SqlQueryTemplate")]

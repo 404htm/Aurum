@@ -11,7 +11,7 @@ using static Aurum.SQL.Helpers.SqlHelpers;
 
 namespace Aurum.SQL.Readers
 {
-	/// <summary>Provides Query Metadata for SQL2012 and Newer</summary>
+	/// <summary>Provides metadata and validation for user queries - Relies on functions only available in SQLServer 2012+</summary>
 	public class SqlQueryReader2012 : IDisposable, ISqlValidator
 	{
 		SqlConnection _cnn;

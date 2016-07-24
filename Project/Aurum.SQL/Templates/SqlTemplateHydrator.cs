@@ -12,7 +12,8 @@ using query = System.Func<Aurum.SQL.Data.SqlTableDetail, string>;
 
 namespace Aurum.SQL
 {
-	public class SqlQueryTemplateHydrator : ISqlQueryTemplateHydrator
+	/// <summary> Helper class that compiles SqlQueryTemplateData (serializable) into a usable SqlQueryTemplate </summary>
+	internal class SqlQueryTemplateHydrator : ISqlQueryTemplateHydrator
 	{
 		IExpressionParser<filter> _filterParser;
 		IExpressionParser<query> _queryParser;

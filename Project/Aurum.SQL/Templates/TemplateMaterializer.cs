@@ -11,6 +11,7 @@ using lookup = System.Collections.Generic.Dictionary<string, string>;
 
 namespace Aurum.SQL
 {
+	/// <summary> Determines which templates are applicable to a given table and generates appropiate queries </summary>
 	public class TemplateMaterializer
 	{
 		IList<ISqlQueryTemplate> _templates;

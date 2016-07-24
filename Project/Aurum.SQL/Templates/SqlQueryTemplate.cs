@@ -12,6 +12,7 @@ using query = System.Func<Aurum.SQL.Data.SqlTableDetail, string>;
 
 namespace Aurum.SQL.Templates
 {
+	/// <summary> Template that can be applied to a Sql Table or View to produce a default SQL Query </summary>
 	public class SqlQueryTemplate : SqlQueryTemplateData,  ISqlQueryTemplate
 	{
 		internal SqlQueryTemplate(SqlQueryTemplateData data, IExpressionParser<filter> filterParser, IExpressionParser<query> queryParser)

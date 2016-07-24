@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 
 namespace Aurum.SQL.Data
 {
+	/// <summary> Possible SQL Type values - Maps to sys.types (System.Data.SqlDbType IDs do not).</summary>
 	[Serializable]
 	public enum SqlType : byte
 	{

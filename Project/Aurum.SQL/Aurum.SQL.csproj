@@ -63,7 +63,6 @@
     <Compile Include="Readers\SqlSchemaReader.cs" />
     <Compile Include="Data\SqlTableInfo.cs" />
     <Compile Include="Data\SqlTableDetail.cs" />
-    <Compile Include="Templates\TemplateBuilder.cs" />
     <Compile Include="Templates\TemplateMaterializer.cs" />
     <Compile Include="Readers\SqlQueryReader2012.cs" />
   </ItemGroup>

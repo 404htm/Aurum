@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 
 namespace Aurum.SQL
 {
+	[Obsolete]
 	public class TemplateBuilder
 	{
 		SqlTableDetail _tableInfo;

@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 
 namespace Aurum.SQL
 {
+	/// <summary> Reads metadata around database objects</summary>
 	public class SqlSchemaReader : IDisposable, ISqlSchemaReader
 	{
 		SqlConnection _cnn;
