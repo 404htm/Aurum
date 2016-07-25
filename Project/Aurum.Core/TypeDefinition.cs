@@ -8,11 +8,8 @@ namespace Aurum.Core
 	[DataContract]
 	public class TypeDefinition : Storeable<TypeDefinition>
 	{
-		[DataMember]
-		public string Name { get; set; }
-		[DataMember]
-		public Type SimpleType { get; set; }
-		[DataMember]
-		public Dictionary<string, TypeDefinition> Properties { get; set; }
+		[DataMember] public string Name { get; set; }
+		[DataMember] public Type SimpleType { get; set; }
+		[DataMember] public Dictionary<string, TypeDefinition> Properties { get; set; }
 	}
 }

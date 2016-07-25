@@ -10,9 +10,9 @@ namespace Aurum.SQL.Data
 {
 	public class SqlQueryDetail : SqlQueryDefinition
 	{
-		[DataMember] public List<string> ExtendedInfo { get; set; }
-		[DataMember] public TypeDefinition InputType { get; private set; }
-		[DataMember] public TypeDefinition OutputType { get; private set; }
+		[DataMember] public IList<string> ExtendedInfo { get; set; }
+		[DataMember] public IList<SqlParameter> Inputs { get; internal set; }
+		[DataMember] public IList<SqlColumn> Outputs { get; internal set; }
 
 		internal static SqlQueryDetail MapFrom(SqlQueryDefinition original)
 		{

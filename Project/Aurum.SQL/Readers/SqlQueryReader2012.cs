@@ -12,7 +12,7 @@ using static Aurum.SQL.Helpers.SqlHelpers;
 namespace Aurum.SQL.Readers
 {
 	/// <summary>Provides metadata and validation for user queries - Relies on functions only available in SQLServer 2012+</summary>
-	public class SqlQueryReader2012 : IDisposable, ISqlValidator
+	public class SqlQueryReader2012 : IDisposable, ISqlValidator, ISqlQueryReader
 	{
 		SqlConnection _cnn;
 

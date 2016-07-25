@@ -45,7 +45,8 @@
     <Compile Include="Data\SqlElement.cs" />
     <Compile Include="Data\SqlType.cs" />
     <Compile Include="Helpers\SqlHelpers.cs" />
-    <Compile Include="Queries\SqlQueryMetadataLoader.cs" />
+    <Compile Include="Loaders\SqlQueryMetadataLoader.cs" />
+    <Compile Include="Readers\ISqlQueryReader.cs" />
     <Compile Include="Readers\ISqlSchemaReader.cs" />
     <Compile Include="Readers\ISqlValidator.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
