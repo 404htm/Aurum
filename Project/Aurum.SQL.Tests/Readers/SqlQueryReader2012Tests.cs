@@ -77,27 +77,30 @@ namespace Aurum.SQL.Tests.Readers
 		[TestMethod]
 		public void TestGetResult_BasicQuery()
 		{
-			using (var validator = new SqlQueryReader2012(TestHelpers.GetTestConnection()))
+			SqlColumn firstName;
+			using (var reader = new SqlQueryReader2012(TestHelpers.GetTestConnection()))
 			{
 				IList<SqlError> errors;
-				var results = validator.GetResultSet("select Id, Active, FirstName from Customer where FirstName = @name;", out errors, "@name varchar");
+				var results = reader.GetResultSet("select Id, Active, FirstName from Customer where FirstName = @name;", out errors, "@name varchar");
 				WriteErrors(errors);
 				
 				Assert.IsNull(errors);
 				Assert.IsTrue(results.Any(), "No Results Returned");
 
-				var first = results.SingleOrDefault(λ => λ.Name == "FirstName");
-				Assert.IsNotNull(first);
-				Assert.AreEqual(false, first.Identity);
-				Assert.AreEqual(100, first.Length);
-				Assert.AreEqual(true, first.Nullable);
-				Assert.AreEqual(3, first.Order);
-				Assert.AreEqual("FirstName", first.SourceColumn);
-				Assert.AreEqual(SqlType.VarChar, first.SQLType);
-				Assert.AreEqual(false, first.UniqueKey);
-				Assert.AreEqual(true, first.IsUpdatable);
-				Assert.AreEqual(false, first.IsComputed);
+				firstName = results.SingleOrDefault(λ => λ.Name == "FirstName");
 			}
+
+			Assert.IsNotNull(firstName);
+			Assert.AreEqual(false, firstName.Identity);
+			Assert.AreEqual(100, firstName.Length);
+			Assert.AreEqual(true, firstName.Nullable);
+			Assert.AreEqual(3, firstName.Order);
+			Assert.AreEqual("FirstName", firstName.SourceColumn);
+			Assert.AreEqual(SqlType.VarChar, firstName.SQLType);
+			Assert.AreEqual(false, firstName.UniqueKey);
+			Assert.AreEqual(true, firstName.IsUpdatable);
+			Assert.AreEqual(false, firstName.IsComputed);
+
 		}
 
 
