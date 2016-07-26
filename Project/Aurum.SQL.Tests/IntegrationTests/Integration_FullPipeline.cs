@@ -10,6 +10,7 @@ using Ninject;
 using Aurum.SQL.Data;
 using Aurum.SQL.Readers;
 using System.Data.SqlClient;
+using Aurum.SQL.Loaders;
 
 namespace Aurum.SQL.Tests.IntegrationTests
 {
@@ -23,9 +24,15 @@ namespace Aurum.SQL.Tests.IntegrationTests
 		{
 			var tableMetadata = ReadTableMetadataFromTestDatabase();
 			var templates = ReadAndHydrateDefaultTemplates();
+
 			var queryDefinitions = MaterializeTemplates(templates, tableMetadata);
 			AssertGeneratedQueryValidity(queryDefinitions);
+
+			var queryDetails = ReadMetadataForQueries(queryDefinitions);
+			AssertLoadedQueryValidity(queryDetails);
 		}
+
+
 
 		private IList<SqlTableDetail> ReadTableMetadataFromTestDatabase()
 		{
@@ -81,6 +88,29 @@ namespace Aurum.SQL.Tests.IntegrationTests
 				}
 				Assert.IsTrue(failed_count == 0, $"{failed_count}/{query_count} Queries Failed Validation - See output for details.");
 			}
+		}
+
+		private void AssertLoadedQueryValidity(List<SqlQueryDetail> queryDetails)
+		{
+			Context.WriteLine("Validating Query Details");
+			foreach (var query in queryDetails)
+			{
+				var inputs = query.Inputs?.Select(λ => λ.Name);
+				var outputs = query.Outputs?.Select(λ => λ.Name);
+
+				Context.WriteLine($"\t{query.GroupName} : {query.Name}");
+				Context.WriteLine($"\t\tInputs: {string.Join(", ", inputs)}");
+				Context.WriteLine($"\t\tOutputs: {string.Join(", ", outputs)}");
+
+				Assert.IsNotNull(query.Inputs);
+				Assert.IsNotNull(query.Outputs);
+			}
+		}
+
+		private List<SqlQueryDetail> ReadMetadataForQueries(List<SqlQueryDefinition> queryDefinitions)
+		{
+			var loader = IOC.Get<ISqlQueryMetadataLoader>();
+			return queryDefinitions.Select(loader.LoadQueryDetails).ToList();
 		}
 
 	}

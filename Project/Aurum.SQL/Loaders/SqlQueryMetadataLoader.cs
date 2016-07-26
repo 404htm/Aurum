@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace Aurum.SQL.Loaders
 {
-	public class SqlQueryMetadataLoader
+	public class SqlQueryMetadataLoader : ISqlQueryMetadataLoader
 	{
 		ISqlQueryReader _queryReader;
 
