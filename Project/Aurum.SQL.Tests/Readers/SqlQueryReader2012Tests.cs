@@ -26,7 +26,7 @@ namespace Aurum.SQL.Tests.Readers
 
 				Assert.IsNull(errors);
 				Assert.IsTrue(Parameters.Any());
-				Assert.IsTrue(Parameters.Any(p => p.Name == "@name"));
+				Assert.IsTrue(Parameters.Any(p => p.Name == "name"));
 			}
 		}
 
@@ -81,7 +81,7 @@ namespace Aurum.SQL.Tests.Readers
 			using (var reader = new SqlQueryReader2012(TestHelpers.GetTestConnection()))
 			{
 				IList<SqlError> errors;
-				var results = reader.GetResultSet("select Id, Active, FirstName from Customer where FirstName = @name;", out errors, "@name varchar");
+				var results = reader.GetResultStructure("select Id, Active, FirstName from Customer where FirstName = @name;", out errors, "@name varchar");
 				WriteErrors(errors);
 				
 				Assert.IsNull(errors);

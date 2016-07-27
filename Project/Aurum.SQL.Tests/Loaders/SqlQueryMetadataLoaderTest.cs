@@ -32,7 +32,7 @@ namespace Aurum.SQL.Tests.Loaders
 
 			var reader = new Mock<ISqlQueryReader>();
 			reader.Setup(λ => λ.GetParameters(query.Query, out errors)).Returns(new List<Data.SqlParameter> { new Data.SqlParameter{ Name = "TestParameter" } });
-			reader.Setup(λ => λ.GetResultSet(query.Query, out errors)).Returns(new List<Data.SqlColumn> { new Data.SqlColumn { Name = "TestColumn" } });
+			reader.Setup(λ => λ.GetResultStructure(query.Query, out errors)).Returns(new List<Data.SqlColumn> { new Data.SqlColumn { Name = "TestColumn" } });
 
 			var metadata = new SqlQueryMetadataLoader(reader.Object);
 			var result = metadata.LoadQueryDetails(query);

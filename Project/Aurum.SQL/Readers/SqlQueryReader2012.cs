@@ -33,7 +33,7 @@ namespace Aurum.SQL.Readers
 			return RunAndGetErrors(() => RunParameterQuery(query).ToList(), out errors);
 		}
 
-		public IList<Data.SqlColumn> GetResultSet(string query, out IList<SqlError> errors, params string[] parameters)
+		public IList<Data.SqlColumn> GetResultStructure(string query, out IList<SqlError> errors, params string[] parameters)
 		{
 			return RunAndGetErrors(() => RunResultSetQuery(query, parameters).ToList(), out errors);
 		}
@@ -50,7 +50,7 @@ namespace Aurum.SQL.Readers
 
 				while (reader.Read()) yield return new Data.SqlParameter
 				{
-					Name = reader.GetString(cols["name"]),
+					Name = reader.GetString(cols["name"]).Trim('@'),
 					Order = reader.GetInt32(cols["parameter_ordinal"]),
 					SQLType = reader.GetDbType(cols["suggested_system_type_id"]),
 					Length = reader.GetInt16(cols["suggested_max_length"]),

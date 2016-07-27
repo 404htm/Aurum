@@ -24,7 +24,7 @@ namespace Aurum.SQL.Loaders
 			var detail = SqlQueryDetail.MapFrom(queryDefinition);
 			IList<SqlError> errors = new List<SqlError>();
 			detail.Inputs = _queryReader.GetParameters(queryDefinition.Query, out errors);
-			detail.Outputs = _queryReader.GetResultSet(queryDefinition.Query, out errors);
+			detail.Outputs = _queryReader.GetResultStructure(queryDefinition.Query, out errors);
 			return detail;
 		}
 	}
