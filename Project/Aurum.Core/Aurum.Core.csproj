@@ -86,6 +86,7 @@
     <Compile Include="CodeGen\TemplateComponent.cs" />
     <Compile Include="CodeGen\Template.cs" />
     <Compile Include="Context.cs" />
+    <Compile Include="Extensions\DictionaryExtensions.cs" />
     <Compile Include="IDataConnection.cs" />
     <Compile Include="IDataSource.cs" />
     <Compile Include="Parser\IParserFactory.cs" />

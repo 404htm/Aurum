@@ -4,9 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Aurum.Gen
+namespace Aurum.Gen.Data
 {
-    public class Class1
+    public class TemplateNode
     {
+        public List<TemplateNode> Content { get; set; }
     }
 }

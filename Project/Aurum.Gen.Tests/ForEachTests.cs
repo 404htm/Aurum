@@ -4,7 +4,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 namespace Aurum.Gen.Tests
 {
     [TestClass]
-    public class UnitTest1
+    public class ForEachTests
     {
         [TestMethod]
         public void TestMethod1()
