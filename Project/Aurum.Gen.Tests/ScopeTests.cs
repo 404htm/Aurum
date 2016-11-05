@@ -51,6 +51,40 @@ namespace Aurum.Gen.Tests
             Assert.AreEqual(pairOuter2.Item2, resultOuter);
         }
 
+        [TestMethod]
+        public void Scope_RetrieveListStringSingleScope()
+        {
+            var key = "TestKey";
+            var value = new List<string> { "TestValue" };
+
+            var scope = new Scope();
+            scope.SetList(key, value);
+
+            var result = scope.GetList<string>(key);
+            Assert.AreEqual(value, result);
+        }
+
+        [TestMethod]
+        public void Scope_CheckInnerAndOuterListVars()
+        {
+            var pairOuter1 = Tuple.Create("key", new List<string> { "value_o1" });
+            var pairOuter2 = Tuple.Create("key2", new List<string> { "value_o2" });
+            var pairInner1 = Tuple.Create("key", new List<string> { "value_i1" });
+
+            var outer = new Scope();
+            var inner = new Scope(outer);
+
+            outer.SetList(pairOuter1.Item1, pairOuter1.Item2);
+            outer.SetList(pairOuter2.Item1, pairOuter2.Item2);
+            inner.SetList(pairInner1.Item1, pairInner1.Item2);
+
+            var resultInner = inner.GetList<string>(pairInner1.Item1);
+            Assert.AreEqual(pairInner1.Item2, resultInner);
+
+            var resultOuter = inner.GetList<string>(pairOuter2.Item1);
+            Assert.AreEqual(pairOuter2.Item2, resultOuter);
+        }
+
 
     }
 }
