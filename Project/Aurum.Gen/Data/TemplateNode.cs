@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Aurum.Gen.Data
 {
-    public class TemplateNode
+    public abstract class TemplateNode
     {
         public List<TemplateNode> Content { get; set; }
     }

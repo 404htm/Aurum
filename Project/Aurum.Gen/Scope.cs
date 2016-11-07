@@ -6,11 +6,11 @@ namespace Aurum.Gen
 {
     public class Scope : IScope
     {
-        Scope _parent;
+        IScope _parent;
         Dictionary<string, object> _vars { get; set; }
         Dictionary<string, IEnumerable<object>> _sets { get; set; }
 
-        public Scope(Scope parent = null)
+        public Scope(IScope parent = null)
         {
             _parent = parent;
             _vars = new Dictionary<string, object>();
