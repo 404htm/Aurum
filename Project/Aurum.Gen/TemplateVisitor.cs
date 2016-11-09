@@ -1,32 +1,37 @@
-﻿using Aurum.Gen.Data;
+﻿using Aurum.Core.Parser;
+using Aurum.Gen.Nodes;
 using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 
 namespace Aurum.Gen
 {
     public class TemplateVisitor
     {
         ICodeMaterializer _materializer;
+        IParserFactory _parserFactory;
         Func<IScope, IScope> _scopeFactory;
         StringBuilder _sb = new StringBuilder();
 
-        public TemplateVisitor(ICodeMaterializer codeMaterializer, Func<IScope,  IScope> scopeFactory)
+        public TemplateVisitor(ICodeMaterializer codeMaterializer, Func<IScope,  IScope> scopeFactory, IParserFactory parserFactory)
         {
             _materializer = codeMaterializer;
             _scopeFactory = scopeFactory;
+            _parserFactory = parserFactory;
         }
 
 
         public void Visit(TemplateNode template, IScope scope = null)
         {
             //Resolve back to the correct subtype 
-            Visit((dynamic)template, scope ?? _scopeFactory(null));
+            Build((dynamic)template, scope ?? _scopeFactory(null));
         }
 
-        internal void Visit(Data.ForEach template, IScope scope)
+        internal void Build(Code code, IScope scope)
+        {
+            _materializer.Process(scope, code);
+        }
+
+        internal void Build(ForEach template, IScope scope)
         {
             var set = template.Set;
             var items = scope.GetList<object>(set);
@@ -39,10 +44,11 @@ namespace Aurum.Gen
             }
         }
 
-        internal void Visit(Data.Code code, IScope scope)
+        internal void Build(If template, IScope scope)
         {
-            _materializer.Process(scope, code);
+
         }
+
     }
 
 

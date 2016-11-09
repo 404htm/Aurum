@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Aurum.Gen.Data
+namespace Aurum.Gen.Nodes
 {
     public abstract class TemplateNode
     {

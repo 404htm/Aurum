@@ -66,6 +66,10 @@
     <Compile Include="ScopeTests.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Aurum.Core\Aurum.Core.csproj">
+      <Project>{e1c4f2cc-c604-4576-a1fb-70afef14ab6d}</Project>
+      <Name>Aurum.Core</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Aurum.Gen\Aurum.Gen.csproj">
       <Project>{2d7e10cf-6040-47a9-94c1-5897d13344b0}</Project>
       <Name>Aurum.Gen</Name>

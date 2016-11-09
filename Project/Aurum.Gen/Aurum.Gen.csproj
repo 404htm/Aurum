@@ -42,9 +42,10 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="CodeMaterializer.cs" />
-    <Compile Include="Data\Code.cs" />
-    <Compile Include="Data\ForEach.cs" />
-    <Compile Include="Data\TemplateNode.cs" />
+    <Compile Include="Nodes\Code.cs" />
+    <Compile Include="Nodes\ForEach.cs" />
+    <Compile Include="Nodes\If.cs" />
+    <Compile Include="Nodes\TemplateNode.cs" />
     <Compile Include="ICodeMaterializer.cs" />
     <Compile Include="IScope.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

@@ -1,4 +1,4 @@
-﻿using Aurum.Gen.Data;
+﻿using Aurum.Gen.Nodes;
 
 namespace Aurum.Gen
 {

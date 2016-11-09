@@ -4,10 +4,10 @@ namespace Aurum.Gen
 {
     public interface IScope
     {
-        T Get<T>(string name) where T : class;
-        void Set<T>(string name, T value) where T : class;
+        T Get<T>(string name);
+        void Set<T>(string name, T value);
 
-        IEnumerable<T> GetList<T>(string name) where T : class;
-        void SetList<T>(string name, IEnumerable<T> value) where T : class;
+        IEnumerable<T> GetList<T>(string name);
+        void SetList<T>(string name, IEnumerable<T> value);
     }
 }

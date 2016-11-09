@@ -1,16 +1,14 @@
 ﻿using System;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using Aurum.Gen.Data;
 using System.Linq;
 using Moq;
+using Aurum.Gen.Nodes;
 
 namespace Aurum.Gen.Tests
 {
     [TestClass]
     public class TemplateVisitorTests
     {
-
-
         [TestMethod]
         public void TemplateVisitor_ForEach()
         {
@@ -34,11 +32,19 @@ namespace Aurum.Gen.Tests
             mat.Setup(c => c.Process(It.IsAny<IScope>(), It.IsAny<Code>()))
                 .Callback<IScope, Code>((s, c) => output += $"{s.Get<object>("cur")}{c.Value}|");
 
-            var templateVisitor = new TemplateVisitor(mat.Object, (s) => scope.Object);
+            var templateVisitor = new TemplateVisitor(mat.Object, (s) => scope.Object, null);
             templateVisitor.Visit(node, scope.Object);
 
             Assert.AreEqual("HEADER|A1|A2|B1|B2|C1|C2|D1|D2|E1|E2|", output);
         }
+
+        //[TestMethod]
+        //public void TemplateVisitor_IfTrue()
+        //{
+        //    var scope = new Mock<IScope>();
+        //    scope.Setup(s => s.Get<bool?>("condition")).Returns(true);
+
+        //}
 
 
     }
