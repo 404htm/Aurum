@@ -1,5 +1,4 @@
-﻿using Aurum.Core.CodeGen;
-using Aurum.Gen.Data;
+﻿using Aurum.Gen.Data;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -38,7 +37,11 @@ namespace Aurum.Gen
                 inner.Set(template.Var, item);
                 foreach (var c in template.Content) Visit(c, inner);
             }
+        }
 
+        internal void Visit(Data.Code code, IScope scope)
+        {
+            _materializer.Process(scope, code);
         }
     }
 

@@ -2,6 +2,7 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Aurum.Gen.Data;
 using System.Linq;
+using Moq;
 
 namespace Aurum.Gen.Tests
 {
@@ -9,18 +10,34 @@ namespace Aurum.Gen.Tests
     public class TemplateVisitorTests
     {
 
-        //[TestMethod]
-        public void TEMPTEST()
+
+        [TestMethod]
+        public void TemplateVisitor_ForEach()
         {
-            var items = Enumerable.Range('A', 10).Select(c => ((char)c).ToString());
-            TemplateNode node = new ForEach() { Set = "TestSet", Var = "Current" };
-            var scope = new Scope();
-            scope.SetList("TestSet", items);
+            var items = new object[]{ "A", "B", "C", "D", "E"};
+            object current = "X";
 
-            var templateVisitor = new TemplateVisitor(null, (s) => new Scope(s));
-            templateVisitor.Visit(node, scope);
+            //Scope Contains the set to enumerate and persists the current value - This should match "Var" from the ForEach block
+            var scope = new Mock<IScope>();
+            scope.Setup(s => s.GetList<object>("list")).Returns(items);
+            scope.Setup(s => s.Set("cur", It.IsAny<object>())).Callback<string, object>((k, v) => current = v);
+            scope.Setup(s => s.Get<object>("cur")).Returns(() => current);
 
+            //Minimal tree to walk - Visitor terminates on Code so needed to include both objects for testing
+            TemplateNode node = new ForEach() { Set = "list", Var = "cur" };
+            node.Content.Add(new Code() { Value = "1" });
+            node.Content.Add(new Code() { Value = "2" });
 
+            //Build materializer that just concatenates the objects and code segment value
+            string output = "HEADER|";
+            var mat = new Mock<ICodeMaterializer>();
+            mat.Setup(c => c.Process(It.IsAny<IScope>(), It.IsAny<Code>()))
+                .Callback<IScope, Code>((s, c) => output += $"{s.Get<object>("cur")}{c.Value}|");
+
+            var templateVisitor = new TemplateVisitor(mat.Object, (s) => scope.Object);
+            templateVisitor.Visit(node, scope.Object);
+
+            Assert.AreEqual("HEADER|A1|A2|B1|B2|C1|C2|D1|D2|E1|E2|", output);
         }
 
 

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Aurum.Gen.Data;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,9 +9,10 @@ namespace Aurum.Gen
 {
     public class CodeMaterializer : ICodeMaterializer
     {
-        void Generate(IScope scope, string code)
+        public void Process(IScope scope, Code code)
         {
-
+            throw new NotImplementedException();
         }
+
     }
 }

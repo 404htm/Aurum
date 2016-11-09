@@ -6,8 +6,8 @@ using System.Threading.Tasks;
 
 namespace Aurum.Gen.Data
 {
-    public class Code
+    public class Code : TemplateNode
     {
-
+        public string Value { get; set; }
     }
 }

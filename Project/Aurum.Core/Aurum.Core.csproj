@@ -82,9 +82,6 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="CodeGen\ForEach.cs" />
-    <Compile Include="CodeGen\TemplateComponent.cs" />
-    <Compile Include="CodeGen\Template.cs" />
     <Compile Include="Context.cs" />
     <Compile Include="Extensions\DictionaryExtensions.cs" />
     <Compile Include="IDataConnection.cs" />
