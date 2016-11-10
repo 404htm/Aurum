@@ -46,7 +46,12 @@ namespace Aurum.Gen
 
         internal void Build(If template, IScope scope)
         {
+            var parser = _parserFactory.Create<Func<bool>>();
+            var expr = parser.Parse(template.Condition);
+            var result = expr();
 
+            var commands = (result) ? template.Content : template.Else;
+            commands.ForEach(n => Visit(n, scope));
         }
 
     }
