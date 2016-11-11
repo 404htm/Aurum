@@ -86,12 +86,14 @@
     <Compile Include="Extensions\DictionaryExtensions.cs" />
     <Compile Include="IDataConnection.cs" />
     <Compile Include="IDataSource.cs" />
+    <Compile Include="IScope.cs" />
     <Compile Include="Parser\IParserFactory.cs" />
     <Compile Include="Parser\ParserFactory.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="QueryDefinition.cs" />
     <Compile Include="QuerySet.cs" />
     <Compile Include="QueryTemplate.cs" />
+    <Compile Include="Scope.cs" />
     <Compile Include="SourceType.cs" />
     <Compile Include="SqlDataConnection.cs" />
     <Compile Include="Storeable.cs" />

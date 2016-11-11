@@ -2,7 +2,7 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Collections.Generic;
 
-namespace Aurum.Gen.Tests
+namespace Aurum.Core.Tests
 {
     [TestClass]
     public class ScopeTests

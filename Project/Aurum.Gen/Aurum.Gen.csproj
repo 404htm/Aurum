@@ -47,7 +47,6 @@
     <Compile Include="Nodes\If.cs" />
     <Compile Include="Nodes\TemplateNode.cs" />
     <Compile Include="ICodeMaterializer.cs" />
-    <Compile Include="IScope.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Scope.cs" />
     <Compile Include="TemplateVisitor.cs" />

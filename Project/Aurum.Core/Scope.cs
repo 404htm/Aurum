@@ -1,9 +1,8 @@
-﻿using Aurum.Core;
-using Aurum.Core.Extensions;
+﻿using Aurum.Core.Extensions;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace Aurum.Gen
+namespace Aurum.Core
 {
     public class Scope : IScope
     {

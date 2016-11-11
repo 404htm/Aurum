@@ -5,6 +5,7 @@ using Moq;
 using Aurum.Gen.Nodes;
 using Aurum.Core.Parser;
 using System.Collections.Generic;
+using Aurum.Core;
 
 namespace Aurum.Gen.Tests
 {

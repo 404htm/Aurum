@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace Aurum.Gen
+namespace Aurum.Core
 {
     public interface IScope
     {

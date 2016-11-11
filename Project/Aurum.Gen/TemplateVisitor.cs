@@ -1,4 +1,5 @@
-﻿using Aurum.Core.Parser;
+﻿using Aurum.Core;
+using Aurum.Core.Parser;
 using Aurum.Gen.Nodes;
 using System;
 using System.Text;
