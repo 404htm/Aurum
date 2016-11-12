@@ -49,7 +49,7 @@ namespace Aurum.Gen.Tests
 
             //todo: substitution of variables
             var parser = new Mock<IExpressionParser<Func<bool>>>();
-            parser.Setup(p => p.Parse("true")).Returns(() => true);
+            parser.Setup(p => p.Parse("true")).ReturnsAsync(() => true);
             var factory = new Mock<IParserFactory>();
             factory.Setup(f => f.Create<Func<bool>>()).Returns(parser.Object);
 
@@ -78,7 +78,7 @@ namespace Aurum.Gen.Tests
 
             //todo: substitution of variables
             var parser = new Mock<IExpressionParser<Func<bool>>>();
-            parser.Setup(p => p.Parse("false")).Returns(() => true);
+            parser.Setup(p => p.Parse("false")).ReturnsAsync(() => true);
             var factory = new Mock<IParserFactory>();
             factory.Setup(f => f.Create<Func<bool>>()).Returns(parser.Object);
 

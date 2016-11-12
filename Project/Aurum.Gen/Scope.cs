@@ -26,6 +26,7 @@ namespace Aurum.Gen
             else if (_parent != null) return _parent.Get<T>(name);
             else return default(T);
         }
+
         public void Set<T>(string name, T value) => _vars[name] = _vars[name] = value;
 
         public IEnumerable<T> GetList<T>(string name) => _sets.SafeGet(name)?.Cast<T>() ?? _parent?.GetList<T>(name);
