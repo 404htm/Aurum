@@ -2,6 +2,7 @@
 using Aurum.Core.Parser;
 using Aurum.Gen.Nodes;
 using System;
+using System.Collections.Generic;
 using System.Text;
 
 namespace Aurum.Gen
@@ -35,7 +36,7 @@ namespace Aurum.Gen
         internal void Build(ForEach template, IScope scope)
         {
             var set = template.Set;
-            var items = scope.GetList<object>(set);
+            var items = scope.Get<IEnumerable<object>>(set);
 
             foreach(var item in items)
             {

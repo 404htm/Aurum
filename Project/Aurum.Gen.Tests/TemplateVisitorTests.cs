@@ -20,7 +20,7 @@ namespace Aurum.Gen.Tests
 
             //Scope Contains the set to enumerate and persists the current value - This should match "Var" from the ForEach block
             var scope = new Mock<IScope>();
-            scope.Setup(s => s.GetList<object>("list")).Returns(items);
+            scope.Setup(s => s.Get<IEnumerable<object>>("list")).Returns(items);
             scope.Setup(s => s.Set("cur", It.IsAny<object>())).Callback<string, object>((k, v) => current = v);
             scope.Setup(s => s.Get<object>("cur")).Returns(() => current);
 

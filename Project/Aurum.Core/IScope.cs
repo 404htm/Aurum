@@ -6,8 +6,6 @@ namespace Aurum.Core
     {
         T Get<T>(string name);
         void Set<T>(string name, T value);
-
-        IEnumerable<T> GetList<T>(string name);
-        void SetList<T>(string name, IEnumerable<T> value);
+        List<string> Keys { get; }
     }
 }

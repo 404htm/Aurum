@@ -58,9 +58,9 @@ namespace Aurum.Core.Tests
             var value = new List<string> { "TestValue" };
 
             var scope = new Scope();
-            scope.SetList(key, value);
+            scope.Set(key, value);
 
-            var result = scope.GetList<string>(key);
+            var result = scope.Get<IEnumerable<string>>(key);
             Assert.AreEqual(value, result);
         }
 
@@ -74,14 +74,14 @@ namespace Aurum.Core.Tests
             var outer = new Scope();
             var inner = new Scope(outer);
 
-            outer.SetList(pairOuter1.Item1, pairOuter1.Item2);
-            outer.SetList(pairOuter2.Item1, pairOuter2.Item2);
-            inner.SetList(pairInner1.Item1, pairInner1.Item2);
+            outer.Set(pairOuter1.Item1, pairOuter1.Item2);
+            outer.Set(pairOuter2.Item1, pairOuter2.Item2);
+            inner.Set(pairInner1.Item1, pairInner1.Item2);
 
-            var resultInner = inner.GetList<string>(pairInner1.Item1);
+            var resultInner = inner.Get<IEnumerable<string>>(pairInner1.Item1);
             Assert.AreEqual(pairInner1.Item2, resultInner);
 
-            var resultOuter = inner.GetList<string>(pairOuter2.Item1);
+            var resultOuter = inner.Get<IEnumerable<string>>(pairOuter2.Item1);
             Assert.AreEqual(pairOuter2.Item2, resultOuter);
         }
 

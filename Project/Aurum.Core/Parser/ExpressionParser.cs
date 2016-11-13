@@ -33,8 +33,8 @@ namespace Aurum.Core.Parser
         public async Task<T> Parse(string expression)
         {
             var loader = new InteractiveAssemblyLoader();
+            //var globals = new Globals { NumberOfStudents = 80, StudentsPerClass = 15 };
             var script = CSharpScript.Create<T>($"return {expression};", GetOptions(), null, loader);
-
             var task = script.RunAsync();
             var result = await task;
             return result.ReturnValue;

@@ -48,7 +48,6 @@
     <Compile Include="Nodes\TemplateNode.cs" />
     <Compile Include="ICodeMaterializer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Scope.cs" />
     <Compile Include="TemplateVisitor.cs" />
   </ItemGroup>
   <ItemGroup>
