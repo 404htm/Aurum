@@ -5,12 +5,14 @@ using System.Linq;
 
 namespace Aurum.Core
 {
-    /// <summary>Variable storage object enabling nested scoping rules</summary>
+    /// <summary>Dictionary backed variable storage that enables nested scoping rules</summary>
     public class Scope : IScope
     {
         IScope _outer;
         Dictionary<string, object> _vars { get; set; }
 
+        /// <summary>Create a new scope object</summary>
+        /// <param name="outer">The outer scope object - Leave null for top level</param>
         public Scope(IScope outer = null)
         {
             _outer = outer;
