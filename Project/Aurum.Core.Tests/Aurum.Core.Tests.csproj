@@ -40,6 +40,7 @@
       <HintPath>..\packages\Castle.Core.3.3.3\lib\net45\Castle.Core.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="Microsoft.CSharp" />
     <Reference Include="Moq, Version=4.5.8.0, Culture=neutral, PublicKeyToken=69f491c39445e920, processorArchitecture=MSIL">
       <HintPath>..\packages\Moq.4.5.8\lib\net45\Moq.dll</HintPath>
       <Private>True</Private>
@@ -70,6 +71,7 @@
     <Compile Include="ScopeTests.cs" />
     <Compile Include="StoreableBaseTests.cs" />
     <Compile Include="ExpressionParserTests.cs" />
+    <Compile Include="ScopeExtensionTests.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Aurum.Core\Aurum.Core.csproj">

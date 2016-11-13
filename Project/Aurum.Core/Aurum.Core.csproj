@@ -84,6 +84,7 @@
   <ItemGroup>
     <Compile Include="Context.cs" />
     <Compile Include="Extensions\DictionaryExtensions.cs" />
+    <Compile Include="Extensions\ScopeExtensions.cs" />
     <Compile Include="IDataConnection.cs" />
     <Compile Include="IDataSource.cs" />
     <Compile Include="IScope.cs" />
