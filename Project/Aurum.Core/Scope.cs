@@ -8,22 +8,22 @@ namespace Aurum.Core
     /// <summary>Variable storage object enabling nested scoping rules</summary>
     public class Scope : IScope
     {
-        IScope _parent;
+        IScope _outer;
         Dictionary<string, object> _vars { get; set; }
 
-        public Scope(IScope parent = null)
+        public Scope(IScope outer = null)
         {
-            _parent = parent;
+            _outer = outer;
             _vars = new Dictionary<string, object>();
         }
 
         public object this[string key]
         {
-            get { return _vars.SafeGet(key) ?? _parent?[key] ?? null; }
+            get { return _vars.SafeGet(key) ?? _outer?[key] ?? null; }
             set { _vars[key] = value; }
         }
 
-        public List<string> Keys => _vars.Keys.Union(_parent?.Keys).ToList();
+        public List<string> Keys => _vars.Keys.Union(_outer?.Keys??Enumerable.Empty<string>()).ToList();
 
     }
 }

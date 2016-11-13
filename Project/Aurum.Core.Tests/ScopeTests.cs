@@ -1,6 +1,7 @@
 ﻿using System;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Aurum.Core.Tests
 {
@@ -85,6 +86,40 @@ namespace Aurum.Core.Tests
             Assert.AreEqual(pairOuter2.Item2, resultOuter);
         }
 
+        [TestMethod]
+        public void Scope_CheckKeysFlat()
+        {
+            var scope = new Scope();
+            scope["A"] = "A";
+            scope["B"] = 5;
+            scope["C"] = null;
+
+            var result = scope.Keys.OrderBy(k => k);
+            var expected = new string[] { "A", "B", "C" };
+            Assert.IsTrue(result.SequenceEqual(expected), "The keys returned by scope do not match the expected value");
+        }
+
+        [TestMethod]
+        public void Scope_CheckKeysNested()
+        {
+            var scopeO = new Scope();
+            scopeO["A"] = "A";
+            scopeO["B"] = 5;
+            scopeO["C"] = null;
+
+            var scopeI = new Scope(scopeO);
+            scopeI["B"] = "A";
+            scopeI["C"] = 5;
+            scopeI["D"] = null;
+
+            var resultO = scopeO.Keys.OrderBy(k => k);
+            var expectedO = new string[] { "A", "B", "C",};
+            Assert.IsTrue(resultO.SequenceEqual(expectedO));
+
+            var resultI = scopeI.Keys.OrderBy(k => k);
+            var expectedI = new string[] { "A", "B", "C", "D"};
+            Assert.IsTrue(resultI.SequenceEqual(expectedI));
+        }
 
     }
 }
