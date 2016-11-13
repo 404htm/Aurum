@@ -14,9 +14,9 @@ namespace Aurum.Core.Tests
             var value = "TestValue";
 
             var scope = new Scope();
-            scope.Set(key, value);
+            scope[key] = value;
 
-            var result = scope.Get<string>(key);
+            var result = (string)scope[key];
             Assert.AreEqual(value, result);
         }
 
@@ -26,7 +26,7 @@ namespace Aurum.Core.Tests
             var key = "TestKey";
 
             var scope = new Scope();
-            var result = scope.Get<string>(key);
+            var result = (string)scope[key];
             Assert.IsNull(result);
         }
 
@@ -40,14 +40,14 @@ namespace Aurum.Core.Tests
             var outer = new Scope();
             var inner = new Scope(outer);
 
-            outer.Set(pairOuter1.Item1, pairOuter1.Item2);
-            outer.Set(pairOuter2.Item1, pairOuter2.Item2);
-            inner.Set(pairInner1.Item1, pairInner1.Item2);
+            outer[pairOuter1.Item1] = pairOuter1.Item2;
+            outer[pairOuter2.Item1] = pairOuter2.Item2;
+            inner[pairInner1.Item1] = pairInner1.Item2;
 
-            var resultInner = inner.Get<string>(pairInner1.Item1);
+            var resultInner = (string)inner[pairInner1.Item1];
             Assert.AreEqual(pairInner1.Item2, resultInner);
 
-            var resultOuter = inner.Get<string>(pairOuter2.Item1);
+            var resultOuter = (string)inner[pairOuter2.Item1];
             Assert.AreEqual(pairOuter2.Item2, resultOuter);
         }
 
@@ -58,9 +58,9 @@ namespace Aurum.Core.Tests
             var value = new List<string> { "TestValue" };
 
             var scope = new Scope();
-            scope.Set(key, value);
+            scope[key] = value;
 
-            var result = scope.Get<IEnumerable<string>>(key);
+            var result = (IEnumerable<string>)scope[key];
             Assert.AreEqual(value, result);
         }
 
@@ -74,14 +74,14 @@ namespace Aurum.Core.Tests
             var outer = new Scope();
             var inner = new Scope(outer);
 
-            outer.Set(pairOuter1.Item1, pairOuter1.Item2);
-            outer.Set(pairOuter2.Item1, pairOuter2.Item2);
-            inner.Set(pairInner1.Item1, pairInner1.Item2);
+            outer[pairOuter1.Item1] = pairOuter1.Item2;
+            outer[pairOuter2.Item1] = pairOuter2.Item2;
+            inner[pairInner1.Item1] = pairInner1.Item2;
 
-            var resultInner = inner.Get<IEnumerable<string>>(pairInner1.Item1);
+            var resultInner = (IEnumerable<string>)inner[pairInner1.Item1];
             Assert.AreEqual(pairInner1.Item2, resultInner);
 
-            var resultOuter = inner.Get<IEnumerable<string>>(pairOuter2.Item1);
+            var resultOuter = (IEnumerable<string>)inner[pairOuter2.Item1];
             Assert.AreEqual(pairOuter2.Item2, resultOuter);
         }
 

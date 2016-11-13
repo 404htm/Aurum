@@ -12,10 +12,10 @@ namespace Aurum.Core.Tests
         public void ScopeExtension_ToExpando()
         {
             var scope = new Mock<IScope>();
-            scope.Setup(s => s.Get<object>("ItemA")).Returns("A");
-            scope.Setup(s => s.Get<object>("ItemB")).Returns(5);
-            scope.Setup(s => s.Get<object>("ItemC")).Returns('C');
-            scope.Setup(s => s.Get<object>("ItemD")).Returns(null);
+            scope.Setup(s => s["ItemA"]).Returns("A");
+            scope.Setup(s => s["ItemB"]).Returns(5);
+            scope.Setup(s => s["ItemC"]).Returns('C');
+            scope.Setup(s => s["ItemD"]).Returns(null);
             scope.Setup(s => s.Keys).Returns(new List<string> { "ItemA", "ItemB", "ItemC", "ItemD" });
 
 

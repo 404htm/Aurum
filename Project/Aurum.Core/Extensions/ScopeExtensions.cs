@@ -16,7 +16,7 @@ namespace Aurum.Core.Extensions
             var obj = new ExpandoObject();
             var lookup = obj as IDictionary<string, object>;
 
-            foreach(var key in scope.Keys) lookup[key] = scope.Get<object>(key);
+            foreach(var key in scope.Keys) lookup[key] = scope[key];
 
             return obj;
         }

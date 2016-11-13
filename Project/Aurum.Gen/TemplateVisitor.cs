@@ -36,12 +36,12 @@ namespace Aurum.Gen
         internal void Build(ForEach template, IScope scope)
         {
             var set = template.Set;
-            var items = scope.Get<IEnumerable<object>>(set);
+            var items = (IEnumerable<object>)scope[set];
 
             foreach(var item in items)
             {
                 var inner = _scopeFactory(scope);
-                inner.Set(template.Var, item);
+                inner[template.Var] = item;
                 foreach (var c in template.Content) Visit(c, inner);
             }
         }

@@ -5,6 +5,7 @@ using System.Linq;
 
 namespace Aurum.Core
 {
+    /// <summary>Variable storage object enabling nested scoping rules</summary>
     public class Scope : IScope
     {
         IScope _parent;
@@ -16,16 +17,11 @@ namespace Aurum.Core
             _vars = new Dictionary<string, object>();
         }
 
-        public T Get<T>(string name)
+        public object this[string key]
         {
-            var result = (T)(_vars.SafeGet(name));
-
-            if (result != null) return result;
-            else if (_parent != null) return _parent.Get<T>(name);
-            else return default(T);
+            get { return _vars.SafeGet(key) ?? _parent?[key] ?? null; }
+            set { _vars[key] = value; }
         }
-
-        public void Set<T>(string name, T value) => _vars[name] = value;
 
         public List<string> Keys => _vars.Keys.Union(_parent?.Keys).ToList();
 

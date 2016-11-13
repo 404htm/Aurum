@@ -20,9 +20,9 @@ namespace Aurum.Gen.Tests
 
             //Scope Contains the set to enumerate and persists the current value - This should match "Var" from the ForEach block
             var scope = new Mock<IScope>();
-            scope.Setup(s => s.Get<IEnumerable<object>>("list")).Returns(items);
-            scope.Setup(s => s.Set("cur", It.IsAny<object>())).Callback<string, object>((k, v) => current = v);
-            scope.Setup(s => s.Get<object>("cur")).Returns(() => current);
+            scope.SetupGet(s => s["list"]).Returns(items);
+            scope.SetupSet(s => s["cur"] = It.IsAny<object>()).Callback<string, object>((k,v) => current = v);
+            scope.SetupGet(s => s["cur"]).Returns(() => current);
 
             //Minimal tree to walk - Visitor terminates on Code so needed to include both objects for testing
             TemplateNode node = new ForEach() { Set = "list", Var = "cur" };
@@ -33,7 +33,7 @@ namespace Aurum.Gen.Tests
             string output = "HEADER|";
             var materializer = new Mock<ICodeMaterializer>();
             materializer.Setup(c => c.Process(It.IsAny<IScope>(), It.IsAny<Code>()))
-                .Callback<IScope, Code>((s, c) => output += $"{s.Get<object>("cur")}{c.Value}|");
+                .Callback<IScope, Code>((s, c) => output += $"{s["cur"]}{c.Value}|");
 
             var templateVisitor = new TemplateVisitor(materializer.Object, (s) => scope.Object, null);
             templateVisitor.Visit(node, scope.Object);
@@ -45,7 +45,7 @@ namespace Aurum.Gen.Tests
         public void TemplateVisitor_IfTrue()
         {
             var scope = new Mock<IScope>();
-            scope.Setup(s => s.Get<bool?>("condition")).Returns(true);
+            scope.SetupGet(s => s["condition"]).Returns(true);
 
             //todo: substitution of variables
             var parser = new Mock<IExpressionParser<Func<bool>>>();
@@ -74,7 +74,7 @@ namespace Aurum.Gen.Tests
         public void TemplateVisitor_IfFalse()
         {
             var scope = new Mock<IScope>();
-            scope.Setup(s => s.Get<bool?>("condition")).Returns(false);
+            scope.Setup(s => (bool ?)s["condition"]).Returns(false);
 
             //todo: substitution of variables
             var parser = new Mock<IExpressionParser<Func<bool>>>();
