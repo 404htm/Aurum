@@ -9,22 +9,22 @@ namespace Aurum.Core.Tests
 	public class ExpressionParserTests
 	{
 		[TestMethod]
-		public async void SimpleStatementTests()
+		public void SimpleStatementTests()
 		{
 			var runner = new ExpressionParser<Func<int, int>>();
-			var result = await runner.Parse("(n) => 6 + n");
+			var result = runner.Parse("(n) => 6 + n").Result;
 
 			Assert.IsNotNull(result);
 			Assert.AreEqual(6 + 5, result(5));
 		}
 
 		[TestMethod]
-		public async void SimpleStatementWithImport()
+		public void SimpleStatementWithImport()
 		{
 			var runner = new ExpressionParser<Func<Context>>();
 			runner.Register<Context>();
 			runner.Import("Aurum.Core");
-			var result = await runner.Parse("() => new Context()");
+			var result = runner.Parse("() => new Context()").Result;
 
 			Assert.IsNotNull(result);
 			Assert.IsNotNull(result());
