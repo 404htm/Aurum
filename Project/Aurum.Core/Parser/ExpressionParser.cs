@@ -13,11 +13,17 @@ using System.Threading.Tasks;
 
 namespace Aurum.Core.Parser
 {
+
+    public class Globals
+    {
+        public dynamic __scope;
+    }
+
     public class ExpressionParser<T> : IExpressionParser<T>
     {
         List<string> _imports = new List<string>();
         List<Type> _types = new List<Type>();
-        const string DYNAMIC_OBJ = "__scope";
+        const string DYN_ALIAS = "__scope";
 
         public void Import(string import) =>_imports.Add(import);
         public void Register<T2>() =>_types.Add(typeof(T2));
@@ -25,6 +31,7 @@ namespace Aurum.Core.Parser
 
         public ExpressionParser()
         {
+            Register(this.GetType());
             Register<DynamicObject>();
             Register<Microsoft.CSharp.RuntimeBinder.CSharpArgumentInfo>();
             Register<CSharpArgumentInfo>();
@@ -33,7 +40,7 @@ namespace Aurum.Core.Parser
         public async Task<T> Parse(string expression)
         {
             if (expression == null) throw new ArgumentNullException(nameof(expression));
-            return await Parse(expression, null, null);
+            return await Parse(expression, (ExpandoObject)null);
         }
 
         public async Task<T> Parse(string expression, IScope scope)
@@ -42,14 +49,22 @@ namespace Aurum.Core.Parser
             if (expression == null) throw new ArgumentNullException(nameof(expression));
 
             var globals = scope.ToExpando();
-            return await Parse(expression, globals, typeof(ExpandoObject));
+            return await Parse(expression, globals);
         }
 
-        async Task<T> Parse(string expression, ExpandoObject globals, Type typeGlobals)
+        async Task<T> Parse(string expression, ExpandoObject globals)
         {
+            string expr;
+            var vars = new Globals{ __scope = globals };
+
+            if (globals != null) expr = $"{BuildIndirectAdaptor(globals)} return {expression};";
+            else expr = $"return {expression};";
+
             var loader = new InteractiveAssemblyLoader();
-            var script = CSharpScript.Create<T>($"return {expression};", GetOptions(), typeGlobals, loader);
-            var task = script.RunAsync(globals);
+            var task = CSharpScript.RunAsync<T>(expr, GetOptions(), vars, typeof(Globals));
+
+            //var script = CSharpScript.Create<T>(expr, GetOptions(), typeof(Globals), loader);
+            //var task = script.RunAsync(vars);
             var result = await task;
             return result.ReturnValue;
         }
@@ -71,9 +86,16 @@ namespace Aurum.Core.Parser
         private string BuildIndirectAdaptor(ExpandoObject globals)
         {
             //Workaround for https://github.com/dotnet/roslyn/issues/3194
-            var sb = new StringBuilder();
 
+            var vars = globals as IDictionary<string, object>;
+            var sb = new StringBuilder();
+            foreach(var v in vars)
+            {
+                var type = v.Value.GetType();
+                sb.AppendLine($"var {v.Key} = {DYN_ALIAS}.{v.Key};");
+            }
             return sb.ToString();
         }
+
     }
 }
