@@ -45,16 +45,15 @@ namespace Aurum.Gen.Tests
         public void TemplateVisitor_IfTrue()
         {
             var scope = new Mock<IScope>();
-            scope.SetupGet(s => s["condition"]).Returns(true);
 
-            //todo: substitution of variables
             var parser = new Mock<IExpressionParser<Func<bool>>>();
-            parser.Setup(p => p.Parse("true")).ReturnsAsync(() => true);
+            parser.Setup(p => p.Parse("condition", It.IsAny<IScope>())).ReturnsAsync(() => true).Verifiable();
+
             var factory = new Mock<IParserFactory>();
             factory.Setup(f => f.Create<Func<bool>>()).Returns(parser.Object);
 
             //Minimal tree to walk - Visitor terminates on Code so needed to include both objects for testing
-            TemplateNode node = new If() { Condition = "true",
+            TemplateNode node = new If() { Condition = "condition",
                 Content = new List<TemplateNode> { new Code { Value = "TRUE1" }, new Code { Value = "TRUE2" } },
                 Else = new List<TemplateNode> { new Code { Value = "FALSE1" }, new Code { Value = "FALSE2" } },
             };
@@ -67,6 +66,9 @@ namespace Aurum.Gen.Tests
 
             var templateVisitor = new TemplateVisitor(materializer.Object, (s) => scope.Object, factory.Object);
             templateVisitor.Visit(node, scope.Object);
+
+            scope.Verify();
+            parser.Verify();
 
             Assert.AreEqual("HEADER|TRUE1|TRUE2|", output);
         }
@@ -74,18 +76,17 @@ namespace Aurum.Gen.Tests
         public void TemplateVisitor_IfFalse()
         {
             var scope = new Mock<IScope>();
-            scope.Setup(s => (bool ?)s["condition"]).Returns(false);
 
-            //todo: substitution of variables
             var parser = new Mock<IExpressionParser<Func<bool>>>();
-            parser.Setup(p => p.Parse("false")).ReturnsAsync(() => true);
+            parser.Setup(p => p.Parse("condition", It.IsAny<IScope>())).ReturnsAsync(() => false).Verifiable();
+
             var factory = new Mock<IParserFactory>();
             factory.Setup(f => f.Create<Func<bool>>()).Returns(parser.Object);
 
             //Minimal tree to walk - Visitor terminates on Code so needed to include both objects for testing
             TemplateNode node = new If()
             {
-                Condition = "false",
+                Condition = "condition",
                 Content = new List<TemplateNode> { new Code { Value = "TRUE1" }, new Code { Value = "TRUE2" } },
                 Else = new List<TemplateNode> { new Code { Value = "FALSE1" }, new Code { Value = "FALSE2" } },
             };
@@ -98,6 +99,10 @@ namespace Aurum.Gen.Tests
 
             var templateVisitor = new TemplateVisitor(materializer.Object, (s) => scope.Object, factory.Object);
             templateVisitor.Visit(node, scope.Object);
+
+            scope.Verify();
+            parser.Verify();
+
 
             Assert.AreEqual("HEADER|FALSE1|FALSE2|", output);
         }
