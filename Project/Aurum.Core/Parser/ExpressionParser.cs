@@ -31,9 +31,7 @@ namespace Aurum.Core.Parser
 
         public ExpressionParser()
         {
-            Register(this.GetType());
             Register<DynamicObject>();
-            Register<Microsoft.CSharp.RuntimeBinder.CSharpArgumentInfo>();
             Register<CSharpArgumentInfo>();
         }
 
