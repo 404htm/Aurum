@@ -56,6 +56,14 @@ namespace Aurum.Gen
             commands.ForEach(n => Visit(n, scope));
         }
 
+        internal void Build(Var template, IScope scope)
+        {
+            var parser = _parserFactory.Create<Func<object>>();
+            var expr = parser.Parse(template.Value, scope).Result;
+
+            scope[template.Name] = expr();
+        }
+
     }
 
 

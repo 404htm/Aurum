@@ -45,6 +45,7 @@ namespace Aurum.Gen.Tests
         public void TemplateVisitor_IfTrue()
         {
             var scope = new Mock<IScope>();
+            //Actual scope ignored because call would be from the parser (which is also mocked out)
 
             var parser = new Mock<IExpressionParser<Func<bool>>>();
             parser.Setup(p => p.Parse("condition", It.IsAny<IScope>())).ReturnsAsync(() => true).Verifiable();
@@ -73,9 +74,11 @@ namespace Aurum.Gen.Tests
             Assert.AreEqual("HEADER|TRUE1|TRUE2|", output);
         }
 
+        [TestMethod]
         public void TemplateVisitor_IfFalse()
         {
             var scope = new Mock<IScope>();
+            //Actual scope ignored because call would be from the parser (which is also mocked out)
 
             var parser = new Mock<IExpressionParser<Func<bool>>>();
             parser.Setup(p => p.Parse("condition", It.IsAny<IScope>())).ReturnsAsync(() => false).Verifiable();
@@ -107,5 +110,32 @@ namespace Aurum.Gen.Tests
             Assert.AreEqual("HEADER|FALSE1|FALSE2|", output);
         }
 
+        [TestMethod]
+        public void TemplateVisitor_Var()
+        {
+            int result = 0;
+
+            var scope = new Mock<IScope>();
+            scope.SetupSet(s => s["testVar"] = It.IsAny<int>()).Callback<string, object>((k, v) => result = (dynamic)v);
+
+            var parser = new Mock<IExpressionParser<Func<object>>>();
+            parser.Setup(p => p.Parse("testStatement", It.IsAny<IScope>())).ReturnsAsync(() => 15).Verifiable();
+
+            var factory = new Mock<IParserFactory>();
+            factory.Setup(f => f.Create<Func<object>>()).Returns(parser.Object);
+
+            TemplateNode node = new Var()
+            {
+                Name = "testVar",
+                Value = "testStatement"
+            };
+
+            var templateVisitor = new TemplateVisitor(null, (s) => scope.Object, factory.Object);
+            templateVisitor.Visit(node, scope.Object);
+
+
+            parser.Verify();
+            Assert.AreEqual(15, result);
+        }
     }
 }
