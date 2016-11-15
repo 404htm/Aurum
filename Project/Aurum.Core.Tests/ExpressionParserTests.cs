@@ -46,5 +46,19 @@ namespace Aurum.Core.Tests
             Assert.AreEqual(8, result(5));
         }
 
+        [TestMethod]
+        public void Parser_EvaluateWithScopeMultiple()
+        {
+            var scope = new Mock<IScope>();
+            scope.SetupGet(s => s["numVar"]).Returns(10);
+            scope.SetupGet(s => s["strVar"]).Returns("MyString");
+            scope.Setup(s => s.Keys).Returns(new List<string> { "numVar", "strVar" });
+
+            var runner = new ExpressionParser<Func<string>>();
+            var result = runner.Parse(@"() => $""{strVar}-{numVar}""", scope.Object).Result;
+
+            Assert.IsNotNull(result);
+            Assert.AreEqual("MyString-10", result());
+        }
     }
 }

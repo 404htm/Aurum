@@ -86,6 +86,7 @@ namespace Aurum.Core.Parser
         private string BuildIndirectAdaptor(ExpandoObject globals)
         {
             //Workaround for https://github.com/dotnet/roslyn/issues/3194
+            //TODO: Bring this up in confession
 
             var vars = globals as IDictionary<string, object>;
             var sb = new StringBuilder();
