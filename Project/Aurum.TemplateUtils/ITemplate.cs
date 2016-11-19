@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-
-namespace Aurum.TemplateUtils
+﻿namespace Aurum.TemplateUtils
 {
     public interface ITemplate<T>
     {
@@ -12,3 +7,4 @@ namespace Aurum.TemplateUtils
         void Body(T data);
     }
 }
+
