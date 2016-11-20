@@ -49,12 +49,17 @@
     <Compile Include="ICodeMaterializer.cs" />
     <Compile Include="Nodes\Var.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="TemplateRewriter.cs" />
     <Compile Include="TemplateVisitor.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Aurum.Core\Aurum.Core.csproj">
       <Project>{e1c4f2cc-c604-4576-a1fb-70afef14ab6d}</Project>
       <Name>Aurum.Core</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Aurum.TemplateUtils\Aurum.TemplateUtils.csproj">
+      <Project>{de29813a-2e6c-49e0-a38f-369e5285c155}</Project>
+      <Name>Aurum.TemplateUtils</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

@@ -2,9 +2,8 @@
 {
     public interface ITemplate<T>
     {
-        string Source { get; }
-        string FileName { get; }
-        void Body(T data);
+        string GetFileName(T model);
+        void Body(T model);
     }
 }
 
