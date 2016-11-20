@@ -125,7 +125,7 @@ namespace Aurum.Gen.Tests
         }
 
         [TestMethod]
-        public void EnsureMetaAWorksWithLeadingTabs()
+        public void EnsureMetaWorksWithLeadingTabs()
         {
             Func<string, string> metaSub = (line) => $"-{line}-";
             Func<string, string> inlineSub = (statement) => "X";
