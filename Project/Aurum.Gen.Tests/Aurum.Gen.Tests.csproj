@@ -64,6 +64,7 @@
   <ItemGroup>
     <Compile Include="Metadata\BasicTable.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="TemplateRewriterTests.cs" />
     <Compile Include="Templates\Basic.au.cs" />
     <Compile Include="TemplateVisitorTests.cs" />
   </ItemGroup>
