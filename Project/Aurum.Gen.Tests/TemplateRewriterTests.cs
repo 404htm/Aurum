@@ -100,6 +100,34 @@ namespace Aurum.Gen.Tests
             Assert.AreEqual("C", result[2]);
         }
 
+        [TestMethod]
+        public void TemplateRewriter_EnsureOnlyWhitespaceAllowedBeforeMeta()
+        {
+            Func<string, string> substitution = (line) => $"-{line}-";
+            var input = new List<string> { "A", ":    B", ".    :C" };
 
+            var underTest = new TemplateRewriter(":", "`", substitution);
+            var result = underTest.Rewrite(input).ToList();
+
+            Assert.AreEqual(3, result.Count());
+            Assert.AreEqual("A", result[0]);
+            Assert.AreEqual("-    B-", result[1]);
+            Assert.AreEqual(".    :C", result[2]);
+        }
+
+        [TestMethod]
+        public void TemplateRewriter_EnsureMetaAWorksWithLeadingTabs()
+        {
+            Func<string, string> substitution = (line) => $"-{line}-";
+            var input = new List<string> { "A", ":B", "\t:C" };
+
+            var underTest = new TemplateRewriter(":", "`", substitution);
+            var result = underTest.Rewrite(input).ToList();
+
+            Assert.AreEqual(3, result.Count());
+            Assert.AreEqual("A", result[0]);
+            Assert.AreEqual("-B-", result[1]);
+            Assert.AreEqual("-C-", result[2]);
+        }
     }
 }
