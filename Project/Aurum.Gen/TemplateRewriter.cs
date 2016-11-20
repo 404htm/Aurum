@@ -14,38 +14,52 @@ namespace Aurum.Gen
     /// </summary>
     public class TemplateRewriter
     {
-        readonly Func<string, string> _substitution;
-        readonly Regex _lineFinder;
+        readonly Func<string, string> _metaReplacement;
+        readonly Func<string, string> _inlineReplacement;
+        readonly List<string> _inlineSymbols;
+        readonly Regex _metaFinder;
+        readonly Regex _inlineFinder;
 
-
-        public TemplateRewriter(string metaLineSymbol, string metaEscapeSymbol, Func<string, string> substitution)
+        public TemplateRewriter(string metaSymbol, string inlineSymbolL, string inlineSymbolR, Func<string, string> metaReplace, Func<string, string> inlineReplace)
         {
-            var line = Regex.Escape(metaLineSymbol);
-            var esc = Regex.Escape(metaEscapeSymbol);
+            var line = Regex.Escape(metaSymbol);
+            var escL = Regex.Escape(inlineSymbolL);
+            var escR = Regex.Escape(inlineSymbolR);
 
-            _lineFinder = new Regex($@"(?<=^\s*({line}|//{line}))(.*)$");
-            _substitution = substitution;
+            _inlineSymbols = new List<string> { inlineSymbolL, inlineSymbolR};
+            _metaFinder = new Regex($@"(?<=^\s*({line}|//{line}))(.*)$");
+            _inlineFinder = new Regex(@"(?<!\\)`(?<esc>.+?)(?<!\\)`");
+
+            _metaReplacement = metaReplace;
+            _inlineReplacement = inlineReplace;
         }
 
         public IEnumerable<string> Rewrite(IEnumerable<string> template)
         {
-            foreach (var line in template)
+            foreach (var line in template) yield return EscapeLineIfMeta(line);
+        }
+
+        /// <summary>Checks for meta lines and applies specified transformation</summary>
+        private string EscapeLineIfMeta(string line)
+        {
+            var metaMatch = _metaFinder.Match(line);
+            if (metaMatch.Success)
             {
-                var result = _lineFinder.Match(line);
-                if (result.Success)
-                {
-                    
-                    var sub = _substitution(result.Value);
-                    yield return sub;
-                }
-                else
-                {
-                    yield return line;
-                }
+                var statement = _metaReplacement(metaMatch.Value);
+                var raised = RaiseInlineStatements(statement);
+                return raised;
+            }
+            else
+            {
+                return line;
             }
         }
 
-
+        /// <summary>Checks for inline statements and replaces with specified transformation. Should only be called on meta lines</summary>
+        private string RaiseInlineStatements(string line)
+        {
+            return _inlineFinder.Replace(line, _inlineReplacement("${esc}"));
+        }
 
     }
 }
