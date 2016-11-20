@@ -32,8 +32,16 @@ namespace Aurum.Gen
             foreach (var line in template)
             {
                 var result = _lineFinder.Match(line);
-                if (result.Success) yield return _substitution(result.Value);
-                else yield return line;
+                if (result.Success)
+                {
+                    
+                    var sub = _substitution(result.Value);
+                    yield return sub;
+                }
+                else
+                {
+                    yield return line;
+                }
             }
         }
 

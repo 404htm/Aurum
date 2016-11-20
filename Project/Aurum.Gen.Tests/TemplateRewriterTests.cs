@@ -129,5 +129,20 @@ namespace Aurum.Gen.Tests
             Assert.AreEqual("-B-", result[1]);
             Assert.AreEqual("-C-", result[2]);
         }
+
+        [TestMethod]
+        public void TemplateRewriter_EnsureMetaLinesReplacedCustomValueRegexUnsafe()
+        {
+            Func<string, string> substitution = (line) => $"-{line}-";
+            var input = new List<string> { "A", "^B", "C" };
+
+            var underTest = new TemplateRewriter("^", "`", substitution);
+            var result = underTest.Rewrite(input).ToList();
+
+            Assert.AreEqual(3, result.Count());
+            Assert.AreEqual("A", result[0]);
+            Assert.AreEqual("-B-", result[1]);
+            Assert.AreEqual("C", result[2]);
+        }
     }
 }
