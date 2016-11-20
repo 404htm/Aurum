@@ -14,14 +14,14 @@ namespace Aurum.Gen.Tests
     public class TemplateRewriterTests
     {
         [TestMethod]
-        public void TemplateRewriter_EnsurePlainTextIsntAltered()
+        public void EnsurePlainTextIsntAltered()
         {
-            Func<string, string> substitution = (line) => "FAIL";
-            Func<string, string> escape = (statement) => "X";
+            Func<string, string> metaSub = (line) => "FAIL";
+            Func<string, string> inlineSub = (statement) => "X";
 
             var input = new List<string> { "LINE 1", "LINE 2", "LINE 3" };
 
-            var underTest = new TemplateRewriter(":", "`", "`", substitution, escape);
+            var underTest = new TemplateRewriter(":", "`", "`", metaSub, inlineSub);
             var result = underTest.Rewrite(input);
 
             Assert.AreEqual(3, result.Count());
@@ -29,14 +29,14 @@ namespace Aurum.Gen.Tests
         }
 
         [TestMethod]
-        public void TemplateRewriter_EnsureCommentTextIsntAltered()
+        public void EnsureCommentTextIsntAltered()
         {
-            Func<string, string> substitution = (line) => "FAIL";
-            Func<string, string> escape = (statement) => "X";
+            Func<string, string> metaSub = (line) => "FAIL";
+            Func<string, string> inlineSub = (statement) => "X";
 
             var input = new List<string> { "LINE 1", "//LINE 2", "//LINE 3" };
 
-            var underTest = new TemplateRewriter(":", "`", "`", substitution, escape);
+            var underTest = new TemplateRewriter(":", "`", "`", metaSub, inlineSub);
             var result = underTest.Rewrite(input);
 
             Assert.AreEqual(3, result.Count());
@@ -45,13 +45,13 @@ namespace Aurum.Gen.Tests
 
 
         [TestMethod]
-        public void TemplateRewriter_EnsureMetaLinesReplaced()
+        public void EnsureMetaLinesReplaced()
         {
-            Func<string, string> substitution = (line) => $"-{line}-";
-            Func<string, string> escape = (statement) => "X";
+            Func<string, string> metaSub = (line) => $"-{line}-";
+            Func<string, string> inlineSub = (statement) => "X";
             var input = new List<string> { "A", ":B", "C" };
 
-            var underTest = new TemplateRewriter(":", "`", "`", substitution, escape);
+            var underTest = new TemplateRewriter(":", "`", "`", metaSub, inlineSub);
             var result = underTest.Rewrite(input).ToList();
 
             Assert.AreEqual(3, result.Count());
@@ -61,13 +61,13 @@ namespace Aurum.Gen.Tests
         }
 
         [TestMethod]
-        public void TemplateRewriter_EnsureCommentMetaLinesReplaced()
+        public void EnsureCommentMetaLinesReplaced()
         {
-            Func<string, string> substitution = (line) => $"-{line}-";
-            Func<string, string> escape = (statement) => "X";
+            Func<string, string> metaSub = (line) => $"-{line}-";
+            Func<string, string> inlineSub = (statement) => "X";
             var input = new List<string> { "A", "//:B", "C" };
 
-            var underTest = new TemplateRewriter(":", "`", "`", substitution, escape);
+            var underTest = new TemplateRewriter(":", "`", "`", metaSub, inlineSub);
             var result = underTest.Rewrite(input).ToList();
 
             Assert.AreEqual(3, result.Count());
@@ -77,13 +77,13 @@ namespace Aurum.Gen.Tests
         }
 
         [TestMethod]
-        public void TemplateRewriter_EnsureCommentMetaAWorksWithLeadingWhitespace()
+        public void EnsureCommentMetaAWorksWithLeadingWhitespace()
         {
-            Func<string, string> substitution = (line) => $"-{line}-";
-            Func<string, string> escape = (statement) => "X";
+            Func<string, string> metaSub = (line) => $"-{line}-";
+            Func<string, string> inlineSub = (statement) => "X";
             var input = new List<string> { "A", "    //:B", "C" };
 
-            var underTest = new TemplateRewriter(":", "`", "`", substitution, escape);
+            var underTest = new TemplateRewriter(":", "`", "`", metaSub, inlineSub);
             var result = underTest.Rewrite(input).ToList();
 
             Assert.AreEqual(3, result.Count());
@@ -93,13 +93,13 @@ namespace Aurum.Gen.Tests
         }
 
         [TestMethod]
-        public void TemplateRewriter_EnsurePreservesLeadingWhitespace()
+        public void EnsurePreservesLeadingWhitespace()
         {
-            Func<string, string> substitution = (line) => $"-{line}-";
-            Func<string, string> escape = (statement) => "X";
+            Func<string, string> metaSub = (line) => $"-{line}-";
+            Func<string, string> inlineSub = (statement) => "X";
             var input = new List<string> { "A", ":    B", "C" };
 
-            var underTest = new TemplateRewriter(":", "`", "`", substitution, escape);
+            var underTest = new TemplateRewriter(":", "`", "`", metaSub, inlineSub);
             var result = underTest.Rewrite(input).ToList();
 
             Assert.AreEqual(3, result.Count());
@@ -109,13 +109,13 @@ namespace Aurum.Gen.Tests
         }
 
         [TestMethod]
-        public void TemplateRewriter_EnsureOnlyWhitespaceAllowedBeforeMeta()
+        public void EnsureOnlyWhitespaceAllowedBeforeMeta()
         {
-            Func<string, string> substitution = (line) => $"-{line}-";
-            Func<string, string> escape = (statement) => "X";
+            Func<string, string> metaSub = (line) => $"-{line}-";
+            Func<string, string> inlineSub = (statement) => "X";
             var input = new List<string> { "A", ":    B", ".    :C" };
 
-            var underTest = new TemplateRewriter(":", "`", "`", substitution, escape);
+            var underTest = new TemplateRewriter(":", "`", "`", metaSub, inlineSub);
             var result = underTest.Rewrite(input).ToList();
 
             Assert.AreEqual(3, result.Count());
@@ -125,13 +125,13 @@ namespace Aurum.Gen.Tests
         }
 
         [TestMethod]
-        public void TemplateRewriter_EnsureMetaAWorksWithLeadingTabs()
+        public void EnsureMetaAWorksWithLeadingTabs()
         {
-            Func<string, string> substitution = (line) => $"-{line}-";
-            Func<string, string> escape = (statement) => "X";
+            Func<string, string> metaSub = (line) => $"-{line}-";
+            Func<string, string> inlineSub = (statement) => "X";
             var input = new List<string> { "A", ":B", "\t:C" };
 
-            var underTest = new TemplateRewriter(":", "`", "`", substitution, escape);
+            var underTest = new TemplateRewriter(":", "`", "`", metaSub, inlineSub);
             var result = underTest.Rewrite(input).ToList();
 
             Assert.AreEqual(3, result.Count());
@@ -141,13 +141,13 @@ namespace Aurum.Gen.Tests
         }
 
         [TestMethod]
-        public void TemplateRewriter_EnsureMetaLinesReplacedCustomValueRegexUnsafe()
+        public void EnsureMetaLinesReplacedCustomValueRegexUnsafe()
         {
-            Func<string, string> substitution = (line) => $"-{line}-";
-            Func<string, string> escape = (statement) => "X";
+            Func<string, string> metaSub = (line) => $"-{line}-";
+            Func<string, string> inlineSub = (statement) => "X";
             var input = new List<string> { "A", "^B", "C" };
 
-            var underTest = new TemplateRewriter("^", "`", "`", substitution, escape);
+            var underTest = new TemplateRewriter("^", "`", "`", metaSub, inlineSub);
             var result = underTest.Rewrite(input).ToList();
 
             Assert.AreEqual(3, result.Count());
@@ -157,13 +157,13 @@ namespace Aurum.Gen.Tests
         }
 
         [TestMethod]
-        public void TemplateRewriter_EnsureInliningApplied()
+        public void EnsureInliningAppliedToMetaCode()
         {
-            Func<string, string> substitution = (line) => $"{line}";
-            Func<string, string> escape = (statement) =>  $"{{{statement}}}";
+            Func<string, string> metaSub = (line) => $"{line}";
+            Func<string, string> inlineSub = (statement) =>  $"{{{statement}}}";
             var input = new List<string> { ":`A` and `B`" };
 
-            var underTest = new TemplateRewriter(":", "`", "`", substitution, escape);
+            var underTest = new TemplateRewriter(":", "`", "`", metaSub, inlineSub);
             var result = underTest.Rewrite(input).ToList();
 
             Assert.AreEqual(1, result.Count());
@@ -171,13 +171,13 @@ namespace Aurum.Gen.Tests
         }
 
         [TestMethod]
-        public void TemplateRewriter_EnsureInliningNotAppliedToNormalCode()
+        public void EnsureInliningNotAppliedToOuterCode()
         {
-            Func<string, string> substitution = (line) => $"{line}";
-            Func<string, string> escape = (statement) => $"{{{statement}}}";
+            Func<string, string> metaSub = (line) => $"{line}";
+            Func<string, string> inlineSub = (statement) => $"{{{statement}}}";
             var input = new List<string> { "`A` and `B`" };
 
-            var underTest = new TemplateRewriter(":", "`", "`", substitution, escape);
+            var underTest = new TemplateRewriter(":", "`", "`", metaSub, inlineSub);
             var result = underTest.Rewrite(input).ToList();
 
             Assert.AreEqual(1, result.Count());
