@@ -26,9 +26,9 @@ namespace Aurum.Gen
             var escL = Regex.Escape(inlineSymbolL);
             var escR = Regex.Escape(inlineSymbolR);
 
-            _inlineSymbols = new List<string> { inlineSymbolL, inlineSymbolR};
+            _inlineSymbols = new List<string> { inlineSymbolL, inlineSymbolR };
             _metaFinder = new Regex($@"(?<=^\s*({line}|//{line}))(.*)$");
-            _inlineFinder = new Regex(@"(?<!\\)`(?<esc>.+?)(?<!\\)`");
+            _inlineFinder = new Regex($@"(?<!\\){escL}(?<esc>.+?)(?<!\\){escR}");
 
             _metaReplacement = metaReplace;
             _inlineReplacement = inlineReplace;
@@ -45,9 +45,12 @@ namespace Aurum.Gen
             var metaMatch = _metaFinder.Match(line);
             if (metaMatch.Success)
             {
-                var statement = _metaReplacement(metaMatch.Value);
-                var raised = RaiseInlineStatements(statement);
-                return raised;
+                var result = _metaReplacement(metaMatch.Value);
+                result = RaiseInlineStatements(result);
+                result = RestoreEscapedCharacters(result);
+                result = RestoreEscapedCharacters(result);
+
+                return result;
             }
             else
             {
@@ -59,6 +62,13 @@ namespace Aurum.Gen
         private string RaiseInlineStatements(string line)
         {
             return _inlineFinder.Replace(line, _inlineReplacement("${esc}"));
+        }
+
+        private string RestoreEscapedCharacters(string line)
+        {
+            var result = line;
+            foreach (var s in _inlineSymbols) result = result.Replace($@"\{s}", s);
+            return result;
         }
 
     }
