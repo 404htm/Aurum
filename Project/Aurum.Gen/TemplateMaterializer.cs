@@ -1,4 +1,5 @@
-﻿using Aurum.TemplateUtils;
+﻿using Aurum.Core.Parser;
+using Aurum.TemplateUtils;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -10,29 +11,28 @@ namespace Aurum.Gen
 {
     public class TemplateMaterializer
     {
-        TextReader _inputFile;
+        IEnumerable<string> _source;
         ITemplateRewriter _rewriter;
+        IParserFactory _parserFactory;
 
         /// <summary> Assembles a code writer from the input source, a rewriter, and a compiler - Should be created once per template file </summary>
-        public TemplateMaterializer(TextReader inputFile, ITemplateRewriter rewriter)
+        public TemplateMaterializer(IEnumerable<string> source, ITemplateRewriter rewriter, IParserFactory parserFactory)
         {
-            _inputFile = inputFile;
+            _source = source;
             _rewriter = rewriter;
+            _parserFactory = parserFactory;
         }
 
-        public void Build()
+        public async Task<TemplateBase<object>> Build()
         {
+            var transformed = _rewriter.Rewrite(_source);
 
-        }
+            var sb = new StringBuilder();
+            foreach (var line in transformed) sb.AppendLine(line);
 
-        public void Validate()
-        {
-            throw new NotImplementedException();
-        }
-
-        public ITemplate<T> Generate<T>(T model)
-        {
-            throw new NotImplementedException();
+            var parser = _parserFactory.Create<TemplateBase<object>>();
+            var template = await parser.Parse(sb.ToString());
+            return template;
         }
     }
 }
