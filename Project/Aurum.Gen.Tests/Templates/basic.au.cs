@@ -16,7 +16,7 @@ namespace Aurum.Gen.Tests.Templates
             return $"{data.Name}.cs";
         }
 
-        public void Body(BasicTable data)
+        public void GenerateCode(BasicTable data, ICodeEmitter emitter)
         {
             //:using System;
             //:namespace Aurum.Generated

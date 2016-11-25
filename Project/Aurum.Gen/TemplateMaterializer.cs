@@ -31,8 +31,7 @@ namespace Aurum.Gen
             foreach (var line in transformed) sb.AppendLine(line);
 
             var parser = _parserFactory.Create<TemplateBase<object>>();
-            var template = await parser.Parse(sb.ToString());
-            return template;
+            return await parser.Parse(sb.ToString());
         }
     }
 }

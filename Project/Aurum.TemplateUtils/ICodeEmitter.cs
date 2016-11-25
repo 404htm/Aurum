@@ -1,13 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Aurum.Gen
+namespace Aurum.TemplateUtils
 {
     public interface ICodeEmitter
     {
-        void Emit(string code);
+        void WriteLine(string text, [CallerLineNumber] int lineNumber = 0);
     }
 }

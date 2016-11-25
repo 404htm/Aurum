@@ -3,7 +3,7 @@
     public interface ITemplate<T>
     {
         string GetFileName(T model);
-        void Body(T model);
+        void GenerateCode(T model, ICodeEmitter emitter);
     }
 }
 

@@ -43,7 +43,6 @@
   <ItemGroup>
     <Compile Include="ITemplateRewriter.cs" />
     <Compile Include="Obsolete\CodeMaterializer.cs" />
-    <Compile Include="ICodeEmitter.cs" />
     <Compile Include="Nodes\Code.cs" />
     <Compile Include="Nodes\ForEach.cs" />
     <Compile Include="Nodes\If.cs" />
