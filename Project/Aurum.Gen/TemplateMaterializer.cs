@@ -12,20 +12,28 @@ namespace Aurum.Gen
     public class TemplateMaterializer
     {
         IEnumerable<string> _source;
-        ITemplateRewriter _rewriter;
+        ITemplateRewriterFactory _rewriterFactory;
         IParserFactory _parserFactory;
 
         /// <summary> Assembles a code writer from the input source, a rewriter, and a compiler - Should be created once per template file </summary>
-        public TemplateMaterializer(IEnumerable<string> source, ITemplateRewriter rewriter, IParserFactory parserFactory)
+        public TemplateMaterializer(IEnumerable<string> source, ITemplateRewriterFactory rewriterFactory, IParserFactory parserFactory)
         {
             _source = source;
-            _rewriter = rewriter;
+            _rewriterFactory = rewriterFactory;
             _parserFactory = parserFactory;
         }
 
         public async Task<ITemplate<object>> Build()
         {
-            var transformed = _rewriter.Rewrite(_source);
+            //TODO: Extract real emitter name
+            var emitterName = "emitter";
+            var methodName = nameof(ICodeEmitter.WriteLine);
+
+            Func<string, string> metaFunc = (line) => $@"{emitterName}.{methodName}(""{line}"");";
+            Func<string, string> inlineFunc = (text) => $@"{{{text}}}";
+
+            var rewriter = _rewriterFactory.Create(metaFunc, inlineFunc);
+            var transformed = rewriter.Rewrite(_source);
 
             var sb = new StringBuilder();
             foreach (var line in transformed) sb.AppendLine(line);

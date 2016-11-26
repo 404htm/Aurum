@@ -6,13 +6,13 @@ using System.Threading.Tasks;
 
 namespace Aurum.Gen
 {
-    public class RewriterFactory : IRewriterFactory
+    public class TemplateRewriterFactory : ITemplateRewriterFactory
     {
         string _metaSymbol;
         string _inlineSymbolL;
         string _inlineSymbolR;
 
-        public RewriterFactory(string metaSymbol, string inlineSymbolL, string inlineSymbolR)
+        public TemplateRewriterFactory(string metaSymbol, string inlineSymbolL, string inlineSymbolR)
         {
             _metaSymbol = metaSymbol;
             _inlineSymbolL = inlineSymbolL;

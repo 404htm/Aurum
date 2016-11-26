@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Aurum.Gen
 {
-    public interface IRewriterFactory
+    public interface ITemplateRewriterFactory
     {
         ITemplateRewriter Create(Func<string, string> metaReplace, Func<string, string> inlineReplace);
     }
