@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace Aurum.Gen
 {
-    public class TemplateMaterializer
+    public class TemplateMaterializer<TModel>
     {
         IEnumerable<string> _source;
         ITemplateRewriterFactory _rewriterFactory;
@@ -23,7 +23,7 @@ namespace Aurum.Gen
             _parserFactory = parserFactory;
         }
 
-        public async Task<ITemplate<object>> Build()
+        public async Task<ITemplate<TModel>> Build()
         {
             //TODO: Extract real emitter name
             var emitterName = "emitter";
@@ -38,7 +38,7 @@ namespace Aurum.Gen
             var sb = new StringBuilder();
             foreach (var line in transformed) sb.AppendLine(line);
 
-            var parser = _parserFactory.Create<ITemplate<object>>();
+            var parser = _parserFactory.Create<ITemplate<TModel>>();
             return await parser.Parse(sb.ToString());
         }
     }
