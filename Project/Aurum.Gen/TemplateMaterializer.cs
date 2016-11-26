@@ -23,14 +23,14 @@ namespace Aurum.Gen
             _parserFactory = parserFactory;
         }
 
-        public async Task<TemplateBase<object>> Build()
+        public async Task<ITemplate<object>> Build()
         {
             var transformed = _rewriter.Rewrite(_source);
 
             var sb = new StringBuilder();
             foreach (var line in transformed) sb.AppendLine(line);
 
-            var parser = _parserFactory.Create<TemplateBase<object>>();
+            var parser = _parserFactory.Create<ITemplate<object>>();
             return await parser.Parse(sb.ToString());
         }
     }

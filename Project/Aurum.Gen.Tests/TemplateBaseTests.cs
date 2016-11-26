@@ -14,9 +14,9 @@ namespace Aurum.Gen.Tests
     public class TemplateBaseTests
     {
         //Nested class to serve as a simple template - This replicates template post-rewrite
-        private class DerivedTemplate : TemplateBase<BasicTable>
+        private class DerivedTemplate : ITemplate<BasicTable>
         {
-            public override void GenerateCode(BasicTable model, ICodeEmitter emitter)
+            public void GenerateCode(BasicTable model, ICodeEmitter emitter)
             {
                 foreach(var column in model.Columns)
                 {
@@ -24,7 +24,7 @@ namespace Aurum.Gen.Tests
                 }
             }
 
-            public override string GetFileName(BasicTable model)
+            public string GetFileName(BasicTable model)
             {
                 throw new NotImplementedException();
             }
@@ -33,9 +33,10 @@ namespace Aurum.Gen.Tests
         [TestMethod]
         public void VerifyDerivedTemplateWorkflow()
         {
-            //There isn't really much to test in template base
-            //This is as much a workflow sanity check as anything
-            //One template - multiple models with a registered emitter
+            //Oh God... I'm testing an interface. What have I become???
+            //Going to try and explain myself: 
+            //    Initially there was a base class - This test revealed all the reasons that my design was stupid
+            //    I removed the base class, but leaving the test as it serves as a decent workflow sanity check
 
             var model1 = new BasicTable();
             model1.Columns.Add(new BasicColumn { DisplayName = "A" });
