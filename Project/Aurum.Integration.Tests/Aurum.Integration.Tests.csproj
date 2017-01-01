@@ -50,8 +50,18 @@
     </Otherwise>
   </Choose>
   <ItemGroup>
+    <Compile Include="Templates\datalayer-basic\Repository.au.cs" />
     <Compile Include="Templates\Mark2.au.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Temp\Extensions\NameExtensions.cs" />
+    <Compile Include="Temp\GroupMetadata.cs" />
+    <Compile Include="Temp\OperationMetadata.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Aurum.TemplateUtils\Aurum.TemplateUtils.csproj">
+      <Project>{DE29813A-2E6C-49E0-A38F-369E5285C155}</Project>
+      <Name>Aurum.TemplateUtils</Name>
+    </ProjectReference>
   </ItemGroup>
   <Choose>
     <When Condition="'$(VisualStudioVersion)' == '10.0' And '$(IsCodedUITest)' == 'True'">
