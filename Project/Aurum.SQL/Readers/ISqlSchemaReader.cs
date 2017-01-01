@@ -4,10 +4,10 @@ using System.Collections.Generic;
 
 namespace Aurum.SQL
 {
-	public interface ISqlSchemaReader : IDisposable
-	{
-		SqlTableDetail GetTableDetail(SqlTableInfo tableInfo);
-		IList<SqlTableInfo> GetTables(string schema = null);
-		IList<SqlTableInfo> GetViews(string schema = null);
-	}
+    public interface ISqlSchemaReader : IDisposable
+    {
+        SqlTableDetail GetTableDetail(SqlTableInfo tableInfo);
+        IList<SqlTableInfo> GetTables(string schema = null);
+        IList<SqlTableInfo> GetViews(string schema = null);
+    }
 }

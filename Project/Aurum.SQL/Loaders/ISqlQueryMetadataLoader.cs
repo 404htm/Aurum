@@ -2,8 +2,8 @@
 
 namespace Aurum.SQL.Loaders
 {
-	public interface ISqlQueryMetadataLoader
-	{
-		SqlQueryDetail LoadQueryDetails(SqlQueryDefinition queryDefinition);
-	}
+    public interface ISqlQueryMetadataLoader
+    {
+        SqlQueryDetail LoadQueryDetails(SqlQueryDefinition queryDefinition);
+    }
 }

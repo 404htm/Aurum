@@ -8,16 +8,16 @@ using System.Threading.Tasks;
 
 namespace Aurum.SQL.Data
 {
-	[DataContract]
-	public class SqlQueryDefinition : QueryDefinition
-	{
-		public SqlQueryDefinition() : base()
-		{
+    [DataContract]
+    public class SqlQueryDefinition : QueryDefinition
+    {
+        public SqlQueryDefinition() : base()
+        {
 
-		}
+        }
 
-		[DataMember] public string Query { get; set; }
+        [DataMember] public string Query { get; set; }
 
 
-	}
+    }
 }

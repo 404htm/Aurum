@@ -6,8 +6,8 @@ using System.Threading.Tasks;
 
 namespace Aurum.Core.Parser
 {
-	public interface IParserFactory
-	{
-		IExpressionParser<T> Create<T>();
-	}
+    public interface IParserFactory
+    {
+        IExpressionParser<T> Create<T>();
+    }
 }

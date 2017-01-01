@@ -3,8 +3,8 @@ using Aurum.SQL.Templates;
 
 namespace Aurum.SQL
 {
-	public interface ISqlQueryTemplateHydrator
-	{
-		ISqlQueryTemplate Hydrate(SqlQueryTemplateData data);
-	}
+    public interface ISqlQueryTemplateHydrator
+    {
+        ISqlQueryTemplate Hydrate(SqlQueryTemplateData data);
+    }
 }

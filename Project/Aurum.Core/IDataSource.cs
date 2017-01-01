@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 
 namespace Aurum.Core
 {
-	public interface IDataSource
-	{
-		Guid Id { get; set; }
-		string Name { get; set; }
-	}
+    public interface IDataSource
+    {
+        Guid Id { get; set; }
+        string Name { get; set; }
+    }
 }

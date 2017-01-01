@@ -14,28 +14,28 @@ using System.Threading.Tasks;
 
 namespace Aurum.SQL.Tests
 {
-	public abstract class SQLTestBase
-	{
-		internal static StandardKernel IOC;
-		internal static TestContext Context;
+    public abstract class SQLTestBase
+    {
+        internal static StandardKernel IOC;
+        internal static TestContext Context;
 
-		static SQLTestBase()
-		{
-			IOC = new StandardKernel();
-			IOC.Bind<IParserFactory>().To<ParserFactory>();
-			IOC.Bind<ISqlQueryTemplateHydrator>().To<SqlQueryTemplateHydrator>();
+        static SQLTestBase()
+        {
+            IOC = new StandardKernel();
+            IOC.Bind<IParserFactory>().To<ParserFactory>();
+            IOC.Bind<ISqlQueryTemplateHydrator>().To<SqlQueryTemplateHydrator>();
 
-			IOC.Bind<ISqlValidator>().ToMethod(c => new SqlQueryReader2012(TestHelpers.GetTestConnection()));
-			IOC.Bind<ISqlQueryReader>().ToMethod(c => new SqlQueryReader2012(TestHelpers.GetTestConnection()));
-			IOC.Bind<ISqlSchemaReader>().ToMethod(c => new SqlSchemaReader(TestHelpers.GetTestConnection()));
+            IOC.Bind<ISqlValidator>().ToMethod(c => new SqlQueryReader2012(TestHelpers.GetTestConnection()));
+            IOC.Bind<ISqlQueryReader>().ToMethod(c => new SqlQueryReader2012(TestHelpers.GetTestConnection()));
+            IOC.Bind<ISqlSchemaReader>().ToMethod(c => new SqlSchemaReader(TestHelpers.GetTestConnection()));
 
-			IOC.Bind<IList<SqlQueryTemplateData>>().ToMethod(c => StoreableSet<SqlQueryTemplateData>.Load(Resources.GetDefaultTemplates()));
-			IOC.Bind<ISqlQueryMetadataLoader>().To<SqlQueryMetadataLoader>();
-		}
+            IOC.Bind<IList<SqlQueryTemplateData>>().ToMethod(c => StoreableSet<SqlQueryTemplateData>.Load(Resources.GetDefaultTemplates()));
+            IOC.Bind<ISqlQueryMetadataLoader>().To<SqlQueryMetadataLoader>();
+        }
 
-		public void WriteErrors(IEnumerable<SqlError> errors)
-		{
-			if (errors?.Any() ?? false) foreach (var e in errors) Context.WriteLine(e.Message);
-		}
-	}
+        public void WriteErrors(IEnumerable<SqlError> errors)
+        {
+            if (errors?.Any() ?? false) foreach (var e in errors) Context.WriteLine(e.Message);
+        }
+    }
 }

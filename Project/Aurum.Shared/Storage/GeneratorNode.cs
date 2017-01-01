@@ -6,12 +6,12 @@ using System.Threading.Tasks;
 
 namespace Aurum.Shared.Storage
 {
-	public class GeneratorNode
-	{
-		public Guid Id { get; set; }
-		public Guid ContextId { get; set; }
-		public List<Partition> Partitions { get; set; }
+    public class GeneratorNode
+    {
+        public Guid Id { get; set; }
+        public Guid ContextId { get; set; }
+        public List<Partition> Partitions { get; set; }
 
 
-	}
+    }
 }
