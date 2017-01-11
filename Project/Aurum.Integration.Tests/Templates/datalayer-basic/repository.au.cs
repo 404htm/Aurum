@@ -25,11 +25,12 @@ namespace Aurum.Integration.Tests.Templates.datalayer_basic
             //:
             foreach (var op in group.Operations)
             {
-                //:         public 'op.TypeName.ToSafeNameCS()' 'column.DisplayName' {get; set;}
-                //:
+                //:         public `op.TypeName.ToSafeNameCS()` `column.DisplayName` {get; set;}
+                //:         {
+                //:             
+                //:         }
             }
             //:    }
-            //:
             //:}
         }
     }

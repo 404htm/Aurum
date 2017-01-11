@@ -10,5 +10,7 @@ namespace Aurum.Integration.Tests.Temp
     {
         public object Name { get; internal set; }
         public List<OperationMetadata> Operations { get; set; }
+        public List<ObjectMetadata> Objects {get; set;}
+        public List<SourceMetadata> Sources {get; set;}
     }
 }
