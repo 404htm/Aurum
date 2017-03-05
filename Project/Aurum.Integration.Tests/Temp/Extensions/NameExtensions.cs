@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Aurum.Integration.Tests.Temp.Extensions
+﻿namespace Aurum.Integration.Tests.Temp.Extensions
 {
     public static class NameExtensions
     {

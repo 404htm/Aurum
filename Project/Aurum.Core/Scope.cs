@@ -1,5 +1,4 @@
-﻿using Aurum.Core;
-using Aurum.Core.Extensions;
+﻿using Aurum.Core.Extensions;
 using System.Collections.Generic;
 using System.Linq;
 

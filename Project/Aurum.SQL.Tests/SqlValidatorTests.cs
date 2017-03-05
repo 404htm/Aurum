@@ -1,14 +1,4 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Data.SqlClient;
-using System.Data;
-using System.Diagnostics;
-using Aurum.SQL.Readers;
 
 namespace Aurum.SQL.Tests
 {
@@ -20,7 +10,7 @@ namespace Aurum.SQL.Tests
         [TestInitialize]
         public void Init()
         {
-            _cstr_db = TestHelpers.GetTestConnection();
+            _cstr_db = SQLTestHelpers.GetTestConnection();
         }
 
         //[TestMethod]

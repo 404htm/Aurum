@@ -1,16 +1,13 @@
-﻿using System;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Aurum.SQL.Readers;
-using System.Collections;
 using System.Data.SqlClient;
 using System.Collections.Generic;
 using System.Linq;
-using System.Data;
 using Aurum.SQL.Data;
 
 namespace Aurum.SQL.Tests.Readers
 {
-	[TestClass]
+    [TestClass]
 	public class SqlQueryReader2012Tests : SQLTestBase
 	{
 		[ClassInitialize] public static void SetupTests(TestContext testContext) => Context = testContext;
@@ -18,7 +15,7 @@ namespace Aurum.SQL.Tests.Readers
 		[TestMethod]
 		public void TestGetParameters_GoodQuery()
 		{
-			using (var validator = new SqlQueryReader2012(TestHelpers.GetTestConnection()))
+			using (var validator = new SqlQueryReader2012(SQLTestHelpers.GetTestConnection()))
 			{
 				IList<SqlError> errors;
 				var Parameters = validator.GetParameters("select * from Customer where FirstName = @name;", out errors);
@@ -33,7 +30,7 @@ namespace Aurum.SQL.Tests.Readers
 		[TestMethod]
 		public void TestGetParameters_BadQuery()
 		{
-			using (var reader = new SqlQueryReader2012(TestHelpers.GetTestConnection()))
+			using (var reader = new SqlQueryReader2012(SQLTestHelpers.GetTestConnection()))
 			{
 				IList<SqlError> errors;
 				var Parameters = reader.GetParameters("select * from NotARealTable where FirstName = @name;", out errors);
@@ -48,7 +45,7 @@ namespace Aurum.SQL.Tests.Readers
 		[TestMethod]
 		public void TestValidate_GoodQuery()
 		{
-			using (var reader = new SqlQueryReader2012(TestHelpers.GetTestConnection()))
+			using (var reader = new SqlQueryReader2012(SQLTestHelpers.GetTestConnection()))
 			{
 				IList<SqlError> errors;
 				var result = reader.Validate("select * from Customer where FirstName = @name;", out errors);
@@ -62,7 +59,7 @@ namespace Aurum.SQL.Tests.Readers
 		[TestMethod]
 		public void TestValidate_BadQuery()
 		{
-			using (var reader = new SqlQueryReader2012(TestHelpers.GetTestConnection()))
+			using (var reader = new SqlQueryReader2012(SQLTestHelpers.GetTestConnection()))
 			{
 				IList<SqlError> errors;
 				var result = reader.Validate("select * from NotARealTable where FirstName = @name;", out errors);
@@ -78,7 +75,7 @@ namespace Aurum.SQL.Tests.Readers
 		public void TestGetResult_BasicQuery()
 		{
 			SqlColumn firstName;
-			using (var reader = new SqlQueryReader2012(TestHelpers.GetTestConnection()))
+			using (var reader = new SqlQueryReader2012(SQLTestHelpers.GetTestConnection()))
 			{
 				IList<SqlError> errors;
 				var results = reader.GetResultStructure("select Id, Active, FirstName from Customer where FirstName = @name;", out errors, "@name varchar");

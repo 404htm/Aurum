@@ -1,8 +1,6 @@
-﻿using System;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Linq;
 using System.Collections.Generic;
-using Ninject;
 using Aurum.SQL.Data;
 
 namespace Aurum.SQL.Tests
@@ -16,7 +14,7 @@ namespace Aurum.SQL.Tests
         [TestInitialize]
         public void Init()
         {
-            _cstr_db = TestHelpers.GetTestConnection();
+            _cstr_db = SQLTestHelpers.GetTestConnection();
         }
 
         [TestMethod]

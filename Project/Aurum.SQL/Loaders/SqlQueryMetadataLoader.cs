@@ -1,12 +1,7 @@
-﻿using Aurum.Core;
-using Aurum.SQL.Data;
+﻿using Aurum.SQL.Data;
 using Aurum.SQL.Readers;
-using System;
 using System.Collections.Generic;
 using System.Data.SqlClient;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Aurum.SQL.Loaders
 {

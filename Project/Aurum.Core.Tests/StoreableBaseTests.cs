@@ -3,11 +3,10 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Runtime.Serialization;
 using System.IO;
 using System.Collections.Generic;
-using Aurum.Core;
 
 namespace Aurum.Core.Tests
 {
-	[TestClass]
+    [TestClass]
 	public class StoreableBaseTests
 	{
 		[DataContract(IsReference = false)]

@@ -1,6 +1,5 @@
 ﻿using System;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using System.Linq;
 using Moq;
 using Aurum.Gen.Nodes;
 using Aurum.Core.Parser;

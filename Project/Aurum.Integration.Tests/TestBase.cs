@@ -1,22 +1,24 @@
 ﻿using Aurum.Core;
 using Aurum.Core.Parser;
+using Aurum.SQL;
 using Aurum.SQL.Data;
 using Aurum.SQL.Loaders;
 using Aurum.SQL.Readers;
+using Aurum.SQL.Tests;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Ninject;
 using System.Collections.Generic;
 using System.Data.SqlClient;
 using System.Linq;
 
-namespace Aurum.SQL.Tests
+namespace Aurum.Integration.Tests
 {
-    public abstract class SQLTestBase
+    public abstract class TestBase
     {
         internal static StandardKernel IOC;
         internal static TestContext Context;
 
-        static SQLTestBase()
+        static TestBase()
         {
             IOC = new StandardKernel();
             IOC.Bind<IParserFactory>().To<ParserFactory>();

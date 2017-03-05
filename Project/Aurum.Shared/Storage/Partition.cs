@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace Aurum.Shared.Storage
+﻿namespace Aurum.Shared.Storage
 {
     public class Partition
     {

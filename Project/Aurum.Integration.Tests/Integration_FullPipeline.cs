@@ -1,21 +1,18 @@
-﻿using System;
-using System.Text;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Linq;
-using Aurum.Core;
 using Aurum.SQL.Templates;
-using Aurum.Core.Parser;
 using Ninject;
 using Aurum.SQL.Data;
-using Aurum.SQL.Readers;
-using System.Data.SqlClient;
 using Aurum.SQL.Loaders;
+using Aurum.SQL;
+using System.Data.SqlClient;
+using Aurum.SQL.Tests;
 
-namespace Aurum.SQL.Tests.IntegrationTests
+namespace Aurum.Integration.Tests
 {
-	[TestClass]
-	public class Integration_FullPipeline : SQLTestBase
+    [TestClass]
+	public class Integration_FullPipeline : TestBase
 	{
 		[ClassInitialize] public static void SetupTests(TestContext testContext) => Context = testContext;
 

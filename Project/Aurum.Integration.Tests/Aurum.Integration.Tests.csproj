@@ -8,7 +8,7 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>Aurum.Integration.Tests</RootNamespace>
     <AssemblyName>Aurum.Integration.Tests</AssemblyName>
-    <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{3AC096D0-A1C2-E12C-1390-A8335801FDAB};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
@@ -16,6 +16,7 @@
     <ReferencePath>$(ProgramFiles)\Common Files\microsoft shared\VSTT\$(VisualStudioVersion)\UITestExtensionPackages</ReferencePath>
     <IsCodedUITest>False</IsCodedUITest>
     <TestProjectType>UnitTest</TestProjectType>
+    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -35,7 +36,12 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Ninject, Version=3.2.0.0, Culture=neutral, PublicKeyToken=c7192dc5380945e7, processorArchitecture=MSIL">
+      <HintPath>..\packages\Ninject.3.2.2.0\lib\net45-full\Ninject.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="System" />
+    <Reference Include="System.Data" />
   </ItemGroup>
   <Choose>
     <When Condition="('$(VisualStudioVersion)' == '10.0' or '$(VisualStudioVersion)' == '') and '$(TargetFrameworkVersion)' == 'v3.5'">
@@ -45,11 +51,21 @@
     </When>
     <Otherwise>
       <ItemGroup>
-        <Reference Include="Microsoft.VisualStudio.QualityTools.UnitTestFramework" />
+        <Reference Include="Microsoft.VisualStudio.QualityTools.UnitTestFramework">
+          <Private>False</Private>
+        </Reference>
       </ItemGroup>
     </Otherwise>
   </Choose>
   <ItemGroup>
+    <Compile Include="Integration_FullPipeline.cs" />
+    <Compile Include="Properties\Settings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+      <DependentUpon>Settings.settings</DependentUpon>
+    </Compile>
+    <Compile Include="Prototypes\CustomerRepo.cs" />
+    <Compile Include="TestBase.cs" />
     <Compile Include="Templates\datalayer-basic\Repository.au.cs" />
     <Compile Include="Templates\Mark2.au.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -58,12 +74,37 @@
     <Compile Include="Temp\ObjectMetadata.cs" />
     <Compile Include="Temp\OperationMetadata.cs" />
     <Compile Include="Temp\SourceMetadata.cs" />
+    <Compile Include="PreliminaryInheritanceTest.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Aurum.Core\Aurum.Core.csproj">
+      <Project>{e1c4f2cc-c604-4576-a1fb-70afef14ab6d}</Project>
+      <Name>Aurum.Core</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Aurum.Gen\Aurum.Gen.csproj">
+      <Project>{2d7e10cf-6040-47a9-94c1-5897d13344b0}</Project>
+      <Name>Aurum.Gen</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Aurum.SQL.Tests\Aurum.SQL.Tests.csproj">
+      <Project>{D2A64C8E-F748-42B3-A1FC-A04A4B9FABCE}</Project>
+      <Name>Aurum.SQL.Tests</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Aurum.SQL\Aurum.SQL.csproj">
+      <Project>{4876c3d4-7838-469d-ae82-8bfbda682c46}</Project>
+      <Name>Aurum.SQL</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Aurum.TemplateUtils\Aurum.TemplateUtils.csproj">
       <Project>{DE29813A-2E6C-49E0-A38F-369E5285C155}</Project>
       <Name>Aurum.TemplateUtils</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
+    <None Include="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </None>
   </ItemGroup>
   <Choose>
     <When Condition="'$(VisualStudioVersion)' == '10.0' And '$(IsCodedUITest)' == 'True'">

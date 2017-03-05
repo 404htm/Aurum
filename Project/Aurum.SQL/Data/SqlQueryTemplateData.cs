@@ -1,11 +1,4 @@
-﻿using Aurum.Core;
-using Aurum.Core.Parser;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Runtime.Serialization;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Runtime.Serialization;
 
 /// <summary>Backing data for SqlTemplates - Describes a compilable query and filter that can be used to generate SQL queries against multiple tables</summary>
 namespace Aurum.SQL.Data

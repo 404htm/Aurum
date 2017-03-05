@@ -1,7 +1,6 @@
 ﻿using System;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Aurum.Core.Parser;
-using System.Text;
 using Moq;
 using System.Collections.Generic;
 

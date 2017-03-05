@@ -1,12 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Aurum.SQL.Tests
 {
-    public static class TestHelpers
+    public static class SQLTestHelpers
     {
         public static string GetTestConnection()
         {

@@ -1,15 +1,10 @@
 ﻿using Aurum.TemplateUtils;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Aurum.Gen.Tests.Metadata;
 
 namespace Aurum.Gen.Tests.Templates
 {
 
-    public class basic : ITemplate<Metadata.BasicTable>
+    public class basic : ITemplate<BasicTable>
     {
         public string GetFileName(BasicTable data)
         {
