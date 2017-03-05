@@ -74,7 +74,7 @@
     <Compile Include="Temp\ObjectMetadata.cs" />
     <Compile Include="Temp\OperationMetadata.cs" />
     <Compile Include="Temp\SourceMetadata.cs" />
-    <Compile Include="PreliminaryInheritanceTest.cs" />
+    <Compile Include="integration_NestedMetadataMaterializer.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Aurum.Core\Aurum.Core.csproj">
