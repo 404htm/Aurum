@@ -12,7 +12,7 @@ using Aurum.SQL.Tests;
 namespace Aurum.Integration.Tests
 {
     [TestClass]
-    public class Integration_FullPipeline : TestBase
+    public class SQLFullPipelineTest : TestBase
     {
         [ClassInitialize] public static void SetupTests(TestContext testContext) => Context = testContext;
 

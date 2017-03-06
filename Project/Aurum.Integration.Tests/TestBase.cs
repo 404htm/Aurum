@@ -1,10 +1,12 @@
 ﻿using Aurum.Core;
 using Aurum.Core.Parser;
+using Aurum.Gen;
 using Aurum.SQL;
 using Aurum.SQL.Data;
 using Aurum.SQL.Loaders;
 using Aurum.SQL.Readers;
 using Aurum.SQL.Tests;
+using Aurum.TemplateUtils;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Ninject;
 using System.Collections.Generic;
@@ -30,6 +32,8 @@ namespace Aurum.Integration.Tests
 
             IOC.Bind<IList<SqlQueryTemplateData>>().ToMethod(c => StoreableSet<SqlQueryTemplateData>.Load(Resources.GetDefaultTemplates()));
             IOC.Bind<ISqlQueryMetadataLoader>().To<SqlQueryMetadataLoader>();
+
+            IOC.Bind<ICodeEmitter>().To<BasicEmitter>();
         }
 
         public void WriteErrors(IEnumerable<SqlError> errors)
