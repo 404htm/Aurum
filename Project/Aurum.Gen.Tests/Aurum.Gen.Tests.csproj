@@ -70,6 +70,7 @@
     <Compile Include="TemplateRewriterTests.cs" />
     <Compile Include="Templates\Basic.au.cs" />
     <Compile Include="TemplateVisitorTests.cs" />
+    <Compile Include="Validators\CSharpValidatorTests.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Aurum.Core\Aurum.Core.csproj">
@@ -86,8 +87,10 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <None Include="app.config" />
     <None Include="packages.config" />
   </ItemGroup>
+  <ItemGroup />
   <Choose>
     <When Condition="'$(VisualStudioVersion)' == '10.0' And '$(IsCodedUITest)' == 'True'">
       <ItemGroup>
