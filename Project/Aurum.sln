@@ -1,13 +1,15 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 14
-VisualStudioVersion = 14.0.25420.1
+# Visual Studio 15
+VisualStudioVersion = 15.0.26228.4
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Aurum.Core", "Aurum.Core\Aurum.Core.csproj", "{E1C4F2CC-C604-4576-A1FB-70AFEF14AB6D}"
-EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "UI", "UI", "{9E5F1A35-3828-4041-AD73-ABDCB447EAF4}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{ECA38059-0D1C-42DE-8D6E-433F3FFB47AB}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Client", "Client", "{6BAED460-C1AE-459E-B61B-105CC99A4B31}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Aurum.Core", "Aurum.Core\Aurum.Core.csproj", "{E1C4F2CC-C604-4576-A1FB-70AFEF14AB6D}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Aurum.SQL", "Aurum.SQL\Aurum.SQL.csproj", "{4876C3D4-7838-469D-AE82-8BFBDA682C46}"
 EndProject
@@ -32,8 +34,6 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Aurum.Gen.Tests", "Aurum.Gen.Tests\Aurum.Gen.Tests.csproj", "{37DC5276-322F-42DE-881B-BCC764E2C289}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Aurum.Integration.Tests", "Aurum.Integration.Tests\Aurum.Integration.Tests.csproj", "{D5FEA941-D907-4F9B-9296-3B9493CAC53B}"
-EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Client", "Client", "{6BAED460-C1AE-459E-B61B-105CC99A4B31}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Aurum.TemplateUtils", "Aurum.TemplateUtils\Aurum.TemplateUtils.csproj", "{DE29813A-2E6C-49E0-A38F-369E5285C155}"
 EndProject
