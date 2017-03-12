@@ -12,23 +12,55 @@ namespace Aurum.Gen.Tests.Validators
     public class CSharpValidatorTests
     {
         [TestMethod]
-        public void Gen_VerifyBasicClassDeclarationPasses()
+        public void Gen_BasicClassDeclarationPassesValidation()
         {
             var code = @"
-                using custom.namespace;
+                using test.include;
 
-                namespace Code.Generated;
-                public class GeneratedCode
+                namespace generated
                 {
-                    public bool GeneratedMethod()
+                    public class GeneratedCode
                     {
-                        return true;
+                        public bool GeneratedMethod()
+                        {
+                            return true;
+                        }
                     }
-                };
+                }
             ";
 
             var underTest = new CSharpValidator();
-            var result = underTest.Parse(code);
+            var results = underTest.Parse(code);
+            Assert.IsFalse(results.Any());
+        }
+
+        [TestMethod]
+        public void Gen_InvalidMethodNameGeneratesErrors()
+        {
+            var code = @"
+                using test.include;
+
+                namespace generated
+                {
+                    public class GeneratedCode
+                    {
+                        public bool 1GeneratedMethod()
+                        {
+                            return true;
+                        }
+                    }
+                }
+            ";
+
+            var underTest = new CSharpValidator();
+            var results = underTest.Parse(code);
+
+            Assert.IsTrue(results.Any());
+            Assert.AreEqual(3, results.Count());
+
+            var msg = results.First();
+            Assert.AreEqual("Invalid token '1' in class, struct, or interface member declaration", msg.Message);
+            Assert.AreEqual("CS1519", msg.Code);
         }
     }
 }
