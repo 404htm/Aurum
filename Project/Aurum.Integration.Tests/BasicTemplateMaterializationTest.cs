@@ -15,6 +15,7 @@ namespace Aurum.Integration.Tests
         public void Integration_BasicTemplateMaterialization()
         {
             var customerMetadata = SetupCustomerMetadata();
+            
             //TODO: Materialize Code
             //TODO: Compile Code
 

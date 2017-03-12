@@ -11,6 +11,11 @@ namespace Aurum.Gen.Tests.Validators
     [TestClass]
     public class CSharpValidatorTests
     {
+        public static TestContext Context { get; private set; }
+
+        [ClassInitialize]
+        public static void SetupTests(TestContext testContext) => Context = testContext;
+
         [TestMethod]
         public void Gen_BasicClassDeclarationPassesValidation()
         {
@@ -31,6 +36,8 @@ namespace Aurum.Gen.Tests.Validators
 
             var underTest = new CSharpValidator();
             var results = underTest.Parse(code);
+            WriteResults(results, "Basic Class Declaration");
+          
             Assert.IsFalse(results.Any());
         }
 
@@ -54,6 +61,7 @@ namespace Aurum.Gen.Tests.Validators
 
             var underTest = new CSharpValidator();
             var results = underTest.Parse(code);
+            WriteResults(results, "Invalid Method Name");
 
             Assert.IsTrue(results.Any());
             Assert.AreEqual(3, results.Count());
@@ -61,6 +69,12 @@ namespace Aurum.Gen.Tests.Validators
             var msg = results.First();
             Assert.AreEqual("Invalid token '1' in class, struct, or interface member declaration", msg.Message);
             Assert.AreEqual("CS1519", msg.Code);
+        }
+
+        private void WriteResults(IEnumerable<ValidationResult> results, string section)
+        {
+            Context.WriteLine($"{section} Validation results:");
+            foreach (var r in results) Context.WriteLine($"\t{r.Code} : {r.Message} (Line {r.Line})");
         }
     }
 }

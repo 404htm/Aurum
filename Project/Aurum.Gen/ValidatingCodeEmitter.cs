@@ -14,7 +14,7 @@ namespace Aurum.Gen
         ICodeValidator _validator;
         public ValidatingCodeEmitter(ICodeValidator validator)
         {
-
+            _validator = validator;
         }
 
         public void WriteLine(string text, [CallerLineNumber] int lineNumber = 0)
