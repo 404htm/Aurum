@@ -69,12 +69,43 @@ namespace Aurum.Gen.Tests.Validators
             var msg = results.First();
             Assert.AreEqual("Invalid token '1' in class, struct, or interface member declaration", msg.Message);
             Assert.AreEqual("CS1519", msg.Code);
+            Assert.AreEqual(7, msg.Line);
+        }
+
+        [TestMethod]
+        public void Gen_MismatchedBracesGeneratesErrors()
+        {
+            var code = @"
+                using test.include;
+
+                namespace generated
+                {
+                    public class GeneratedCode
+                    {
+                        public bool GeneratedMethod()
+                        {
+                            return true;
+                        }
+                    }
+            ";
+
+            var underTest = new CSharpValidator();
+            var results = underTest.Parse(code);
+            WriteResults(results, "Invalid Method Name");
+
+            Assert.IsTrue(results.Any());
+            Assert.AreEqual(1, results.Count());
+
+            var msg = results.First();
+            Assert.AreEqual("} expected", msg.Message);
+            Assert.AreEqual("CS1513", msg.Code);
+            Assert.AreEqual(11, msg.Line);
         }
 
         private void WriteResults(IEnumerable<ValidationResult> results, string section)
         {
             Context.WriteLine($"{section} Validation results:");
-            foreach (var r in results) Context.WriteLine($"\t{r.Code} : {r.Message} (Line {r.Line})");
+            foreach (var r in results) Context.WriteLine($"\t{r.Code} : {r.Message.Replace("{","{{").Replace("}","}}")} (Line {r.Line})");
         }
     }
 }

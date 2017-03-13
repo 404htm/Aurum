@@ -55,7 +55,8 @@ namespace Aurum.Gen.Validators
                 Code = diagnostic.Id,
                 Message = diagnostic.GetMessage(),
                 Start = diagnostic.Location.SourceSpan.Start,
-                Length = diagnostic.Location.SourceSpan.Length
+                Length = diagnostic.Location.SourceSpan.Length,
+                Line = diagnostic.Location.GetLineSpan().StartLinePosition.Line
             };
         }
 
