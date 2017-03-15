@@ -33,7 +33,7 @@ namespace Aurum.Integration.Tests
             IOC.Bind<IList<SqlQueryTemplateData>>().ToMethod(c => StoreableSet<SqlQueryTemplateData>.Load(Resources.GetDefaultTemplates()));
             IOC.Bind<ISqlQueryMetadataLoader>().To<SqlQueryMetadataLoader>();
 
-            IOC.Bind<ICodeEmitter>().To<BasicEmitter>();
+            IOC.Bind<ICodeEmitter>().To<CodeEmitter>();
         }
 
         public void WriteErrors(IEnumerable<SqlError> errors)

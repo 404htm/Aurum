@@ -9,6 +9,9 @@ using Aurum.Gen.Validators;
 
 namespace Aurum.Gen
 {
+    /// <summary>
+    /// Builds code output line by line and provides diagnostics correlating errors in source and output
+    /// </summary>
     public class ValidatingCodeEmitter : ICodeEmitter
     {
         ICodeValidator _validator;
@@ -18,6 +21,11 @@ namespace Aurum.Gen
         }
 
         public void WriteLine(string text, [CallerLineNumber] int lineNumber = 0)
+        {
+            throw new NotImplementedException();
+        }
+
+        public List<ValidationResult> GetDiagnostics()
         {
             throw new NotImplementedException();
         }

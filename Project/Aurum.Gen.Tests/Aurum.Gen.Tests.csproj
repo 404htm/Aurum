@@ -80,6 +80,7 @@
     <Compile Include="TemplateRewriterTests.cs" />
     <Compile Include="Templates\Basic.au.cs" />
     <Compile Include="TemplateVisitorTests.cs" />
+    <Compile Include="CodeEmitterTests.cs" />
     <Compile Include="Validators\CSharpValidatorTests.cs" />
   </ItemGroup>
   <ItemGroup>
