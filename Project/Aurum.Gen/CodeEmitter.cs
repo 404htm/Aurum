@@ -29,9 +29,16 @@ namespace Aurum.Gen
             if (cur_line > max_lines) throw new InvalidOperationException($"Code output has exceeded max lines ({max_lines}");
         }
 
-        public List<EmittedCodeLine> GetCode()
+        public List<EmittedCodeLine> GetCodeWithMetadata()
         {
             return _lines;
+        }
+
+        public string GetCode()
+        {
+            var sb = new StringBuilder();
+            foreach (var line in _lines) sb.AppendLine(line.Text);
+            return sb.ToString();
         }
     }
 }

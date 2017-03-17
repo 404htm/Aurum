@@ -17,7 +17,7 @@ namespace Aurum.Gen.Tests
 
             for (int i = 1; i <= 100; i++) underTest.WriteLine($"Line{i}", i * 2);
 
-            var result = underTest.GetCode();
+            var result = underTest.GetCodeWithMetadata();
             Assert.AreEqual(100, result.Count());
 
             Assert.AreEqual("Line1", result[0].Text);

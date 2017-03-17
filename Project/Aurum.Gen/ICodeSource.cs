@@ -4,6 +4,7 @@ namespace Aurum.Gen
 {
      public interface ICodeSource
     {
-        List<EmittedCodeLine> GetCode();
+        List<EmittedCodeLine> GetCodeWithMetadata();
+        string GetCode();
     }
 }

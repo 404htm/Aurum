@@ -1,6 +1,7 @@
 ﻿using Aurum.Core;
 using Aurum.Core.Parser;
 using Aurum.Gen;
+using Aurum.Gen.Validators;
 using Aurum.SQL;
 using Aurum.SQL.Data;
 using Aurum.SQL.Loaders;
@@ -34,6 +35,7 @@ namespace Aurum.Integration.Tests
             IOC.Bind<ISqlQueryMetadataLoader>().To<SqlQueryMetadataLoader>();
 
             IOC.Bind<ICodeEmitter>().To<CodeEmitter>();
+            IOC.Bind<ICodeValidator>().To<CSharpValidator>();
         }
 
         public void WriteErrors(IEnumerable<SqlError> errors)
