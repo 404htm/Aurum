@@ -1,10 +1,12 @@
-﻿using Aurum.Gen;
+﻿using Aurum.Core.Parser;
+using Aurum.Gen;
 using Aurum.Gen.Validators;
 using Aurum.Integration.Tests.Temp;
 using Aurum.TemplateUtils;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Ninject;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 
 namespace Aurum.Integration.Tests
@@ -18,17 +20,18 @@ namespace Aurum.Integration.Tests
         [TestMethod]
         public void Integration_BasicTemplateMaterialization()
         {
-            var customerMeta = SetupCustomerMetadata();
+            var model = SetupCustomerMetadata();
             var emitter = IOC.Get<ICodeEmitter>();
             var compiler = IOC.Get<ICodeValidator>();
+           
+            //var parser = IOC.Get<IParserFactory>().Create<ITemplate<GroupMetadata>>();
 
-            var template = new Templates.datalayer_basic.Repository();
-            //TODO: MATERIALIZE TEMPLATE
-            //var materialzer = new TemplateMaterializer<BasicTable>();
+            var templateSource = File.ReadAllLines("./Templates/datalayer-basic/Repository.au.cs");
+            var materializerFactory = IOC.Get<ITemplateMaterializerFactory>();
+            var materializer = materializerFactory.Create<GroupMetadata>(templateSource);
 
-            //materialzer.Process()
-
-            //template.GenerateCode(customerMeta, emitter);
+            var template = materializer.Build().Result;
+            template.GenerateCode(model, emitter);
 
             var code = ((ICodeSource)emitter).GetCode();
             Context.WriteLine("Emitted Code:");
@@ -44,8 +47,6 @@ namespace Aurum.Integration.Tests
             }
 
             Assert.IsFalse(result.Any());
-            //TODO: Compile Code
-
         }
 
         private GroupMetadata SetupCustomerMetadata()

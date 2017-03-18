@@ -34,8 +34,13 @@ namespace Aurum.Integration.Tests
             IOC.Bind<IList<SqlQueryTemplateData>>().ToMethod(c => StoreableSet<SqlQueryTemplateData>.Load(Resources.GetDefaultTemplates()));
             IOC.Bind<ISqlQueryMetadataLoader>().To<SqlQueryMetadataLoader>();
 
+
+            IOC.Bind<ITemplateRewriterFactory>().ToMethod(c => new TemplateRewriterFactory(":", "`", "`"));
+            //IOC.Bind<ITemplateRewriter>().ToMethod(c => new TemplateRewriter(":", "`", "`", (line) => $"{line}", (statement) => $"{{{statement}}}"));
+            //IOC.Bind<IExpression>().To<ExpressionParser>();
             IOC.Bind<ICodeEmitter>().To<CodeEmitter>();
             IOC.Bind<ICodeValidator>().To<CSharpValidator>();
+            IOC.Bind<ITemplateMaterializerFactory>().To<TemplateMaterializerFactory>();
         }
 
         public void WriteErrors(IEnumerable<SqlError> errors)

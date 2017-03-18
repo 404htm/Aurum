@@ -20,7 +20,7 @@ namespace Aurum.Integration.Tests
         public void Integration_AllTables_DefaultTemplates_FullPipeline()
         {
             var tableMetadata = ReadTableMetadataFromTestDatabase();
-            var templates = ReadAndHydrateDefaultTemplates();
+            var templates = ReadAndHydrateDefaultSQLTemplates();
 
             var queryDefinitions = MaterializeTemplates(templates, tableMetadata);
             AssertGeneratedQueryValidity(queryDefinitions);
@@ -46,7 +46,7 @@ namespace Aurum.Integration.Tests
             return details;
         }
 
-        private List<ISqlQueryTemplate> ReadAndHydrateDefaultTemplates()
+        private List<ISqlQueryTemplate> ReadAndHydrateDefaultSQLTemplates()
         {
             var rawTemplates = IOC.Get<IList<SqlQueryTemplateData>>();
             Assert.IsTrue(rawTemplates.Any(), "Templates could not be loaded from assembly resources");

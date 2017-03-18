@@ -154,6 +154,9 @@
     <Compile Include="CodeEmitter.cs" />
     <Compile Include="EmittedCodeLine.cs" />
     <Compile Include="ICodeSource.cs" />
+    <Compile Include="ITemplateMaterializer.cs" />
+    <Compile Include="ITemplateMaterializerFactory.cs" />
+    <Compile Include="TemplateMaterializerFactory.cs" />
     <Compile Include="ITemplateRewriterFactory.cs" />
     <Compile Include="ITemplateRewriter.cs" />
     <Compile Include="Obsolete\CodeMaterializer.cs" />

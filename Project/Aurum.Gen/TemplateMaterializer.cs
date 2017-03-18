@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Aurum.Gen
 {
-    public class TemplateMaterializer<TModel>
+    public class TemplateMaterializer<TModel> : ITemplateMaterializer<TModel>
     {
         IEnumerable<string> _source;
         ITemplateRewriterFactory _rewriterFactory;

@@ -1,5 +1,4 @@
-﻿using Aurum.Integration.Tests.Temp;
-using Aurum.TemplateUtils;
+﻿//using Aurum.TemplateUtils;
 
 namespace Aurum.Integration.Tests.Templates.datalayer_basic
 {
