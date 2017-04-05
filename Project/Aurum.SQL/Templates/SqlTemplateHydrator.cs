@@ -10,8 +10,8 @@ namespace Aurum.SQL
     /// <summary> Helper class that compiles SqlQueryTemplateData (serializable) into a usable SqlQueryTemplate </summary>
     internal class SqlQueryTemplateHydrator : ISqlQueryTemplateHydrator
     {
-        IExpressionParser<filter> _filterParser;
-        IExpressionParser<query> _queryParser;
+        IParser<filter> _filterParser;
+        IParser<query> _queryParser;
 
         public SqlQueryTemplateHydrator(IParserFactory parserfactory)
         {

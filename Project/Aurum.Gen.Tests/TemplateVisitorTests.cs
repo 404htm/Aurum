@@ -46,7 +46,7 @@ namespace Aurum.Gen.Tests
             var scope = new Mock<IScope>();
             //Actual scope ignored because call would be from the parser (which is also mocked out)
 
-            var parser = new Mock<IExpressionParser<Func<bool>>>();
+            var parser = new Mock<IParser<Func<bool>>>();
             parser.Setup(p => p.Parse("condition", It.IsAny<IScope>())).ReturnsAsync(() => true).Verifiable();
 
             var factory = new Mock<IParserFactory>();
@@ -79,7 +79,7 @@ namespace Aurum.Gen.Tests
             var scope = new Mock<IScope>();
             //Actual scope ignored because call would be from the parser (which is also mocked out)
 
-            var parser = new Mock<IExpressionParser<Func<bool>>>();
+            var parser = new Mock<IParser<Func<bool>>>();
             parser.Setup(p => p.Parse("condition", It.IsAny<IScope>())).ReturnsAsync(() => false).Verifiable();
 
             var factory = new Mock<IParserFactory>();
@@ -117,7 +117,7 @@ namespace Aurum.Gen.Tests
             var scope = new Mock<IScope>();
             scope.SetupSet(s => s["testVar"] = It.IsAny<int>()).Callback<string, object>((k, v) => result = (dynamic)v);
 
-            var parser = new Mock<IExpressionParser<Func<object>>>();
+            var parser = new Mock<IParser<Func<object>>>();
             parser.Setup(p => p.Parse("testStatement", It.IsAny<IScope>())).ReturnsAsync(() => 15).Verifiable();
 
             var factory = new Mock<IParserFactory>();

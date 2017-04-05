@@ -19,7 +19,7 @@ namespace Aurum.Core.Parser
         public dynamic __scope;
     }
 
-    public class ExpressionParser<T> : IExpressionParser<T>
+    public class ExpressionParser<T> : IParser<T>
     {
         List<string> _imports = new List<string>();
         List<Type> _types = new List<Type>();

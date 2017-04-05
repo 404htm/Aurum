@@ -2,6 +2,6 @@
 {
     public interface IParserFactory
     {
-        IExpressionParser<T> Create<T>();
+        IParser<T> Create<T>();
     }
 }

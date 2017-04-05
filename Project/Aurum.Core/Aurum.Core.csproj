@@ -158,6 +158,9 @@
     <Compile Include="IDataConnection.cs" />
     <Compile Include="IDataSource.cs" />
     <Compile Include="IScope.cs" />
+    <Compile Include="Parser\ClassCompiler.cs" />
+    <Compile Include="Parser\ICompiler.cs" />
+    <Compile Include="Parser\ICompiler1.cs" />
     <Compile Include="Parser\IParserFactory.cs" />
     <Compile Include="Parser\ParserFactory.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -171,7 +174,7 @@
     <Compile Include="StoreableSet.cs" />
     <Compile Include="TypeDefinition.cs" />
     <Compile Include="Parser\ExpressionParser.cs" />
-    <Compile Include="Parser\IExpressionParser.cs" />
+    <Compile Include="Parser\IParser.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />

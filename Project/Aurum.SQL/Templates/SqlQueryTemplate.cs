@@ -10,7 +10,7 @@ namespace Aurum.SQL.Templates
     /// <summary> Template that can be applied to a Sql Table or View to produce a default SQL Query </summary>
     public class SqlQueryTemplate : SqlQueryTemplateData,  ISqlQueryTemplate
     {
-        internal SqlQueryTemplate(SqlQueryTemplateData data, IExpressionParser<filter> filterParser, IExpressionParser<query> queryParser)
+        internal SqlQueryTemplate(SqlQueryTemplateData data, IParser<filter> filterParser, IParser<query> queryParser)
         {
             Name = data.Name;
             QueryName = data.Name;

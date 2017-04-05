@@ -31,7 +31,7 @@ namespace Aurum.Gen.Tests
                 .Verifiable();
 
             //We need to verify that parser is called with the rewritten template text
-            var parserMock = new Mock<IExpressionParser<ITemplate<BasicTable>>>();
+            var parserMock = new Mock<IParser<ITemplate<BasicTable>>>();
             parserMock
                 .Setup(λ => λ.Parse(It.IsAny<string>()))
                 .Callback<string>(λ => Assert.AreEqual(expectedTemplateTxt, λ))
