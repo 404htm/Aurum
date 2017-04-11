@@ -18,6 +18,7 @@ namespace Aurum.Integration.Tests
         public static void SetupTests(TestContext testContext) => Context = testContext;
 
         [TestMethod]
+        [Ignore]
         public void Integration_BasicTemplateMaterialization()
         {
             var model = SetupCustomerMetadata();

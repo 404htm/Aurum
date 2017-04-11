@@ -1,22 +1,37 @@
 ﻿using System;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.CodeAnalysis.Scripting;
 using Microsoft.CodeAnalysis.CSharp.Scripting;
 using Aurum.Core.CodeAnalysis;
+using Aurum.Core.Tests.Resources;
+using Xunit;
+using System.Collections.Generic;
 
 namespace Aurum.Core.Tests.CodeAnalysis
 {
-    [TestClass]
     public class SymbolLocatorTests
     {
+        [Fact]
+        public void FindImplementationsThrowsIfInterfaceNotLoaded()
+        {
+            var comp = makeScriptCompilation("");
+            List<INamedTypeSymbol> _;
 
+            var ex = Assert.Throws<Exception>(
+                () => _ = SymbolLocator.FindImplementations<ITestInterface>(comp)
+            );
 
-        [TestMethod]
+            Assert.Contains("The specified interface cannot be located in compilation", ex.Message);
+        }
+
+        [Fact]
         public void FindImplementationsReturnsNothingForEmptyCompilation()
         {
-           // var underTest = SymbolLocator.FindImplementations<ITest>();
+            Assert.True(false);
+            var comp = makeScriptCompilation("");
+            var underTest = SymbolLocator.FindImplementations<ITestInterface>(comp);
+
         }
 
         private Compilation makeEmptyComp()
