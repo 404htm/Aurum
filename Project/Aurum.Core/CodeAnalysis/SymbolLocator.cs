@@ -36,7 +36,7 @@ namespace Aurum.Core.CodeAnalysis
             return implementors;
         }
 
-        public static List<INamedTypeSymbol> locateTypesRecursively(INamedTypeSymbol type)
+        static List<INamedTypeSymbol> locateTypesRecursively(INamedTypeSymbol type)
         {
             var results = type.GetTypeMembers().SelectMany(locateTypesRecursively);
             return (new INamedTypeSymbol[] { type }.Concat(results)).ToList();

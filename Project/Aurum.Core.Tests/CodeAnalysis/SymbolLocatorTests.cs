@@ -31,14 +31,13 @@ namespace Aurum.Core.Tests.CodeAnalysis
         public void FindImplementationsReturnsNothingForEmptyCompilation()
         {
             var comp = makeScriptCompilation("", getReference<ITestInterface>());
-
             var result = SymbolLocator.FindImplementations<ITestInterface>(comp);
 
             Assert.Empty(result);
         }
 
         [Fact]
-        public void FindImplementationLocatesSingleClassWithNoExplicitNamespace()
+        public void FindImplementationLocatesSingleClass()
         {
             var code =
             @"
@@ -49,12 +48,79 @@ namespace Aurum.Core.Tests.CodeAnalysis
                     public string DoSomething() => ""Hello World"";
                 }
             ";
-            var comp = makeScriptCompilation(code, getReference<ITestInterface>());
 
+            var comp = makeScriptCompilation(code, getReference<ITestInterface>());
             var result = SymbolLocator.FindImplementations<ITestInterface>(comp);
 
             Assert.Single(result);
             Assert.Equal("TestImplementation", result.Single().Name);
+        }
+
+        [Fact]
+        public void FindImplementationIgnoresOtherInterfaces()
+        {
+            var code =
+            @"
+                using Aurum.Core.Tests.Resources;
+
+                public class TestImplementation: IDontCare
+                {
+                    public string DoSomething() => ""Hello World"";
+                }
+            ";
+
+            var comp = makeScriptCompilation(code, getReference<ITestInterface>());
+            var result = SymbolLocator.FindImplementations<ITestInterface>(comp);
+
+            Assert.Empty(result);
+        }
+
+        [Fact]
+        public void FindImplementationLocatesNestedClass()
+        {
+            var code =
+            @"
+                using Aurum.Core.Tests.Resources;
+                public class OuterClass
+                {
+                    public class TestImplementation: ITestInterface
+                    {
+                        public string DoSomething() => ""Hello World"";
+                    }
+                }
+            ";
+
+            var comp = makeScriptCompilation(code, getReference<ITestInterface>());
+            var result = SymbolLocator.FindImplementations<ITestInterface>(comp);
+
+            Assert.Single(result);
+            Assert.Equal("TestImplementation", result.Single().Name);
+        }
+
+        [Fact]
+        public void FindImplementationLocatesMultipleClasses()
+        {
+            var code =
+            @"
+                using Aurum.Core.Tests.Resources;
+
+                public class TestImplementation1: ITestInterface
+                {
+                    public string DoSomething() => ""Hello World 1"";
+                }
+
+                public class TestImplementation2: ITestInterface
+                {
+                    public string DoSomething() => ""Hello World 2"";
+                }
+            ";
+
+            var comp = makeScriptCompilation(code, getReference<ITestInterface>());
+            var result = SymbolLocator.FindImplementations<ITestInterface>(comp);
+
+            Assert.Equal(2, result.Count());
+            Assert.Equal("TestImplementation1", result[0].Name);
+            Assert.Equal("TestImplementation2", result[1].Name);
         }
 
         private Compilation makeEmptyComp()
@@ -62,6 +128,7 @@ namespace Aurum.Core.Tests.CodeAnalysis
             return makeScriptCompilation(@"");
         }
 
+        #region Compilation Setup Code
         private MetadataReference getReference<T>()
         {
             var assembly = typeof(T).Assembly.Location;
@@ -74,8 +141,9 @@ namespace Aurum.Core.Tests.CodeAnalysis
             var options = ScriptOptions.Default;
             options = options.AddReferences(references);
 
-            var state =  CSharpScript.RunAsync(code, options).Result;
+            var state = CSharpScript.RunAsync(code, options).Result;
             return state.Script.GetCompilation();
-        }
+        } 
+        #endregion
     }
 }

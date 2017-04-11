@@ -10,4 +10,9 @@ namespace Aurum.Core.Tests.Resources
     {
         string DoSomething();
     }
+
+    public interface IDontCare
+    {
+
+    }
 }
