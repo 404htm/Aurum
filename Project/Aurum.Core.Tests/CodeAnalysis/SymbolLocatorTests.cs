@@ -7,6 +7,7 @@ using Aurum.Core.CodeAnalysis;
 using Aurum.Core.Tests.Resources;
 using Xunit;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Aurum.Core.Tests.CodeAnalysis
 {
@@ -16,9 +17,10 @@ namespace Aurum.Core.Tests.CodeAnalysis
         public void FindImplementationsThrowsIfInterfaceNotLoaded()
         {
             var comp = makeScriptCompilation("");
+            
             List<INamedTypeSymbol> _;
 
-            var ex = Assert.Throws<Exception>(
+            var ex = Assert.Throws<ArgumentException>(
                 () => _ = SymbolLocator.FindImplementations<ITestInterface>(comp)
             );
 
@@ -28,10 +30,31 @@ namespace Aurum.Core.Tests.CodeAnalysis
         [Fact]
         public void FindImplementationsReturnsNothingForEmptyCompilation()
         {
-            Assert.True(false);
-            var comp = makeScriptCompilation("");
-            var underTest = SymbolLocator.FindImplementations<ITestInterface>(comp);
+            var comp = makeScriptCompilation("", getReference<ITestInterface>());
 
+            var result = SymbolLocator.FindImplementations<ITestInterface>(comp);
+
+            Assert.Empty(result);
+        }
+
+        [Fact]
+        public void FindImplementationLocatesSingleClassWithNoExplicitNamespace()
+        {
+            var code =
+            @"
+                using Aurum.Core.Tests.Resources;
+
+                public class TestImplementation: ITestInterface
+                {
+                    public string DoSomething() => ""Hello World"";
+                }
+            ";
+            var comp = makeScriptCompilation(code, getReference<ITestInterface>());
+
+            var result = SymbolLocator.FindImplementations<ITestInterface>(comp);
+
+            Assert.Single(result);
+            Assert.Equal("TestImplementation", result.Single().Name);
         }
 
         private Compilation makeEmptyComp()
@@ -39,9 +62,18 @@ namespace Aurum.Core.Tests.CodeAnalysis
             return makeScriptCompilation(@"");
         }
 
-        private Compilation makeScriptCompilation(string code)
+        private MetadataReference getReference<T>()
+        {
+            var assembly = typeof(T).Assembly.Location;
+            var @ref = MetadataReference.CreateFromFile(assembly);
+            return @ref;
+        }
+
+        private Compilation makeScriptCompilation(string code, params MetadataReference[] references)
         {
             var options = ScriptOptions.Default;
+            options = options.AddReferences(references);
+
             var state =  CSharpScript.RunAsync(code, options).Result;
             return state.Script.GetCompilation();
         }

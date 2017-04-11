@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Aurum.Core.Tests.Resources
 {
-    interface ITestInterface
+    public interface ITestInterface
     {
         string DoSomething();
     }

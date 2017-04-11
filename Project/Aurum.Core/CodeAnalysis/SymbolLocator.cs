@@ -23,15 +23,23 @@ namespace Aurum.Core.CodeAnalysis
             var targetInterface = compilation.GetTypeByMetadataName(typeof(I).FullName);
             if (targetInterface == null)
             {
+                //TODO: Better exception type
                 throw new ArgumentException("The specified interface cannot be located in compilation.", "<I>");
             }
             
             var global = compilation.Assembly.GlobalNamespace;
             var namespaces = global.ConstituentNamespaces;
-            var members = namespaces.SelectMany(m => m.GetTypeMembers());
-            var implementors = members.Where(t => t.Interfaces.Contains(targetInterface)).ToList();
+            var directTypes = namespaces.SelectMany(m => m.GetTypeMembers());
+            var allTypes = directTypes.SelectMany(locateTypesRecursively);
+            var implementors = allTypes.Where(t => t.Interfaces.Contains(targetInterface)).ToList();
 
             return implementors;
+        }
+
+        public static List<INamedTypeSymbol> locateTypesRecursively(INamedTypeSymbol type)
+        {
+            var results = type.GetTypeMembers().SelectMany(locateTypesRecursively);
+            return (new INamedTypeSymbol[] { type }.Concat(results)).ToList();
         }
 
     }
